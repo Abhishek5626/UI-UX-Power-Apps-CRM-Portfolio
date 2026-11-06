@@ -1,0 +1,8 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Agent icon">
+<rect x="0.5" y="0.5" width="35" height="35" rx="17.5" fill="#E7F0FE"/>
+<rect x="0.5" y="0.5" width="35" height="35" rx="17.5" stroke="#BDD5F6"/>
+<path id="Checkmark" d="M15 17.2222L17.5846 20L22 15" stroke-width="1.1" stroke="white"/>
+<circle id="Verified circle" cx="18" cy="18" r="7" fill="#205EB5"/>
+</g>
+</svg>

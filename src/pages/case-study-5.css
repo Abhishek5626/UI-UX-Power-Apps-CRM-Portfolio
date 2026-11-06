@@ -1,0 +1,102 @@
+/* What Quik adds to the shared case study system: blank image slots and the outcome grid. */
+.cs-system {
+  --q-metric: #c9cdf3;
+  --q-metric-soft: #eaebfa;
+}
+
+html[data-theme="dark"] .cs-system {
+  --q-metric: #2a2c4d;
+  --q-metric-soft: #1b1c30;
+}
+
+/* Body text fills the column on this page, out to the same edge as its images. */
+.q-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.q-page.cs-system .cs-content .cs-opening-summary,
+.q-page.cs-system .cs-content .cs-block-summary,
+.q-page.cs-system .cs-content .cs-chapter > .cs-block:first-child > .cs-block-head .cs-b1 {
+  max-width: none;
+}
+
+/* Each slot keeps its image's proportions instead of the media block's fixed height. */
+.cs-system .q-blank {
+  width: 100%;
+  height: auto;
+}
+
+.cs-block-body:has(> .q-blank) {
+  display: grid;
+  gap: 24px;
+}
+
+.q-bento {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.q-metric,
+.q-bento-image {
+  aspect-ratio: 1;
+  border-radius: 10px;
+}
+
+.q-metric {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  background: var(--q-metric);
+}
+
+.cs-system .cs-content .q-metric strong {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 34px;
+  letter-spacing: -0.3px;
+}
+
+.q-metric span {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.q-bento-image {
+  background: var(--q-metric-soft);
+}
+
+/* Phones stack the opening as Agentic AI does: title, text, then role. */
+@media (max-width: 809px) {
+  .q-intro .cs-opening-head {
+    display: contents;
+  }
+
+  .q-intro .cs-opening-meta {
+    order: 1;
+  }
+}
+
+@media (max-width: 810px) {
+  .q-bento {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .q-bento > i {
+    display: none;
+  }
+
+  .q-bento-image {
+    grid-column: 1 / -1;
+    aspect-ratio: 2;
+  }
+
+  .cs-system .cs-content .q-metric strong {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}

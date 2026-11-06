@@ -1,0 +1,314 @@
+/* Shared motion for the Agentic AI case study. Values measured from the reference. */
+.cs-system {
+  --fx-ink: #191919;
+  --fx-ink-2: #616161;
+  --fx-ink-3: color-mix(in oklab, #191919 64%, transparent);
+  --fx-border: rgb(31 61 46 / 0.1);
+  --fx-panel: rgb(255 255 255 / 0.86);
+  --fx-card: #fff;
+  --fx-chip: #f4f4f4;
+  --fx-ink-4: color-mix(in oklab, #191919 46%, transparent);
+  --fx-hairline: rgb(31 61 46 / 0.08);
+  --fx-workshop-bg: color-mix(in oklab, #e2edfa 82%, #fff);
+  --fx-workshop-fg: #1f5aa6;
+  --fx-workshop-line: color-mix(in oklab, #1f5aa6 18%, transparent);
+  --fx-merchant-bg: color-mix(in oklab, #f8e6e0 82%, #fff);
+  --fx-merchant-fg: color-mix(in oklab, #d35c3d 70%, #191919);
+  --fx-merchant-line: color-mix(in oklab, #d35c3d 20%, transparent);
+}
+
+html[data-theme="dark"] .cs-system {
+  --fx-ink: var(--theme-text);
+  --fx-ink-2: var(--theme-text-muted);
+  --fx-ink-3: var(--theme-text-muted);
+  --fx-border: var(--theme-border);
+  --fx-panel: var(--theme-surface);
+  --fx-card: var(--theme-surface-raised);
+  --fx-chip: var(--theme-chip);
+  --fx-ink-4: var(--theme-text-muted);
+  --fx-hairline: var(--theme-border);
+  --fx-workshop-bg: var(--cs-side-a);
+  --fx-workshop-fg: var(--cs-side-a-ink);
+  --fx-workshop-line: var(--theme-border);
+  --fx-merchant-bg: var(--cs-side-b);
+  --fx-merchant-fg: var(--cs-side-b-ink);
+  --fx-merchant-line: var(--theme-border);
+}
+
+.fx-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 99px;
+  background: transparent;
+  color: var(--fx-ink-2);
+  font: 500 13px/24px var(--cs-font);
+  cursor: pointer;
+  transition: color 150ms cubic-bezier(0.2, 0, 0, 1), background-color 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.fx-play:focus-visible {
+  outline: 2px solid var(--fx-ink);
+  outline-offset: 2px;
+}
+
+/* Existing cards rising in one after another. */
+.fx-run {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rf-light::after,
+.rf-loop-light,
+.fx-wire-light {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fx-card);
+  box-shadow: 0 0 0 2px var(--wire-ink, var(--fx-ink)), 0 0 12px 2px color-mix(in oklab, var(--wire-ink, var(--fx-ink)) 45%, transparent);
+}
+
+.fx-wire,
+.fx-wire-trace {
+  fill: none;
+}
+
+.fx-wire {
+  stroke: var(--fx-ink-4);
+  stroke-opacity: 0.5;
+  stroke-width: 1px;
+  stroke-linecap: round;
+}
+
+.fx-wire-trace {
+  stroke: var(--wire-ink, var(--fx-ink));
+  stroke-width: 1.5px;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.fx-wire-ring {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border: 1.5px solid var(--wire-ink, var(--fx-ink));
+  border-radius: 50%;
+  box-sizing: border-box;
+  opacity: 0;
+}
+
+.af-status {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1b561a;
+  box-shadow: 0 0 0 3px #e0fae0;
+  animation: fx-breathe 4s ease-in-out infinite;
+}
+
+/* An outcome or rule, with its dot. */
+.fx-pill {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  padding: 0 12px 0 8px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 13px;
+}
+
+.fx-pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.fx-pill.is-ok {
+  background: #e0fae0;
+  color: #1b561a;
+}
+
+.fx-pill.is-ask {
+  background: #fbeed3;
+  color: #8a5a00;
+}
+
+.fx-pill.is-person {
+  background: #edecff;
+  color: #3a2f9e;
+}
+
+.fx-pill.is-rule {
+  background: #fff5f5;
+  color: #d50b0b;
+}
+
+html[data-theme="dark"] .fx-pill.is-ok {
+  background: var(--cs-after);
+  color: var(--cs-positive);
+}
+
+html[data-theme="dark"] .fx-pill.is-ask {
+  background: var(--cs-note);
+  color: var(--cs-note-ink);
+}
+
+html[data-theme="dark"] .fx-pill.is-person {
+  background: var(--cs-side-a);
+  color: var(--cs-side-a-ink);
+}
+
+html[data-theme="dark"] .fx-pill.is-rule {
+  background: var(--cs-side-b);
+  color: var(--cs-side-b-ink);
+}
+
+/* The label sitting on a wire. */
+.fx-word {
+  position: absolute;
+  padding: 2px 8px;
+  border: 1px solid var(--fx-hairline);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--fx-card) 94%, transparent);
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+
+.fx-wire-light {
+  z-index: 1;
+  opacity: 0;
+  offset-anchor: center;
+  offset-rotate: 0deg;
+  pointer-events: none;
+}
+
+.fx-step {
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+}
+
+.fx-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 500ms cubic-bezier(0.19, 1, 0.22, 1), transform 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.fx-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.cs-status-dot {
+  animation: fx-breathe 4s ease-in-out infinite;
+}
+
+@keyframes fx-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Playground: a new brand eases in on whatever it paints, at the reference's timing. */
+.cs-playground .cs-brand-button,
+.cs-playground .cs-token-swatch,
+.cs-playground .cs-outcome.is-brand {
+  transition: background-color 400ms ease-in-out, border-color 400ms ease-in-out, color 400ms ease-in-out;
+}
+
+/* A new prototype message arrives. */
+.cs-proto-pair {
+  animation: fx-arrive 250ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@keyframes fx-arrive {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fx-play:hover {
+    background: rgb(255 255 255 / 0.62);
+    color: var(--fx-ink);
+  }
+
+  html[data-theme="dark"] .fx-play:hover {
+    background: var(--fx-chip);
+  }
+}
+
+@media (max-width: 809px) {
+  .fx-play {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-play {
+    transition: none;
+  }
+
+  .fx-reveal {
+    transform: none;
+    transition-duration: 200ms;
+  }
+
+  .cs-playground .cs-brand-button,
+  .cs-playground .cs-token-swatch,
+  .cs-playground .cs-outcome.is-brand {
+    transition: none;
+  }
+
+  .cs-status-dot,
+  .af-status,
+  .cs-proto-pair {
+    animation: none;
+  }
+}
+
+/* Fills whatever icon box a panel gives it. */
+.fx-glyph {
+  display: block;
+  width: 100%;
+  max-width: 20px;
+  height: 100%;
+  max-height: 20px;
+}
+
+.fx-glyph.is-mask {
+  background: currentColor;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+html[data-theme="dark"] .cs-content img[src*="/case-study-4/icons/"] {
+  filter: invert(1);
+}

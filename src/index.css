@@ -1,0 +1,341 @@
+/*
+  Design foundation.
+  Change these variables to edit color, typography, spacing, and content width.
+*/
+:root {
+  --theme-page: #f0f0f0;
+  --theme-surface: #ffffff;
+  --theme-surface-raised: #f3f3f3;
+  --theme-chip: #ebebeb;
+  --theme-text: #121212;
+  --theme-text-muted: #666666;
+  --theme-border: #ebebeb;
+  --theme-border-strong: #d9d9d9;
+  --theme-accent: #00c950;
+  --theme-accent-ink: #0f3d22;
+  --theme-knob: #ffffff;
+  --theme-knob-ink: #121212;
+  --theme-icon: #666666;
+  --theme-icon-muted: #9e9e9e;
+  --theme-stat: rgba(255, 255, 255, 0.79);
+  /* Glass button tokens — tuned to glass-button.learnframer.site */
+  --theme-glass-blur: 10px;
+  --theme-glass-blur-hover: 0.16px;
+  --theme-glass-duration: 0.4s;
+  --theme-glass-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --theme-glass: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.48),
+    rgba(242, 242, 242, 0.28)
+  );
+  --theme-glass-edge: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.32)
+  );
+  --theme-glass-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.06),
+    0 10px 16px -12px rgba(0, 0, 0, 0.38),
+    inset 0 0 1.6px 3px rgba(255, 255, 255, 0.32);
+  --theme-glass-shadow-hover:
+    inset 0 1px 1px rgba(255, 255, 255, 0.85),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.05),
+    0 6px 12px -10px rgba(0, 0, 0, 0.32),
+    inset 0 0 0.8px 1.6px rgba(255, 255, 255, 0.55);
+  --theme-duration: 400ms;
+  --theme-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  color-scheme: light;
+
+  --color-background: var(--theme-page);
+  --color-surface: var(--theme-surface);
+  --color-text: var(--theme-text);
+  --color-text-muted: var(--theme-text-muted);
+  --color-accent: var(--theme-accent);
+  --color-border: var(--theme-border);
+  --color-focus: var(--theme-text);
+
+  --font-family: "Segoe UI", system-ui, sans-serif;
+  --font-size: 1.0625rem;
+  --line-height: 1.6;
+  --heading-line-height: 1.25;
+
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+
+  --content-width: 40rem;
+}
+
+html[data-theme="dark"] {
+  --theme-page: #000000;
+  --theme-surface: #161616;
+  --theme-surface-raised: #141414;
+  --theme-chip: #2a2a2a;
+  --theme-text: #ffffff;
+  --theme-text-muted: #9e9e9e;
+  --theme-border: #2a2a2a;
+  --theme-border-strong: #333333;
+  --theme-stat: rgba(255, 255, 255, 0.08);
+  --theme-glass: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.07)
+  );
+  --theme-glass-edge: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.12)
+  );
+  --theme-glass-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.28),
+    inset 0 -2px 2px rgba(255, 255, 255, 0.1),
+    0 10px 16px -12px rgba(0, 0, 0, 0.75),
+    inset 0 0 1.6px 3px rgba(255, 255, 255, 0.16);
+  --theme-glass-shadow-hover:
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 2px rgba(255, 255, 255, 0.16),
+    0 6px 12px -10px rgba(0, 0, 0, 0.85),
+    inset 0 0 0.8px 1.6px rgba(255, 255, 255, 0.32);
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    /* Short color fade so theme changes stay visible with the toggle. */
+    --theme-duration: 200ms;
+    --theme-glass-duration: 0.01s;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+  Theme switch (see theme.tsx): element transitions are suspended for the
+  one style change so nested color fades can't restart in steps; the page
+  crossfades as a single View Transition instead. The toggle keeps its own.
+*/
+html.theme-switching,
+html.theme-switching *:not(.theme-toggle, .theme-toggle *),
+html.theme-switching *:not(.theme-toggle, .theme-toggle *)::before,
+html.theme-switching *:not(.theme-toggle, .theme-toggle *)::after {
+  transition: none !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--theme-duration);
+  animation-timing-function: var(--theme-ease);
+}
+
+/* The toggle animates live; its frozen old frame would leave a ghost knob. */
+::view-transition-old(.theme-toggle) {
+  display: none;
+}
+
+::view-transition-new(.theme-toggle) {
+  animation: none;
+}
+
+/* Keep the page interactive while the crossfade runs. */
+::view-transition {
+  pointer-events: none;
+}
+
+html {
+  background-color: var(--theme-page);
+  transition: background-color var(--theme-duration) var(--theme-ease);
+}
+
+body {
+  margin: 0;
+  background-color: var(--theme-page);
+  color: var(--theme-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  transition:
+    background-color var(--theme-duration) var(--theme-ease),
+    color var(--theme-duration) var(--theme-ease);
+}
+
+:focus {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link:focus {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: 1;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: var(--space-xs) var(--space-sm);
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+a {
+  color: var(--color-accent);
+  text-underline-offset: 0.18em;
+}
+
+.content {
+  width: min(100% - (2 * var(--space-lg)), var(--content-width));
+  margin-inline: auto;
+}
+
+.hero {
+  padding-block: var(--space-xl) var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.hero h1 {
+  margin: var(--space-xs) 0 var(--space-md);
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 600;
+}
+
+.hero p:last-child {
+  margin: 0;
+  max-width: 36rem;
+}
+
+.placeholder {
+  color: var(--color-text-muted);
+}
+
+.section {
+  padding-block: var(--space-xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.section h2 {
+  margin: 0 0 var(--space-md);
+  font-size: 1.35rem;
+  line-height: var(--heading-line-height);
+}
+
+.section p {
+  margin: 0 0 var(--space-md);
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+.project-list {
+  display: grid;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project {
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.project h3 {
+  margin: 0 0 var(--space-xs);
+  font-size: 1.125rem;
+  line-height: var(--heading-line-height);
+}
+
+.project p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.project .project-summary {
+  margin-bottom: var(--space-xs);
+  color: var(--color-text);
+}
+
+.project .project-action {
+  margin-top: var(--space-sm);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.stack p {
+  margin: 0;
+}
+
+.link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer {
+  padding-block: var(--space-lg);
+  color: var(--color-text-muted);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+@media (max-width: 40rem) {
+  .content {
+    width: min(100% - (2 * var(--space-md)), var(--content-width));
+  }
+
+  .section {
+    padding-block: var(--space-lg);
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+}

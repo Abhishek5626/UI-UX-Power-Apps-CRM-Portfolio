@@ -1,0 +1,392 @@
+/* Proposal frames from Figma "Portfolio 2026", values copied from Dev Mode. */
+.pf-mark {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 99px;
+  background: var(--cs-chip);
+  color: #878181;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: -0.2px;
+}
+
+.pf-mark.is-small {
+  width: 22px;
+  height: 22px;
+}
+
+.cs-system .pf-body {
+  color: var(--cs-text);
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.56px;
+}
+
+.pf-why {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 14px;
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.pf-why-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cs-system .pf-why-label,
+.cs-system .pf-why-title {
+  color: var(--cs-text);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.48px;
+}
+
+.cs-system .pf-why-label {
+  font-weight: 500;
+}
+
+.cs-system .pf-why-title {
+  font-weight: 600;
+}
+
+.pf-why-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pf-why-column {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 1px;
+}
+
+.pf-agent {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.pf-agent-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+}
+
+.cs-system .pf-agent-name {
+  color: var(--cs-text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.48px;
+}
+
+.pf-agent-columns {
+  display: flex;
+  align-items: stretch;
+}
+
+.pf-agent-column {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 1px;
+  padding: 12px;
+  border-top: 1px solid #ebebeb;
+  border-right: 1px solid #ebebeb;
+}
+
+.pf-agent-column.is-never {
+  border-right: 0;
+  border-radius: 0 0 12px;
+  background: #fcf6f6;
+}
+
+.pf-agent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.pf-agent-label.is-never {
+  align-items: center;
+}
+
+.cs-system .pf-agent-label p {
+  color: #7c7c7c;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.pf-tag {
+  padding: 2px 6px;
+  border-radius: 99px;
+  background: #fbeed3;
+  color: #8a5a00;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: -0.2px;
+}
+
+.pf-never-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #d50b0b;
+}
+
+.cs-system .pf-agent-text {
+  color: var(--cs-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.56px;
+}
+
+.cs-system .pf-agent-test {
+  color: var(--cs-text);
+  font-size: 12px;
+  line-height: 22px;
+  letter-spacing: -0.48px;
+}
+
+.pf-data {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.pf-data-card {
+  display: flex;
+  flex: 1 0 0;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 1px;
+  padding: 16px 14px;
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.pf-data-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--cs-chip);
+}
+
+.pf-data-icon span {
+  width: 20px;
+  height: 20px;
+  background: var(--cs-text);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+.pf-data-text {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-width: 1px;
+}
+
+.cs-system .pf-data-title {
+  color: var(--cs-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.56px;
+}
+
+/* Merchant cards: type from the reference, which keeps 4 in a row. */
+.pf-merchants-frame {
+  container: pf-merchants / inline-size;
+}
+
+.cs-system .pf-merchants {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 24px;
+  list-style: none;
+}
+
+.pf-merchant {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: var(--cs-surface);
+}
+
+.pf-merchant-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px;
+}
+
+.pf-merchant-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--cs-chip);
+}
+
+.cs-system .pf-merchant-name {
+  color: var(--fx-ink);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.pf-merchant-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--fx-hairline);
+}
+
+.pf-merchant-field.is-never {
+  background: #fcf6f6;
+}
+
+.cs-system .pf-merchant-value {
+  margin-top: 4px;
+  color: var(--fx-ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  text-wrap: pretty;
+}
+
+.cs-system .pf-merchant-test {
+  margin-top: 4px;
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+  text-wrap: pretty;
+}
+
+.cs-system .pf-merchant-text {
+  color: var(--fx-ink-2);
+  font-size: 14px;
+  line-height: 22px;
+  text-wrap: pretty;
+}
+
+.pf-merchant-text strong {
+  color: var(--fx-ink);
+  font-weight: 600;
+}
+
+.pf-term {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Narrower desktop columns stay at 4 across, with tighter spacing. */
+@container pf-merchants (max-width: 859px) {
+  .cs-system .pf-merchants {
+    column-gap: 12px;
+  }
+
+  .pf-merchant-head {
+    gap: 8px;
+    padding: 14px 12px;
+  }
+
+  .pf-merchant-field {
+    padding: 12px;
+  }
+}
+
+@container pf-merchants (max-width: 639px) {
+  .cs-system .pf-merchants {
+    grid-template-rows: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .pf-merchant {
+    grid-row: auto;
+    grid-template-rows: none;
+  }
+}
+
+@container pf-merchants (max-width: 500px) {
+  .cs-system .pf-merchants {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+html[data-theme="dark"] .pf-merchant-field.is-never {
+  background: var(--cs-before);
+}
+
+html[data-theme="dark"] .pf-agent-column {
+  border-color: var(--cs-divider);
+}
+
+html[data-theme="dark"] .pf-agent-column.is-never {
+  background: var(--cs-before);
+}
+
+html[data-theme="dark"] .pf-tag {
+  background: var(--cs-note);
+  color: var(--cs-note-ink);
+}
+
+@media (max-width: 809px) {
+  .pf-why-columns,
+  .pf-agent-columns,
+  .pf-data {
+    flex-direction: column;
+  }
+
+  .pf-why-column,
+  .pf-agent-column,
+  .pf-data-card {
+    flex: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pf-agent-column {
+    border-right: 0;
+  }
+
+  .pf-agent-column.is-never {
+    border-radius: 0 0 12px 12px;
+  }
+}

@@ -1,0 +1,1774 @@
+/*
+  Shared case study system, Figma "Portfolio 2026" node 182:17.
+  Spec: docs/case-study-design-system.md. Only what a built section uses lives here.
+*/
+.cs-system {
+  --cs-page: #fbfbfb;
+  --cs-toc: linear-gradient(106deg, rgb(253 253 253 / 66%) 8%, rgb(241 245 253 / 66%) 57%, rgb(243 247 254 / 66%) 116%);
+  --cs-toc-border: rgb(31 61 46 / 8%);
+  --cs-toc-circle: rgb(31 61 46 / 7%);
+  --cs-next: #191919;
+  --cs-next-hover: #616161;
+  --cs-toc-shadow: 0 1px 2px rgb(31 61 46 / 5%), 0 12px 32px -16px rgb(31 61 46 / 16%);
+  --cs-toc-current: #fcfdfd;
+  --cs-toc-hover: rgb(0 0 0 / 6%);
+  --cs-toc-press: rgb(0 0 0 / 5.5%);
+  --cs-media: #e2dcdc;
+  --cs-surface: #fff;
+  --cs-surface-soft: #f9fbfd;
+  --cs-chip: #f4f4f4;
+  --cs-border: #efefef;
+  --cs-border-soft: #f6f6f6;
+  --cs-font: Geist, system-ui, sans-serif;
+  --cs-heading: #191919;
+  --cs-text: #191919;
+  --cs-text-soft: #616161;
+  --cs-text-muted: #616161;
+  --cs-marker: #6f6a6a;
+  --cs-side-a: #e7f0fb;
+  --cs-side-a-ink: #1f64bd;
+  --cs-side-b: #f9eae6;
+  --cs-side-b-ink: #ad4b2f;
+  --cs-note: #fff9f1;
+  --cs-note-ink: #96611a;
+  --cs-before: #fff5f5;
+  --cs-after: #f6fff5;
+  --cs-timing-ink: #6e6e6e;
+  --cs-divider: #e3e3e3;
+  --cs-positive: #1b561a;
+  --cs-toc-text: #373737;
+  --cs-toc-detail: #757575;
+  --cs-pill-text: #3a3838;
+  --cs-status-dot: #05b24a;
+  --cs-pill: linear-gradient(
+    129deg,
+    rgb(253 253 253 / 0.66) 8%,
+    rgb(241 245 253 / 0.66) 57%,
+    rgb(243 247 254 / 0.66) 116%
+  );
+  --cs-focus: #403e3e;
+
+  min-height: 100dvh;
+  box-sizing: border-box;
+  /* The drawer's fixed controls take the top; Figma's own top padding is 54px. */
+  padding: 88px 46px 64px;
+  background: var(--cs-page);
+  color: var(--cs-text);
+  font-family: var(--cs-font);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color var(--theme-duration) var(--theme-ease);
+}
+
+html[data-theme="dark"] .cs-system {
+  --cs-page: #020202;
+  --cs-toc: linear-gradient(106deg, rgb(255 255 255 / 8%) 8%, rgb(255 255 255 / 4%) 57%, rgb(255 255 255 / 6%) 116%);
+  --cs-toc-border: rgb(255 255 255 / 12%);
+  --cs-toc-circle: rgb(255 255 255 / 10%);
+  --cs-next: #f2f2f2;
+  --cs-next-hover: #c4c4c4;
+  --cs-toc-shadow: none;
+  --cs-toc-current: var(--theme-chip);
+  --cs-toc-hover: rgb(255 255 255 / 6%);
+  --cs-toc-press: rgb(255 255 255 / 5.5%);
+  --cs-media: var(--theme-chip);
+  --cs-surface: var(--theme-surface);
+  --cs-surface-soft: var(--theme-surface-raised);
+  --cs-chip: var(--theme-chip);
+  --cs-border: var(--theme-border);
+  --cs-border-soft: var(--theme-border);
+  --cs-heading: var(--theme-text);
+  --cs-text: var(--theme-text);
+  --cs-text-soft: var(--theme-text-muted);
+  --cs-text-muted: var(--theme-text-muted);
+  --cs-marker: #bdbdbd;
+  --cs-side-a: #18233a;
+  --cs-side-a-ink: #8db7f2;
+  --cs-side-b: #331e1a;
+  --cs-side-b-ink: #f0a48f;
+  --cs-note: #2b2318;
+  --cs-note-ink: #f0bd6b;
+  --cs-before: #2a1a1a;
+  --cs-after: #18261a;
+  --cs-timing-ink: var(--theme-text-muted);
+  --cs-divider: var(--theme-border);
+  --cs-positive: #8fdc8d;
+  --cs-toc-text: var(--theme-text);
+  --cs-toc-detail: var(--theme-text-muted);
+  --cs-pill-text: var(--theme-text);
+  --cs-pill: var(--theme-chip);
+  --cs-focus: #fff;
+}
+
+.cs-system p,
+.cs-system h1,
+.cs-system h2,
+.cs-system h3,
+.cs-system h4,
+.cs-system h5,
+.cs-system table,
+.cs-system dl,
+.cs-system dd,
+.cs-system ol,
+.cs-system ul,
+.cs-system figure {
+  margin: 0;
+  padding: 0;
+}
+
+.cs-shell {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+/* Table of contents */
+.cs-toc {
+  position: sticky;
+  top: 48px;
+  flex: 0 0 264px;
+  box-sizing: border-box;
+  padding: 8px 8px 18px;
+  border: 1px solid var(--cs-toc-border);
+  border-radius: 18px;
+  /* The landing page's card glass, from landing.css. */
+  background: var(--cs-toc);
+  box-shadow: var(--cs-toc-shadow);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  line-height: normal;
+  /* Stays reachable when the screen is shorter than the panel. */
+  max-height: calc(100dvh - 96px);
+  overflow-y: auto;
+}
+
+/* Row padding plus this gap keeps Figma's 51px between rows, with room for the hover fill. */
+.cs-toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  list-style: none;
+}
+
+.cs-toc-list .is-current {
+  margin-bottom: 3px;
+}
+
+.cs-toc-row {
+  display: flex;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  color: var(--cs-toc-text);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+li:not(.is-current) > .cs-toc-row {
+  opacity: 0.7;
+}
+
+.is-current .cs-toc-row {
+  padding-block: 16px;
+  background: var(--cs-toc-current);
+  box-shadow: 0 1px 2px rgb(31 61 46 / 6%), 0 12px 32px -12px rgb(31 61 46 / 18%);
+}
+
+.cs-toc-number {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--cs-toc-circle);
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  letter-spacing: -0.28px;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+.is-current .cs-toc-number {
+  background: var(--cs-text);
+  color: var(--cs-toc-current);
+}
+
+.cs-toc-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cs-toc-name {
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.28px;
+}
+
+.cs-toc-detail {
+  color: var(--cs-toc-detail);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.24px;
+}
+
+.cs-system .cs-toc-note {
+  margin-top: 21px;
+  padding-inline: 18px;
+  color: var(--cs-toc-text);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.28px;
+}
+
+a.cs-toc-row {
+  transition:
+    background-color 300ms cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 300ms cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 200ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  li:not(.is-current) > a.cs-toc-row:hover {
+    background: var(--cs-toc-hover);
+    opacity: 1;
+  }
+}
+
+li:not(.is-current) > a.cs-toc-row:active {
+  background: var(--cs-toc-press);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.cs-toc-row {
+    transition: none;
+  }
+}
+
+.cs-toc .cs-toc-list a.cs-toc-row:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--cs-toc-current), 0 0 0 3px var(--cs-focus);
+  opacity: 1;
+}
+
+/* Content */
+.cs-content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 92px;
+  min-width: 0;
+}
+
+/* The drawer's bottom blur fades out at the end, so the next button stays sharp. */
+.project-drawer-scroll:has(.cs-system) ~ .progressive-blur .progressive-blur-edge {
+  transition: opacity 200ms ease;
+}
+
+.project-drawer-scroll:has(.cs-system).is-at-end ~ .progressive-blur .progressive-blur-edge {
+  opacity: 0;
+}
+
+/* 64px below the chapter, inside the content column's 92px gap. */
+.cs-next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  margin-top: -28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--fx-hairline);
+}
+
+.cs-next-button {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--cs-next);
+  color: var(--cs-page);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 23px;
+  text-decoration: none;
+  transition: background-color 200ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cs-next-button:hover {
+    background: var(--cs-next-hover);
+  }
+}
+
+.cs-next-button:focus-visible {
+  outline: 2px solid var(--cs-focus);
+  outline-offset: 2px;
+}
+
+.cs-system .cs-next-text {
+  color: var(--cs-text-soft);
+  font-size: 15px;
+  line-height: 23px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-next-button {
+    transition: none;
+  }
+}
+
+/* One chapter of the story; its sections keep the frame's 46px rhythm. */
+.cs-chapter {
+  --cs-chapter-gap: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-chapter-gap);
+  min-width: 0;
+}
+
+/* The landing page's shipped badge, in the case study's font. */
+.cs-chapter-label {
+  display: flex;
+  align-self: flex-start;
+}
+
+/* A chapter's opening: 12px between its lines, then 18px to whatever comes next. */
+.cs-chapter > .cs-block:first-child > .cs-block-head {
+  gap: 12px;
+}
+
+.cs-chapter > .cs-block:first-child:has(> .cs-block-head:last-child) + * {
+  margin-top: calc(18px - var(--cs-chapter-gap));
+}
+
+.cs-chapter-label .shipped-badge {
+  font-family: var(--cs-font);
+}
+
+/* A chapter label has no live status, so its dot is grey with no glow. */
+.cs-chapter-label .shipped-badge-dot::before {
+  display: none;
+}
+
+.cs-chapter-label .shipped-badge-dot::after {
+  background: var(--cs-text-soft);
+  animation: none;
+}
+
+.cs-opening {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cs-opening-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.cs-opening-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.cs-status-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--cs-status-dot);
+}
+
+.cs-h1 {
+  color: var(--cs-heading);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: -1.04px;
+  text-wrap: balance;
+}
+
+.cs-b1 {
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.56px;
+}
+
+.cs-opening-summary {
+  max-width: 563px;
+}
+
+.cs-opening-meta {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  max-width: 40%;
+  text-align: right;
+}
+
+.cs-meta-title {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.56px;
+}
+
+.cs-meta-detail {
+  font-size: 12px;
+  letter-spacing: -0.48px;
+}
+
+.cs-media {
+  display: grid;
+  place-items: center;
+  height: 297px;
+  border-radius: 18px;
+  background: var(--cs-media);
+}
+
+.cs-media-placeholder {
+  padding: 16px;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+  text-align: center;
+}
+
+/* Shared text styles */
+.cs-h2 {
+  color: var(--cs-heading);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: -0.88px;
+  text-wrap: balance;
+}
+
+.cs-h3 {
+  color: var(--cs-text);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.72px;
+  text-wrap: balance;
+}
+
+.cs-h4 {
+  color: var(--cs-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.56px;
+}
+
+.cs-b2 {
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.56px;
+}
+
+.cs-b3 {
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.cs-small {
+  color: var(--cs-text-soft);
+  font-size: 12px;
+  line-height: 22px;
+  letter-spacing: -0.24px;
+}
+
+.cs-card-label {
+  color: var(--cs-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.56px;
+}
+
+.cs-tag,
+.cs-marker {
+  color: var(--cs-marker);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: -0.2px;
+}
+
+.cs-tag {
+  align-self: flex-start;
+  padding: 2px 4px;
+  border-radius: 2px;
+  background: var(--cs-surface);
+}
+
+.cs-marker {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 99px;
+  background: var(--cs-chip);
+}
+
+/* North star */
+.cs-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--cs-border-soft);
+  border-radius: 18px;
+  background: var(--cs-surface-soft);
+}
+
+.cs-summary-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-summary-copy .cs-h3 {
+  max-width: 300px;
+}
+
+.cs-summary-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  list-style: none;
+}
+
+.cs-summary-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+/* Sections */
+.cs-block {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cs-block-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-block-summary {
+  max-width: 636px;
+}
+
+.cs-block-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Roles */
+.cs-roles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.cs-role-side {
+  --side: var(--cs-side-a);
+  --side-ink: var(--cs-side-a-ink);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.cs-role-side.is-b {
+  --side: var(--cs-side-b);
+  --side-ink: var(--cs-side-b-ink);
+}
+
+.cs-role-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 52px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--side);
+  color: var(--side-ink);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.56px;
+  text-align: center;
+}
+
+.cs-role-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs-role-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 14px 18px;
+  border: 1px solid var(--cs-border);
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.cs-role-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cs-role-label {
+  color: var(--side-ink);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.cs-system .cs-role-points {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 18px;
+  color: var(--cs-text-muted);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+/* Assumption and decision notes */
+.cs-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs-note-text {
+  max-width: 819px;
+}
+
+.cs-decision {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.cs-decision-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.56px;
+}
+
+.cs-decision-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.cs-decision-rows li {
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--cs-note);
+  color: var(--cs-note-ink);
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.56px;
+}
+
+/* Before and after: subgrid keeps each step level with its partner. */
+.cs-urgent-summary {
+  max-width: 691px;
+}
+
+.cs-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(7, auto);
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.cs-compare-side {
+  display: grid;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
+  min-width: 0;
+}
+
+.cs-compare-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 12px 12px 12px;
+}
+
+.cs-compare-head .cs-marker {
+  margin-bottom: 6px;
+}
+
+.cs-step-title {
+  color: var(--cs-text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.48px;
+}
+
+.cs-compare-timing {
+  display: grid;
+  padding: 0 12px 12px;
+}
+
+.cs-timing {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--cs-before);
+  color: var(--cs-timing-ink);
+}
+
+.cs-timing.is-after {
+  background: var(--cs-after);
+}
+
+.cs-timing-route {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--cs-text);
+}
+
+.cs-timing-route svg {
+  flex: none;
+}
+
+.cs-timing-line {
+  flex: 1;
+  border-top: 1px dashed currentColor;
+}
+
+.cs-timing-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cs-timing-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.cs-timing-text {
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.cs-steps {
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  list-style: none;
+}
+
+.cs-step {
+  display: flex;
+  gap: 12px;
+  padding: 18px 54px 18px 12px;
+  border-bottom: 1px solid var(--cs-divider);
+}
+
+.cs-step-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding-top: 4px;
+}
+
+/* Research */
+.cs-block-summary {
+  max-width: 636px;
+}
+
+.cs-flow-value {
+  color: var(--cs-heading);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: -0.88px;
+}
+
+.cs-flow-suffix {
+  color: var(--cs-text-muted);
+  font-size: 12px;
+  letter-spacing: -0.48px;
+}
+
+.cs-source {
+  color: var(--cs-text-muted);
+}
+
+.cs-finding {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.cs-finding-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
+}
+
+.cs-finding-side.is-design {
+  background: var(--cs-after);
+}
+
+.cs-finding .cs-tag,
+.cs-tag-soft {
+  background: var(--cs-chip);
+}
+
+.cs-system .cs-callout {
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--cs-note);
+  color: var(--cs-note-ink);
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.56px;
+}
+
+.cs-callout strong {
+  font-weight: 500;
+}
+
+.cs-star {
+  color: var(--cs-heading);
+}
+
+.cs-table-card {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.cs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.cs-table th,
+.cs-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--cs-divider);
+  font-weight: 400;
+  text-align: left;
+  vertical-align: top;
+}
+
+.cs-table thead th {
+  color: var(--cs-text-muted);
+  font-weight: 500;
+}
+
+.cs-table tbody th {
+  color: var(--cs-text);
+  font-weight: 500;
+}
+
+.cs-table td {
+  color: var(--cs-text-muted);
+}
+
+.cs-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.cs-confidence {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 99px;
+  background: var(--cs-note);
+  color: var(--cs-note-ink);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.cs-confidence.is-high {
+  background: var(--cs-after);
+  color: var(--cs-positive);
+}
+
+.cs-confidence.is-low {
+  background: var(--cs-side-b);
+  color: var(--cs-side-b-ink);
+}
+
+.cs-show-all {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 99px;
+  background: var(--cs-chip);
+  color: var(--cs-text);
+  font: 500 12px/16px var(--cs-font);
+  letter-spacing: -0.48px;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+.cs-show-all:hover {
+  background: var(--cs-divider);
+}
+
+.cs-show-all:focus-visible {
+  outline: 2px solid var(--cs-focus);
+  outline-offset: 2px;
+}
+
+.cs-gate {
+  margin-top: auto;
+  padding-top: 6px;
+  color: var(--cs-positive);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.cs-plans {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 32px;
+}
+
+.cs-plans .cs-block {
+  gap: 18px;
+  min-width: 0;
+}
+
+.cs-plan-list {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cs-surface);
+  list-style: none;
+}
+
+.cs-plan-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px;
+  border-bottom: 1px solid var(--cs-divider);
+}
+
+.cs-plan-row:last-child {
+  border-bottom: 0;
+}
+
+.cs-plan-row.is-star {
+  background: var(--cs-after);
+}
+
+.cs-plan-row strong {
+  color: var(--cs-text);
+  font-weight: 500;
+}
+
+.cs-plan-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.cs-plan-when {
+  flex: none;
+}
+
+.cs-pass {
+  color: var(--cs-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.56px;
+}
+
+.cs-pass .cs-source {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.48px;
+}
+
+.cs-decision-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px;
+}
+
+.cs-decision-why {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Proposal */
+.cs-role-side.is-neutral {
+  --side: var(--cs-chip);
+  --side-ink: var(--cs-text);
+}
+
+.cs-agent-side {
+  color: var(--cs-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.56px;
+}
+
+.cs-agent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--cs-border);
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.cs-agent-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.cs-agent-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-agent-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cs-text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.cs-agent-never {
+  margin-top: auto;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--cs-side-b);
+}
+
+.cs-agent-never .cs-agent-label {
+  color: var(--cs-side-b-ink);
+}
+
+.cs-two-up {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cs-people {
+  --person-red: #974834;
+  --person-red-bg: #f9eae6;
+  --person-red-ring: rgb(211 92 61 / 20%);
+  --person-blue: #1f5aa6;
+  --person-blue-bg: #e7f0fb;
+  --person-blue-ring: rgb(31 90 166 / 18%);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+html[data-theme="dark"] .cs-people {
+  --person-red: #f0a491;
+  --person-red-bg: var(--cs-before);
+  --person-red-ring: rgb(240 164 145 / 22%);
+  --person-blue: #9cc3f5;
+  --person-blue-bg: #18222f;
+  --person-blue-ring: rgb(156 195 245 / 22%);
+}
+
+.cs-people-always {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: var(--cs-surface);
+}
+
+.cs-system .cs-person-pill {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  height: 24px;
+  padding: 0 12px 0 8px;
+  border-radius: 999px;
+  background: var(--person-red-bg);
+  color: var(--person-red);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cs-person-pill::before,
+.cs-person-list li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--person-red);
+}
+
+.cs-system .cs-person-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+  color: var(--cs-text);
+  font-size: 14px;
+  line-height: 22px;
+  list-style: none;
+}
+
+.cs-person-list li {
+  position: relative;
+  padding-left: 16px;
+}
+
+.cs-person-list li::before {
+  position: absolute;
+  top: 8px;
+  left: 1px;
+}
+
+.cs-system .cs-person-why {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--fx-hairline);
+  color: var(--cs-text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.cs-person-role {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 12px 24px;
+  border-radius: 16px;
+}
+
+.cs-person-role.is-buyer {
+  --tone: var(--person-blue);
+  background: var(--person-blue-bg);
+  box-shadow: inset 0 0 0 1px var(--person-blue-ring);
+}
+
+.cs-person-role.is-merchant {
+  --tone: var(--person-red);
+  background: var(--person-red-bg);
+  box-shadow: inset 0 0 0 1px var(--person-red-ring);
+}
+
+.cs-system .cs-person-role-name {
+  color: var(--tone);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.cs-system .cs-person-role-text {
+  color: var(--cs-text);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.cs-system .cs-always-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 18px;
+  color: var(--cs-text);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.cs-people-roles {
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: 8px;
+  list-style: none;
+}
+
+/* Trust */
+.cs-outcome {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 99px;
+  background: var(--cs-note);
+  color: var(--cs-note-ink);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+  white-space: nowrap;
+}
+
+.cs-outcome.is-acts {
+  background: var(--cs-after);
+  color: var(--cs-positive);
+}
+
+.cs-outcome.is-hands-over {
+  background: var(--cs-side-a);
+  color: var(--cs-side-a-ink);
+}
+
+.cs-outcome.is-stops {
+  background: var(--cs-side-b);
+  color: var(--cs-side-b-ink);
+}
+
+.cs-checks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  list-style: none;
+}
+
+.cs-limits-cards {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+
+.cs-limit-agent,
+.cs-limit-role {
+  display: block;
+}
+
+.cs-limit-role {
+  color: var(--cs-text-muted);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.48px;
+}
+
+.cs-limit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Side by side at Figma's 584 to 714 split. */
+.cs-try {
+  display: grid;
+  grid-template-columns: minmax(0, 584fr) minmax(0, 714fr);
+  align-items: stretch;
+  gap: 24px;
+}
+
+.cs-link:focus-visible {
+  outline: 2px solid var(--cs-focus);
+  outline-offset: 2px;
+}
+
+.cs-decide {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+
+.cs-privacy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+}
+
+.cs-link {
+  color: var(--cs-side-a-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-show-all {
+    transition: none;
+  }
+}
+
+/* Journeys */
+
+.cs-channels {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  list-style: none;
+}
+
+/* Prototype */
+.cs-proto {
+  display: grid;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  align-items: start;
+  gap: 32px;
+}
+
+.cs-proto-phone {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 500px;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 6px solid var(--cs-heading);
+  border-radius: 28px;
+  background: var(--cs-surface);
+}
+
+.cs-proto-viewer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--cs-text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.48px;
+}
+
+.cs-system .cs-proto-thread {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  overflow-y: auto;
+  border-radius: 8px;
+  list-style: none;
+}
+
+.cs-proto-thread:focus-visible,
+.cs-proto-next:focus-visible {
+  outline: 2px solid var(--cs-focus);
+  outline-offset: 2px;
+}
+
+.cs-proto-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-proto-bubble {
+  align-self: flex-start;
+  max-width: 85%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--cs-chip);
+  color: var(--cs-text);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.24px;
+}
+
+.cs-proto-bubble.is-person {
+  align-self: flex-end;
+  background: var(--cs-side-a);
+  color: var(--cs-side-a-ink);
+}
+
+.cs-proto-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cs-proto-next {
+  flex: 1;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 99px;
+  background: var(--cs-heading);
+  color: var(--cs-page);
+  font: 500 12px/16px var(--cs-font);
+  letter-spacing: -0.48px;
+  cursor: pointer;
+}
+
+.cs-show-all:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.cs-proto-story {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding-top: 24px;
+}
+
+.cs-proto-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: var(--cs-text-muted);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: -0.2px;
+  list-style: none;
+}
+
+.cs-proto-steps li {
+  padding: 4px 8px;
+  border-radius: 99px;
+  background: var(--cs-chip);
+}
+
+.cs-proto-steps .is-done {
+  background: var(--cs-after);
+  color: var(--cs-positive);
+}
+
+.cs-proto-steps .is-now {
+  background: var(--cs-heading);
+  color: var(--cs-page);
+}
+
+/* System */
+.cs-test-steps strong {
+  color: var(--cs-text);
+  font-weight: 500;
+}
+
+.cs-code {
+  color: var(--cs-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+}
+
+.cs-outcome.is-closed {
+  background: var(--cs-chip);
+  color: var(--cs-text);
+}
+
+.cs-outcome.is-brand {
+  background: var(--cs-side-a);
+  color: var(--cs-side-a-ink);
+}
+
+/* Vision */
+.cs-quadrants {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  list-style: none;
+}
+
+.cs-summary-fact.is-first {
+  background: var(--cs-after);
+}
+
+.cs-closing {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid var(--cs-border-soft);
+  border-radius: 18px;
+  background: var(--cs-surface-soft);
+}
+
+.cs-closing .cs-h1 {
+  max-width: 460px;
+}
+
+.cs-closing-link {
+  align-self: flex-start;
+  padding: 10px 14px;
+  border-radius: 99px;
+  background: var(--cs-heading);
+  color: var(--cs-page);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.48px;
+  text-decoration: none;
+}
+
+.cs-closing-link:focus-visible {
+  outline: 2px solid var(--cs-focus);
+  outline-offset: 2px;
+}
+
+/* Side by side, the page starts level with the navigation's pinned position. */
+@media (min-width: 1200px) {
+  .cs-system {
+    padding-top: 48px;
+  }
+
+  /* Clears the drawer's fixed theme toggle and close button. */
+  .cs-opening-meta {
+    margin-right: 150px;
+  }
+}
+
+/* The two columns no longer fit: same break as Case Study 2. */
+@media (max-width: 1199px) {
+  .cs-shell {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .cs-channels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cs-toc {
+    position: static;
+    flex: none;
+    width: 100%;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  /* All chapters stay visible but compact, as on the reference. */
+  .cs-toc-list {
+    flex-flow: row wrap;
+    gap: 4px 8px;
+  }
+
+  .cs-toc-list .is-current {
+    flex: 0 0 100%;
+    margin-bottom: 0;
+  }
+
+  .cs-toc-list li:not(.is-current) {
+    flex: 0 0 calc((100% - 16px) / 3);
+    min-width: 0;
+  }
+
+  .cs-toc-row {
+    gap: 10px;
+    padding: 8px 12px;
+  }
+
+  .is-current .cs-toc-row {
+    padding-block: 12px;
+  }
+
+  .cs-toc-name,
+  .cs-system .cs-toc-note {
+    font-size: 14px;
+    letter-spacing: -0.28px;
+  }
+
+  .cs-toc-detail {
+    display: none;
+  }
+
+  .cs-system .cs-toc-note {
+    margin-top: 10px;
+    padding-inline: 12px;
+    color: var(--cs-toc-detail);
+    font-weight: 400;
+  }
+
+  .cs-content {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 809px) {
+  /* Room for the floating buttons, which cover the page's bottom corners here. */
+  .cs-system {
+    padding-inline: 16px;
+    padding-bottom: 96px;
+  }
+
+  .cs-opening-head {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .cs-opening-meta {
+    align-items: flex-start;
+    max-width: none;
+    text-align: left;
+  }
+
+  .cs-h1 {
+    font-size: 22px;
+    line-height: 30px;
+    letter-spacing: -0.88px;
+  }
+
+  .cs-media {
+    height: 200px;
+  }
+
+  .cs-h2 {
+    font-size: 20px;
+    line-height: 26px;
+    letter-spacing: -0.8px;
+  }
+
+  .cs-summary-facts,
+  .cs-roles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs-compare {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  .cs-quadrants,
+  .cs-proto,
+  .cs-channels,
+  .cs-checks,
+  .cs-try,
+  .cs-agent-grid,
+  .cs-two-up,
+  .cs-people,
+  .cs-system .cs-person-list,
+  .cs-finding,
+  .cs-plans,
+  .cs-decision-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs-decision-body {
+    gap: 8px;
+  }
+
+  .cs-proto-phone {
+    height: 460px;
+  }
+
+  .cs-proto-story {
+    padding-top: 0;
+  }
+
+  .cs-limits-table {
+    display: none;
+  }
+
+  .cs-limits-cards {
+    display: flex;
+  }
+
+  .cs-table th,
+  .cs-table td {
+    padding: 10px 8px;
+  }
+
+  .cs-compare-side,
+  .cs-steps {
+    display: block;
+    grid-row: auto;
+  }
+
+  .cs-step {
+    padding-right: 12px;
+  }
+
+  .cs-content {
+    gap: 64px;
+  }
+
+  .cs-chapter {
+    --cs-chapter-gap: 40px;
+  }
+
+  .cs-closing {
+    padding: 16px;
+  }
+}
+
+/* Three columns would clip the longer chapter names. */
+@media (max-width: 359px) {
+  .cs-toc-list li:not(.is-current) {
+    flex-basis: calc((100% - 8px) / 2);
+  }
+}
+
+

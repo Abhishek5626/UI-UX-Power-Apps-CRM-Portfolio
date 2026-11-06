@@ -1,0 +1,307 @@
+.work-experience {
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  min-height: 191px;
+  padding: 2px;
+  border: 1px solid var(--landing-glass-border);
+  border-radius: 18px;
+  background: transparent;
+  backdrop-filter: var(--landing-glass-blur);
+  -webkit-backdrop-filter: var(--landing-glass-blur);
+}
+
+.work-experience-surface {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  /* Comfortable, even inset; the card keeps its Figma height (191px). */
+  padding: 16px;
+  border-radius: 18px;
+  background-color: var(--theme-surface);
+  isolation: isolate;
+  transition:
+    background-color var(--theme-duration) var(--theme-ease),
+    color var(--theme-duration) var(--theme-ease);
+}
+
+.work-experience-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--landing-glass-fill);
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity var(--theme-duration) var(--theme-ease);
+}
+
+html[data-theme='dark'] .work-experience-surface::before {
+  opacity: 0;
+}
+
+.work-experience-surface > * {
+  position: relative;
+  z-index: 1;
+}
+
+html:not([data-theme='dark']) .work-experience .project-card-icon {
+  background: var(--landing-glass-fill), rgba(255, 255, 255, 0.1);
+}
+
+.work-experience-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+}
+
+.work-experience-label {
+  margin: 0;
+  color: #2f2d2d;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 17px;
+}
+
+.work-experience-year {
+  margin-left: auto;
+  color: #6e6d6d;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 15px;
+}
+
+.work-experience-reset {
+  display: grid;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.work-experience-reset[hidden] {
+  display: none;
+}
+
+/*
+  Exposure ticker (after Smooth UI's Exposure Slider): 3px notches on a 13px
+  pitch, the centre notch in the accent, neighbours clipped and faded by
+  distance in WorkExperienceCard.tsx. The track never resizes, so moving it
+  can't shift the layout.
+*/
+.work-experience-scale {
+  position: relative;
+  flex: none;
+  height: 40px;
+  overflow: hidden;
+  color: rgba(18, 18, 18, 0.55);
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%);
+}
+
+.work-experience-scale.is-dragging {
+  cursor: grabbing;
+}
+
+.work-experience-scale:focus-visible {
+  outline: 2px solid var(--theme-text);
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+.work-experience-track {
+  position: absolute;
+  top: 0;
+  /* Centre of notch 0 sits on the card's centre line. */
+  left: calc(50% - 6.5px);
+  display: flex;
+  height: 100%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.work-experience-notch {
+  flex: none;
+  width: 3px;
+  height: 40px;
+  margin: 0 5px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.work-experience-notch.is-center {
+  background: #ea580c;
+}
+
+.work-experience-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 60px;
+}
+
+.work-experience-role-block {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.work-experience-identity {
+  display: flex;
+  align-items: center;
+  min-height: 17px;
+}
+
+.work-experience-logo {
+  display: block;
+  width: 42px;
+  height: 17px;
+}
+
+.work-experience-company {
+  margin: 0;
+  overflow: hidden;
+  color: #666;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 17px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Up to two lines, so the longest role never runs past the card edge. */
+.work-experience-role {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: #2f2d2d;
+  font-family: Inter, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 20px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* Progress ring (reference indicator): years so far against "Present". */
+.work-experience-ring {
+  position: relative;
+  display: grid;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  color: rgba(18, 18, 18, 0.55);
+}
+
+.work-experience-ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.work-experience-ring-track {
+  fill: currentColor;
+  fill-opacity: 0.067;
+  stroke: currentColor;
+  stroke-opacity: 0.3;
+  stroke-width: 4;
+}
+
+.work-experience-ring-value {
+  fill: none;
+  stroke: #ea580c;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 1 0;
+  transform: rotate(-90deg);
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.work-experience-total {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+  color: #ea580c;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.work-experience-amount {
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.work-experience-unit {
+  font-family: Inter, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+html[data-theme='dark'] .work-experience-label,
+html[data-theme='dark'] .work-experience-role {
+  color: var(--theme-text);
+}
+
+html[data-theme='dark'] .work-experience-company,
+html[data-theme='dark'] .work-experience-year {
+  color: var(--theme-text-muted);
+}
+
+html[data-theme='dark'] .work-experience-total {
+  color: #fb923c;
+}
+
+html[data-theme='dark'] .work-experience-scale,
+html[data-theme='dark'] .work-experience-ring {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+html[data-theme='dark'] .work-experience-notch.is-center {
+  background: #fb923c;
+}
+
+html[data-theme='dark'] .work-experience-ring-value {
+  stroke: #fb923c;
+}
+
+@media (max-width: 760px) {
+  .work-experience-role {
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-experience-surface {
+    transition: none;
+  }
+}

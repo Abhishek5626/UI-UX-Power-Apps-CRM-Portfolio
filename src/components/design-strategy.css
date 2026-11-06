@@ -1,0 +1,202 @@
+.design-strategy {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  container-type: inline-size;
+  color: #211b1c;
+  font-family: Inter, sans-serif;
+}
+
+.design-strategy .project-card-surface {
+  border-radius: 18px;
+}
+
+.design-strategy .project-card-label {
+  margin: 0;
+  font-weight: 500;
+}
+
+.design-strategy-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.design-strategy-frame {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.design-strategy-panel {
+  position: relative;
+  /* 74px of card chrome (2+14 padding each side) keeps the outer card height stable. */
+  height: 290px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(255, 230, 232, 0.48);
+}
+
+/* The reference blush is translucent over a light page. On the dark theme that
+   mix turns muddy, so keep the same pale panel the light page already shows. */
+html[data-theme="dark"] .design-strategy-panel {
+  background: #fff3f4;
+}
+
+.design-strategy-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  box-shadow:
+    rgb(255, 243, 244) 0 6px 14px 0 inset,
+    rgb(255, 243, 244) 0 -12px 24px 0 inset;
+  pointer-events: none;
+}
+
+.strategy-option-list {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 250px);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.strategy-option-list.is-grabbing,
+.strategy-option-list.is-grabbing .strategy-option {
+  cursor: grabbing;
+}
+
+.strategy-option-track {
+  position: absolute;
+  inset: 0;
+}
+
+.strategy-option {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #6b6666;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 22px;
+  white-space: nowrap;
+  transform-origin: left center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* One layer per option is only worth holding while the wheel actually turns. */
+.strategy-option-list.is-turning .strategy-option {
+  will-change: transform;
+}
+
+.strategy-option:focus {
+  outline: none;
+}
+
+.strategy-option:focus-visible,
+.strategy-option.is-key-focus {
+  outline: 2px solid #211b1c;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.strategy-arrow {
+  position: absolute;
+  top: calc(50% - 2px);
+  left: 22px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #2b2525;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.strategy-card-stack {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  width: 272px;
+  height: 263px;
+  pointer-events: none;
+  /*
+    The card's frame shows 223px of this panel, so a stack centred on the
+    full panel sat low and clipped at the bottom. Lift it to just below the
+    visible middle (30px above / 18px below the front card). `translate`
+    leaves the script-set height and the left list's centre line alone.
+  */
+  translate: 0 -26px;
+}
+
+.strategy-detail-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: #211b1c;
+}
+
+.strategy-detail-copy {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 22px;
+}
+
+@container (max-width: 480px) {
+  .design-strategy-panel {
+    /* Same 66px chrome, so the narrow section stays at its previous 520px. */
+    height: 454px;
+  }
+
+  .strategy-option-list {
+    bottom: auto;
+    width: 100%;
+    height: 250px;
+  }
+
+  .strategy-arrow {
+    top: 125px;
+  }
+
+  .strategy-card-stack {
+    top: auto;
+    right: 0;
+    bottom: 12px;
+    left: 0;
+    width: auto;
+    height: 176px;
+    translate: none;
+  }
+}
+

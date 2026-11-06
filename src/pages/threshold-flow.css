@@ -1,0 +1,334 @@
+/* The five orders diagram: every value measured from the reference, in the site's own font. */
+.cs-system .tf {
+  position: relative;
+  padding: 32px;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: var(--fx-panel);
+  box-shadow: 0 1px 2px rgb(31 61 46 / 0.06), 0 12px 32px -12px rgb(31 61 46 / 0.18);
+  container-type: inline-size;
+}
+
+.tf > .fx-play {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 4;
+}
+
+.tf-board {
+  --tf-inset: 12px;
+  --tf-line: 22px;
+
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(12rem, 1.5fr) repeat(3, minmax(0, 1fr)) minmax(0, 1.2fr);
+  column-gap: 8px;
+  padding-top: 24px;
+}
+
+.tf-wires {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.tf-wire {
+  fill: none;
+  stroke: var(--fx-ink-3);
+  stroke-width: 1px;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.tf-head {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: stretch;
+  margin-bottom: 8px;
+}
+
+.cs-system .tf-in {
+  align-self: end;
+  padding-bottom: 8px;
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.tf-agent {
+  display: grid;
+  grid-template-columns: subgrid;
+  align-content: space-between;
+  row-gap: 8px;
+  min-width: 0;
+  padding: 12px 0;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: linear-gradient(145deg, color-mix(in oklab, var(--fx-ink) 7%, var(--fx-card)) 0%, var(--fx-card) 50%);
+}
+
+.tf-agent.is-workshop {
+  border-color: transparent;
+  background: var(--fx-workshop-bg);
+  box-shadow: inset 0 0 0 1px var(--fx-workshop-line);
+}
+
+.tf-agent-name {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 12px 0 calc(var(--tf-inset) - 1px);
+  color: var(--fx-ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.tf-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 8px 0 calc(var(--tf-inset) - 1px);
+}
+
+.tf-check + .tf-check {
+  padding-left: var(--tf-inset);
+}
+
+.tf-check-num {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--fx-ink);
+  color: var(--fx-card);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.tf-check-name {
+  min-width: 0;
+  color: var(--fx-ink);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  text-wrap: balance;
+}
+
+.is-workshop .tf-agent-name,
+.is-workshop .tf-check-name {
+  color: var(--fx-workshop-fg);
+}
+
+.tf-check-short {
+  display: none;
+}
+
+.cs-system .tf-rows {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  list-style: none;
+}
+
+.tf-row {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  grid-template-rows: var(--tf-line) auto;
+  align-items: start;
+  padding: 10px 0;
+  border-top: 1px solid var(--fx-hairline);
+}
+
+.tf-card {
+  display: grid;
+  grid-area: 1 / 1 / 3;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-self: start;
+  column-gap: 8px;
+  margin-right: 24px;
+}
+
+.tf-part {
+  min-width: 0;
+  color: var(--fx-ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: var(--tf-line);
+}
+
+.tf-fit {
+  align-self: start;
+  color: var(--fx-ink);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: var(--tf-line);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.tf-detail {
+  grid-column: 1 / -1;
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tf-gate {
+  display: grid;
+  grid-row: 1;
+  place-items: center;
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  margin-left: var(--tf-inset);
+  border-radius: 50%;
+  background: #e0fae0;
+  color: #1b561a;
+  box-shadow: 0 0 0 3px var(--fx-card);
+}
+
+.tf-result {
+  display: flex;
+  grid-row: 1;
+  align-self: center;
+  min-width: 0;
+  padding-left: var(--tf-inset);
+}
+
+.tf-result .fx-pill {
+  transform-origin: 0 center;
+}
+
+.tf-why {
+  grid-row: 2;
+  max-width: 44ch;
+  padding: 4px 0 0 var(--tf-inset);
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+  text-wrap: balance;
+}
+
+.tf-key {
+  display: none;
+}
+
+.tf-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@container (max-width: 760px) {
+  .tf-board {
+    --tf-line: 24px;
+
+    grid-template-columns: 0 repeat(4, minmax(0, 1fr));
+    column-gap: 0;
+    padding-top: 8px;
+  }
+
+  .cs-system .tf-in,
+  .tf-agent-name,
+  .tf-check-name {
+    display: none;
+  }
+
+  .tf-agent,
+  .tf-agent.is-workshop {
+    display: contents;
+  }
+
+  .tf-check,
+  .tf-check + .tf-check {
+    grid-column: var(--col);
+    gap: 6px;
+    padding: 0 0 0 var(--tf-inset);
+  }
+
+  .tf-check-short {
+    display: block;
+    min-width: 0;
+    color: var(--fx-ink);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+
+  .tf-row {
+    grid-template-rows: auto var(--tf-line) auto;
+  }
+
+  .tf-card {
+    grid-area: 1 / 1 / auto / -1;
+    margin: 0 0 8px;
+  }
+
+  .tf-gate,
+  .tf-result {
+    grid-row: 2;
+  }
+
+  .tf-why {
+    grid-row: 3;
+    grid-column: 1 / -1 !important;
+    max-width: none;
+    padding-left: 0;
+  }
+
+  .cs-system .tf-key {
+    display: block;
+    grid-column: 1 / -1;
+    padding-top: 12px;
+    border-top: 1px solid var(--fx-hairline);
+    color: var(--fx-ink-2);
+    font-size: 13px;
+    line-height: 18px;
+    text-wrap: pretty;
+  }
+}
+
+@media (max-width: 767px) {
+  .cs-system .tf {
+    padding: 48px 16px 16px;
+  }
+
+  .tf > .fx-play {
+    top: 10px;
+    min-height: 44px;
+  }
+}
+
+/* As on the reference: no control and no travelling parts. */
+@media (prefers-reduced-motion: reduce) {
+  .tf > .fx-play,
+  .tf .fx-wire-trace,
+  .tf .fx-wire-light,
+  .tf .fx-wire-ring {
+    display: none;
+  }
+}

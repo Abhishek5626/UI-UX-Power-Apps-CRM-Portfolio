@@ -1,0 +1,57 @@
+/*
+  Progressive blur — bottom edge ramp.
+  Technique: stacked backdrop-filter bands with staggered mask gradients
+  (Craftwork Blank progressive-blur). No fill tint; pointer-events none.
+*/
+.progressive-blur {
+  pointer-events: none;
+  z-index: 20;
+}
+
+.progressive-blur.is-fixed {
+  position: fixed;
+  inset: 0;
+  /* Below PortfolioNav (60) and above page content; drawer mounts its own. */
+  z-index: 20;
+}
+
+.progressive-blur.is-absolute {
+  position: absolute;
+  inset: 0;
+  /* Above .project-drawer-scroll (1), below drawer tools/nav (5). */
+  z-index: 2;
+}
+
+.progressive-blur-edge {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 40%;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.progressive-blur-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: transparent;
+  /* Contain paint so backdrop-filter stays in the masked band. */
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/*
+  Reference uses height: 40% of the scrolling container. On full viewports
+  that band is large; keep the same relative falloff but cap absolute size
+  so cards/nav stay readable and backdrop-filter stays cheap while scrolling.
+*/
+.progressive-blur.is-fixed .progressive-blur-edge,
+.progressive-blur.is-absolute .progressive-blur-edge {
+  height: min(40%, 180px);
+}
+
+/* Static overlay — no animated movement, so reduced-motion does not alter it. */

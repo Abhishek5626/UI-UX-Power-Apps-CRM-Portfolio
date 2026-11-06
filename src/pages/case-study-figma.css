@@ -1,0 +1,757 @@
+/* Generated from Figma "Portfolio 2026" through Dev Mode. */
+.cs-system [class^="fg-"] { box-sizing: border-box; border-width: 0; }
+.cs-system .fg-84b775 { position:absolute;display:block;inset:0;max-width:none;width:100%;height:100% }
+.cs-system .fg-a04927 { line-height:23px }
+.cs-system .fg-3f80eb { background-color:rgba(255,255,255,0.89);align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;overflow:clip;position:relative;border-radius:20px;width:100% }
+.cs-system .fg-66d1f8 { align-content:stretch;display:flex;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:120px }
+.cs-system .fg-dd67e5 { align-content:stretch;display:flex;flex-direction:column;height:100%;align-items:flex-start;padding-left:28px;padding-top:64px;position:relative;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-cbce76 { word-break:break-word;font-weight:500;line-height:normal;position:relative;flex-shrink:0;color:#686868;font-size:15px;white-space:nowrap }
+.cs-system .fg-03029c { align-content:stretch;display:flex;flex-direction:column;height:100%;align-items:flex-start;padding-top:18px;position:relative;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-5d451d { position:relative;flex-shrink:0;width:36px;height:36px }
+.cs-system .fg-886cbc { word-break:break-word;align-content:stretch;display:flex;flex-direction:column;gap:3px;align-items:flex-start;line-height:normal;padding-top:10px;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-60a0a1 { font-weight:500;position:relative;flex-shrink:0;color:#205eb5;font-size:17px;width:100% }
+.cs-system .fg-609201 { font-weight:400;position:relative;flex-shrink:0;color:#686868;font-size:15px;width:100% }
+.cs-system .fg-c493a5 { font-weight:500;position:relative;flex-shrink:0;color:#202020;font-size:17px;width:100% }
+.cs-system .fg-390aed { border-color:#e2e7e5;border-style:solid;border-top-width:0.7px;align-content:stretch;display:flex;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:88px }
+.cs-system .fg-2d12aa { align-content:stretch;display:flex;flex-direction:column;height:100%;align-items:flex-start;padding-left:28px;padding-top:14px;position:relative;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-676dbb { background-color:#dffbe2;align-content:stretch;display:flex;gap:9px;height:27px;align-items:center;padding-left:9px;padding-right:15px;position:relative;border-radius:20px;flex-shrink:0 }
+.cs-system .fg-6f464b { position:relative;flex-shrink:0;width:7px;height:7px }
+.cs-system .fg-205b09 { word-break:break-word;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#205d24;font-size:15px;white-space:nowrap }
+.cs-system .fg-929753 { align-content:stretch;display:flex;flex-direction:column;height:100%;align-items:flex-start;padding-right:20px;padding-top:14px;position:relative;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-128921 { word-break:break-word;font-weight:400;line-height:0;position:relative;flex-shrink:0;color:#686868;font-size:15px;width:100% }
+.cs-system .fg-5f0d0e { line-height:20px }
+.cs-system .fg-e5c330 { font-weight:500;line-height:20px;color:#202020 }
+.cs-system .fg-9c3581 { position:absolute;background-color:#fff4f4;height:25px;left:0;border-radius:13px;top:13px;width:59px }
+.cs-system .fg-45cd6b { word-break:break-word;font-weight:500;line-height:0;min-width:100%;position:relative;flex-shrink:0;color:#686868;font-size:15px;width:min-content;white-space:pre-wrap }
+.cs-system .fg-e7ec54 { margin-bottom:0 }
+.cs-system .fg-31ad33 { line-height:20px;color:#f00000 }
+.cs-system .fg-982a44 { line-height:20px;color:#202020 }
+.cs-system .fg-366726 { word-break:break-word;font-weight:500;line-height:0;position:relative;flex-shrink:0;color:#686868;font-size:15px;width:100% }
+.cs-system .fg-288ee6 { font-weight:400;line-height:20px }
+.cs-system .fg-9efd2d { word-break:break-word;font-weight:400;line-height:20px;position:relative;flex-shrink:0;color:#686868;font-size:15px;width:100% }
+.cs-system .fg-ff2f54 { border-color:#e2e7e5;border-style:solid;border-top-width:0.7px;align-content:stretch;display:flex;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:90px }
+.cs-system .fg-bf0fc9 { background-color:#fff0d2;align-content:stretch;display:flex;gap:9px;height:27px;align-items:center;padding-left:9px;padding-right:15px;position:relative;border-radius:20px;flex-shrink:0 }
+.cs-system .fg-1bf165 { word-break:break-word;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#946000;font-size:15px;white-space:nowrap }
+.cs-system .fg-5495dd { border-color:#e2e7e5;border-style:solid;border-top-width:0.7px;align-content:stretch;display:flex;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:69px }
+.cs-system .fg-a06fb7 { background-color:rgba(255,255,255,0.69);border-color:#e2e7e5;border-width:0.7px;border-style:solid;align-content:stretch;display:flex;gap:9px;height:27px;align-items:center;padding-left:9px;padding-right:15px;position:relative;border-radius:20px;flex-shrink:0 }
+.cs-system .fg-5fa3ac { word-break:break-word;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#202020;font-size:15px;white-space:nowrap }
+.cs-system .fg-14f32d { border-color:#e2e7e5;border-style:solid;border-top-width:0.7px;align-content:stretch;display:flex;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:91px }
+.cs-system .fg-24b07f { background-color:#fff4f4;align-content:stretch;display:flex;gap:9px;height:27px;align-items:center;padding-left:9px;padding-right:15px;position:relative;border-radius:20px;flex-shrink:0 }
+.cs-system .fg-9618f9 { word-break:break-word;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#f00000;font-size:15px;white-space:nowrap }
+.cs-system .fg-1ec868 { border-color:#e2e7e5;border-style:solid;border-top-width:0.7px;align-content:stretch;display:flex;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:68px }
+.cs-system .fg-3c1061 { background-color:#eceaff;align-content:stretch;display:flex;gap:9px;height:27px;align-items:center;padding-left:9px;padding-right:15px;position:relative;border-radius:20px;flex-shrink:0 }
+.cs-system .fg-e53a0a { word-break:break-word;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#4434b5;font-size:15px;white-space:nowrap }
+.cs-system .fg-8bc640 { word-break:break-word;font-weight:500;line-height:20px;position:relative;flex-shrink:0;color:#202020;font-size:15px;width:100% }
+.cs-system .fg-13d2d7 { border-color:#e2e7e5;border-style:solid;border-top-width:0.7px;align-content:stretch;display:flex;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:93px }
+.cs-system .fg-c81ff7 { line-height:20px;margin-bottom:0 }
+.cs-system .fg-5719d1 { background-color:rgba(250,252,251,0.96);align-content:stretch;display:flex;flex-direction:column;gap:15px;align-items:flex-start;overflow:clip;padding-bottom:25px;padding-left:27px;padding-right:29px;padding-top:19px;position:relative;border-radius:18px;box-shadow:0px 12px 28px 0px rgba(66,100,86,0.07);width:100% }
+.cs-system .fg-531bd4 { word-break:break-word;font-weight:500;line-height:18px;min-width:100%;position:relative;flex-shrink:0;color:#696d6b;font-size:14px;letter-spacing:-0.25px;width:min-content }
+.cs-system .fg-4ef7ee { align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-e1efa2 { align-content:stretch;display:flex;gap:13px;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:84px }
+.cs-system .fg-c95b33 { align-content:stretch;display:flex;flex-direction:column;height:100%;align-items:center;position:relative;flex-shrink:0;width:32px }
+.cs-system .fg-ab37af { position:absolute;background-color:#e1e7e4;height:44px;left:15.5px;top:36px;width:1px }
+.cs-system .fg-bab5c3 { background-color:#1d1f1e;align-content:stretch;display:flex;align-items:center;justify-content:center;position:relative;border-radius:99px;flex-shrink:0;width:32px;height:32px }
+.cs-system .fg-bd69c1 { word-break:break-word;font-weight:700;line-height:normal;position:relative;flex-shrink:0;font-size:16px;color:#fff;white-space:nowrap }
+.cs-system .fg-ae2454 { word-break:break-word;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:5px;align-items:flex-start;min-width:1px;padding-top:5px;position:relative }
+.cs-system .fg-6a0805 { font-weight:600;line-height:20px;position:relative;flex-shrink:0;color:#1d1f1e;font-size:17px;letter-spacing:-0.35px;width:100% }
+.cs-system .fg-5ab103 { font-weight:400;line-height:0;position:relative;flex-shrink:0;color:#696d6b;font-size:14.5px;letter-spacing:-0.3px;width:100% }
+.cs-system .fg-335aa3 { line-height:21px;margin-bottom:0 }
+.cs-system .fg-52b6a0 { line-height:21px }
+.cs-system .fg-2d3882 { align-content:stretch;display:flex;gap:13px;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:125px }
+.cs-system .fg-3cbe58 { position:absolute;background-color:#e1e7e4;height:85px;left:15.5px;top:36px;width:1px }
+.cs-system .fg-825276 { align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:5px;align-items:flex-start;min-width:1px;padding-top:5px;position:relative }
+.cs-system .fg-10a927 { word-break:break-word;font-weight:600;line-height:20px;position:relative;flex-shrink:0;color:#1d1f1e;font-size:17px;letter-spacing:-0.35px;width:100% }
+.cs-system .fg-5c7cf5 { word-break:break-word;font-weight:400;line-height:21px;position:relative;flex-shrink:0;color:#696d6b;font-size:14.5px;letter-spacing:-0.3px;width:100% }
+.cs-system .fg-23ed1b { align-content:stretch;display:flex;flex-direction:column;gap:5px;align-items:flex-start;padding-top:5px;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-145afe { align-content:stretch;display:flex;gap:2px;height:27px;align-items:flex-start;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-5109e3 { background-color:rgba(255,255,255,0.59);border-color:#e1e7e4;border-width:0.6px;border-style:solid;align-content:stretch;display:flex;height:27px;align-items:center;justify-content:center;position:relative;border-bottom-left-radius:99px;border-top-left-radius:99px;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-1d10b1 { word-break:break-word;font-weight:600;line-height:18px;position:relative;flex-shrink:0;color:#1d1f1e;font-size:14px;white-space:nowrap }
+.cs-system .fg-b45440 { background-color:rgba(255,255,255,0.59);border-color:#e1e7e4;border-width:0.6px;border-style:solid;align-content:stretch;display:flex;height:27px;align-items:center;justify-content:center;position:relative;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-a5d131 { background-color:rgba(255,255,255,0.59);border-color:#e1e7e4;border-width:0.6px;border-style:solid;align-content:stretch;display:flex;height:27px;align-items:center;justify-content:center;position:relative;border-bottom-right-radius:99px;border-top-right-radius:99px;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-a02d9e { word-break:break-word;align-content:stretch;display:flex;font-weight:400;gap:2px;align-items:flex-start;line-height:18px;position:relative;flex-shrink:0;color:#696d6b;font-size:13px;letter-spacing:-0.3px;width:100% }
+.cs-system .fg-f951cf { position:relative;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-83ed2c { align-content:stretch;display:flex;gap:3px;height:27px;align-items:flex-start;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-4291a6 { background-color:#edebff;align-content:stretch;display:flex;height:27px;align-items:center;justify-content:center;position:relative;border-bottom-left-radius:99px;border-top-left-radius:99px;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-288a3f { word-break:break-word;font-weight:600;line-height:normal;position:relative;flex-shrink:0;color:#4034af;font-size:14px;letter-spacing:-0.3px;white-space:nowrap }
+.cs-system .fg-bf800c { background-color:#fff0d0;align-content:stretch;display:flex;height:27px;align-items:center;justify-content:center;position:relative;flex-shrink:0;width:89px }
+.cs-system .fg-225c3d { word-break:break-word;font-weight:600;line-height:normal;position:relative;flex-shrink:0;color:#946000;font-size:14px;letter-spacing:-0.3px;white-space:nowrap }
+.cs-system .fg-f707e3 { background-color:#dffadf;align-content:stretch;display:flex;height:27px;align-items:center;justify-content:center;position:relative;border-bottom-right-radius:99px;border-top-right-radius:99px;flex-shrink:0;width:89px }
+.cs-system .fg-bf81d7 { word-break:break-word;font-weight:600;line-height:normal;position:relative;flex-shrink:0;color:#27632b;font-size:14px;letter-spacing:-0.3px;white-space:nowrap }
+.cs-system .fg-16ebf0 { word-break:break-word;font-weight:400;height:18px;line-height:normal;position:relative;flex-shrink:0;color:#696d6b;font-size:13px;width:100%;white-space:nowrap }
+.cs-system .fg-7dd161 { position:absolute;left:524px;top:0 }
+.cs-system .fg-250f47 { position:absolute;left:432px;top:0 }
+.cs-system .fg-159734 { position:absolute;left:0;top:0 }
+.cs-system .fg-552dac { align-content:stretch;display:flex;gap:13px;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:65px }
+.cs-system .fg-c595ab { font-weight:400;line-height:21px;position:relative;flex-shrink:0;color:#696d6b;font-size:14.5px;letter-spacing:-0.3px;width:100% }
+.cs-system .fg-f89001 { align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;padding-left:18px;padding-top:1px;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-ca3910 { align-content:stretch;display:flex;gap:8px;height:25px;align-items:center;position:relative;flex-shrink:0 }
+.cs-system .fg-b6982b { background-color:#fff0d0;align-content:stretch;display:flex;height:25px;align-items:center;padding-left:9px;padding-right:9px;position:relative;border-radius:99px;flex-shrink:0 }
+.cs-system .fg-ffb289 { word-break:break-word;font-weight:400;line-height:18px;position:relative;flex-shrink:0;color:#946000;font-size:15px;letter-spacing:-0.3px;white-space:nowrap }
+.cs-system .fg-9e0662 { word-break:break-word;font-weight:400;line-height:21px;position:relative;flex-shrink:0;color:#696d6b;font-size:15px;letter-spacing:-0.35px;white-space:nowrap }
+.cs-system .fg-39757c { word-break:break-word;font-weight:400;line-height:0;min-width:100%;position:relative;flex-shrink:0;color:#696d6b;font-size:15px;letter-spacing:-0.35px;width:min-content }
+.cs-system .fg-ce5b7f { word-break:break-word;font-weight:600;line-height:21px;color:#1d1f1e }
+.cs-system .fg-8057cc { background-color:rgba(255,255,255,0.88);align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;overflow:clip;position:relative;border-radius:17px;width:100% }
+.cs-system .fg-e352c5 { align-content:stretch;display:flex;flex-direction:column;gap:13px;align-items:flex-start;padding-bottom:8px;padding-top:18px;padding-left:24px;padding-right:24px;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-739959 { align-content:stretch;display:flex;gap:8px;height:20px;align-items:center;position:relative;flex-shrink:0 }
+.cs-system .fg-4350f6 { background-color:#df0808;align-content:stretch;display:flex;align-items:center;justify-content:center;position:relative;border-radius:99px;flex-shrink:0;width:20px;height:20px }
+.cs-system .fg-83885f { word-break:break-word;font-weight:700;line-height:normal;position:relative;flex-shrink:0;font-size:14px;color:#fff;white-space:nowrap }
+.cs-system .fg-53cefa { word-break:break-word;font-weight:600;line-height:normal;position:relative;flex-shrink:0;color:#202221;font-size:14.75px;white-space:nowrap }
+.cs-system .fg-b37fc4 { border-color:#dee4e1;border-width:0.7px;border-style:solid;align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;position:relative;border-radius:18px;flex-shrink:0;width:100% }
+.cs-system .fg-2415da { border-color:#dee4e1;border-bottom-width:0.6px;border-style:solid;align-content:stretch;display:flex;align-items:center;position:relative;flex-shrink:0;width:100%;min-height:36px }
+.cs-system .fg-6e119d { background-color:rgba(245,248,247,0.25);align-content:stretch;display:flex;height:100%;align-items:center;padding-left:16px;padding-right:16px;position:relative;flex-shrink:0;flex:1 1 0;min-width:0 }
+.cs-system .fg-060f7f { word-break:break-word;font-weight:500;line-height:normal;position:relative;flex-shrink:0;color:#646665;font-size:12.5px;white-space:nowrap }
+.cs-system .fg-d85a7b { align-content:stretch;display:flex;align-items:flex-start;padding-left:16px;position:relative;flex-shrink:0 }
+.cs-system .fg-cc238d { border-color:#dee4e1;border-bottom-width:0.6px;border-style:solid;align-content:stretch;display:flex;align-items:center;position:relative;flex-shrink:0;width:100%;min-height:48px }
+.cs-system .fg-8ce4fb { align-content:stretch;display:flex;flex:1 0 0;gap:16px;height:100%;align-items:center;min-width:1px;padding-left:12px;padding-right:16px;position:relative }
+.cs-system .fg-30bda5 { height:12px;position:relative;flex-shrink:0;width:17px }
+.cs-system .fg-5a53f4 { position:absolute;inset:-2.76% -3.93% -2.76% 0 }
+.cs-system .fg-5a0a8e { display:block;max-width:none;width:100%;height:100% }
+.cs-system .fg-299b85 { word-break:break-word;flex:1 0 0;font-weight:400;line-height:20px;min-width:1px;position:relative;color:#646665;font-size:14.75px }
+.cs-system .fg-de6c68 { word-break:break-word;flex:1 0 0;font-weight:400;line-height:0;min-width:1px;position:relative;color:#646665;font-size:14.75px }
+.cs-system .fg-6d71c9 { font-weight:600;line-height:20px;color:#202221 }
+.cs-system .fg-698b46 { border-width:0;border-color:#dee4e1;border-style:solid;align-content:stretch;display:flex;align-items:center;position:relative;flex-shrink:0;width:100%;min-height:48px }
+.cs-system .fg-22144e { border-color:#dee4e1;border-bottom-width:0.6px;border-style:solid;border-top-width:0.6px;align-content:stretch;display:flex;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:188px }
+.cs-system .fg-1948cf { align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:10px;height:100%;align-items:flex-start;min-width:1px;padding-bottom:12px;padding-top:20px;padding-left:24px;padding-right:24px;position:relative }
+.cs-system .fg-4cfff4 { align-content:stretch;display:flex;gap:12px;align-items:center;position:relative;flex-shrink:0;width:100%;min-height:32px }
+.cs-system .fg-b5938b { background-color:#f4f6f5;align-content:stretch;display:flex;align-items:center;justify-content:center;position:relative;border-radius:99px;flex-shrink:0;width:24px;height:24px }
+.cs-system .fg-5b80da { position:relative;flex-shrink:0;width:14px;height:14px }
+.cs-system .fg-ccd751 { border-color:#dee4e1;border-left-width:0.6px;border-style:solid;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:10px;height:100%;align-items:flex-start;min-width:1px;padding-bottom:12px;padding-top:20px;padding-left:24px;padding-right:24px;position:relative }
+.cs-system .fg-a940af { align-content:stretch;display:flex;flex-direction:column;gap:17px;align-items:flex-start;padding-bottom:24px;padding-top:21px;padding-left:24px;padding-right:24px;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-4d3530 { word-break:break-word;font-weight:600;line-height:20px;position:relative;flex-shrink:0;color:#202221;font-size:14.75px;white-space:nowrap }
+.cs-system .fg-d98f92 { border-color:#dee4e1;border-bottom-width:0.7px;border-style:solid;align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;padding-bottom:8px;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-809284 { word-break:break-word;font-weight:400;line-height:0;position:relative;flex-shrink:0;color:#646665;font-size:14.75px;width:100% }
+.cs-system .fg-fbbf2b { font-weight:600;line-height:23px;color:#202221 }
+.cs-system .fg-411e2b { border-color:#dee4e1;border-bottom-width:0.7px;border-style:solid;align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;padding-top:8px;padding-bottom:8px;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-b2767c { text-decoration-skip-ink:none;text-underline-position:from-font;text-decoration-thickness:from-font;text-decoration-style:solid;line-height:23px;text-decoration-line:underline }
+.cs-system .fg-bbf2c8 { background-color:rgba(250,252,251,0.94);border-width:1px;border-color:rgba(255,255,255,0.44);border-style:solid;align-content:stretch;display:flex;align-items:flex-start;overflow:clip;position:relative;border-radius:16px;width:100% }
+.cs-system .fg-d9d59e { border-color:#e4e9e7;border-right-width:1px;border-style:solid;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;height:100%;align-items:flex-start;min-width:1px;padding-bottom:14px;padding-top:16px;padding-left:16px;padding-right:16px;position:relative }
+.cs-system .fg-f7868d { align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:50px }
+.cs-system .fg-26293f { background-color:#f6f8f7;align-content:stretch;display:flex;align-items:center;justify-content:center;position:relative;border-radius:99px;flex-shrink:0;width:36px;height:36px }
+.cs-system .fg-470037 { position:relative;flex-shrink:0;width:15px;height:15px }
+.cs-system .fg-b91d7b { word-break:break-word;font-weight:600;line-height:20px;position:relative;flex-shrink:0;color:#222423;font-size:14px;width:100% }
+.cs-system .fg-dd6a9c { word-break:break-word;font-weight:400;line-height:18px;position:relative;flex-shrink:0;color:#656766;font-size:13px;width:100% }
+.cs-system .fg-cc6662 { align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;padding-top:7px;position:relative;flex-shrink:0;width:100% }
+.cs-system .fg-044e93 { word-break:break-word;font-weight:400;line-height:0;position:relative;flex-shrink:0;color:#656766;font-size:14px;width:100% }
+.cs-system .fg-70be46 { font-weight:600;line-height:23px;color:#222423 }
+.cs-system .fg-3a38e2 { border-width:0;border-color:#e4e9e7;border-style:solid;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;height:100%;align-items:flex-start;min-width:1px;padding-bottom:14px;padding-top:16px;padding-left:16px;padding-right:16px;position:relative }
+.cs-system .fg-3da00f { background-color:#fafcfb;border-width:1px;border-color:#dfe9e1;border-style:solid;align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;overflow:clip;position:relative;border-radius:16px;box-shadow:0px 14px 32px 0px rgba(67,95,71,0.13);width:100% }
+.cs-system .fg-16b331 { background-color:#effdef;align-content:stretch;display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding-bottom:22px;padding-top:24px;padding-left:24px;padding-right:24px;position:relative;flex-shrink:0;width:100%;min-height:105px }
+.cs-system .fg-538bc6 { align-content:stretch;display:flex;gap:8px;height:17px;align-items:center;position:relative;flex-shrink:0 }
+.cs-system .fg-9a35ea { word-break:break-word;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#205e29;font-size:13px;white-space:nowrap }
+.cs-system .fg-5351d3 { word-break:break-word;font-weight:500;line-height:34px;min-width:100%;position:relative;flex-shrink:0;color:#202321;font-size:27px;letter-spacing:-0.7px;width:min-content }
+.cs-system .fg-832383 { border-color:#e1e8e4;border-style:solid;border-top-width:1px;align-content:stretch;display:flex;align-items:flex-start;position:relative;flex-shrink:0;width:100%;min-height:222px }
+.cs-system .fg-35be99 { border-width:0;border-color:#e1e8e4;border-style:solid;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:12px;align-items:flex-start;min-width:1px;padding:24px;position:relative;min-height:222px }
+.cs-system .fg-33f4f9 { align-content:stretch;display:flex;gap:8px;align-items:center;position:relative;flex-shrink:0;width:100%;min-height:32px }
+.cs-system .fg-c39d4c { background-color:#f5f8f6;align-content:stretch;display:flex;align-items:center;justify-content:center;position:relative;border-radius:99px;flex-shrink:0;width:32px;height:32px }
+.cs-system .fg-a0e8ba { position:relative;flex-shrink:0;width:16px;height:16px }
+.cs-system .fg-8e16d0 { word-break:break-word;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#646765;font-size:13px;white-space:nowrap }
+.cs-system .fg-dbd203 { word-break:break-word;flex:1 0 0;font-weight:400;line-height:0;min-height:1px;min-width:100%;position:relative;color:#646765;font-size:14.5px;width:min-content }
+.cs-system .fg-d7d8a9 { font-weight:600;line-height:23px;color:#202321 }
+.cs-system .fg-07a744 { background-color:#dffadf;align-content:stretch;display:flex;gap:8px;height:26px;align-items:center;padding-left:12px;padding-right:12px;position:relative;border-radius:99px;flex-shrink:0 }
+.cs-system .fg-7531ec { position:relative;flex-shrink:0;width:12px;height:12px }
+.cs-system .fg-0f27d9 { border-color:#e1e8e4;border-left-width:1px;border-style:solid;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:12px;align-items:flex-start;min-width:1px;padding:24px;position:relative;min-height:222px }
+.cs-system .fg-af5d2b { border-color:#e1e8e4;border-style:solid;border-top-width:1px;align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;padding-left:24px;padding-right:24px;padding-top:16px;padding-bottom:16px;position:relative;flex-shrink:0;width:100%;min-height:79px }
+.cs-system .fg-3ab97c { word-break:break-word;font-weight:400;line-height:0;position:relative;flex-shrink:0;color:#646765;font-size:14.5px;width:100% }
+
+.cs-system [class^="fg-"] { box-sizing: border-box; }
+.cs-system img[class^="fg-"] { max-width: none; }
+
+/* Reflow for the 931px column. Columns may wrap their nowrap labels. */
+.cs-system .fg-row p {
+  white-space: normal;
+}
+
+/* The 2 end segments keep Figma's 89px, so each label starts where its segment does. */
+.cs-system .fg-250f47 {
+  left: calc(100% - 181px);
+}
+
+.cs-system .fg-7dd161 {
+  left: calc(100% - 89px);
+}
+
+/* The limits table keeps its columns and scrolls sideways on phones, so each cell stays under its agent. */
+.fg-scroll:focus-visible {
+  outline: 2px solid var(--cs-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 809px) {
+  .cs-system [class^="fg-"] p,
+  .cs-system [class^="fg-"] span {
+    white-space: normal;
+  }
+
+  .cs-system .fg-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cs-system .fg-row > * {
+    flex: none;
+    width: 100%;
+  }
+
+  .fg-scroll {
+    overflow-x: auto;
+  }
+
+  /* The score and threshold bars stay as bars. */
+  .cs-system .fg-frame-DecidesFrame .fg-row {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .cs-system .fg-frame-DecidesFrame .fg-row > * {
+    flex: 1 1 0;
+    width: auto;
+  }
+
+  .cs-system .fg-frame-DecidesFrame * {
+    max-width: 100%;
+  }
+
+  .cs-system .fg-9e0662 {
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .cs-system .fg-frame-AgentLimitsFrame {
+    width: 860px;
+  }
+
+  .cs-system .fg-frame-AgentLimitsFrame .fg-row {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .cs-system .fg-frame-AgentLimitsFrame .fg-row > * {
+    flex: 1 1 0;
+    width: auto;
+  }
+}
+
+/* The Figma highlight was a fixed width box, which stops fitting "Never" at other sizes. */
+.cs-system .fg-frame-AgentLimitsFrame .fg-9c3581 {
+  display: none;
+}
+
+.cs-system .fg-frame-AgentLimitsFrame .fg-31ad33 {
+  margin-left: -5px;
+  padding: 2px 5px;
+  border-radius: 13px;
+  background: var(--cs-before);
+}
+
+/* Every row shares 1 grid so columns stay straight, and narrow screens scroll sideways. */
+.fg-scroll {
+  overflow-x: auto;
+  border-radius: 20px;
+}
+
+.cs-system .fg-frame-AgentLimitsFrame {
+  width: 100%;
+  min-width: 922px;
+}
+
+.cs-system .fg-frame-AgentLimitsFrame .fg-row {
+  display: grid;
+  grid-template-columns: 172px repeat(5, minmax(150px, 1fr));
+}
+
+.cs-system .fg-frame-AgentLimitsFrame .fg-row > * {
+  width: auto;
+  height: auto;
+  min-width: 0;
+  padding-right: 20px;
+  padding-bottom: 14px;
+  overflow-wrap: anywhere;
+}
+
+.cs-system .fg-frame-AgentLimitsFrame .fg-row > :first-child p {
+  white-space: nowrap;
+}
+
+/* The header's second column shares the rows' width, so "What happens" sits over its answers. */
+.cs-system .fg-d85a7b {
+  flex: 1 0 0;
+  padding-left: 12px;
+}
+
+.cs-system .fg-6e119d {
+  background-color: transparent;
+}
+
+/* Figma 236:2135, the ordering rules card, on the working slider. */
+.td {
+  --td-card: #fafcfb;
+  --td-ink: #202020;
+  --td-soft: #686868;
+  --td-line: #e7eae8;
+  --td-chip: #fff;
+  --td-chip-line: #e0e4e1;
+  --td-ok: #205d23;
+  --td-ok-bg: #e0f9e0;
+  --td-ok-line: #aed7af;
+  --td-ok-fill: #c9e3cb;
+  --td-ask: #946000;
+  --td-ask-bg: #fbeed3;
+  --td-ask-line: #e9dab6;
+  --td-ask-fill: #faeed3;
+  --td-stop: #d50b0b;
+  --td-stop-bg: #fff5f5;
+  --tone: var(--td-ok);
+  --tone-bg: var(--td-ok-bg);
+  --tone-line: var(--td-ok-line);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 18px 20px 24px;
+  border-radius: 18px;
+  background: var(--td-card);
+  container: td / inline-size;
+  box-shadow: 0 1px 2px rgb(49 87 66 / 7%);
+}
+
+.td.is-ask {
+  --tone: var(--td-ask);
+  --tone-bg: var(--td-ask-bg);
+  --tone-line: var(--td-ask-line);
+}
+
+.td.is-stop {
+  --tone: var(--td-stop);
+  --tone-bg: var(--td-stop-bg);
+  --tone-line: var(--td-line);
+}
+
+html[data-theme="dark"] .td {
+  --td-card: var(--cs-surface);
+  --td-ink: var(--cs-text);
+  --td-soft: var(--cs-text-soft);
+  --td-line: var(--cs-divider);
+  --td-chip: var(--cs-chip);
+  --td-chip-line: var(--cs-divider);
+  --td-ok: #8fd694;
+  --td-ok-bg: #16281a;
+  --td-ok-line: #2c5233;
+  --td-ok-fill: #2c5233;
+  --td-ask: #f0bd6b;
+  --td-ask-bg: var(--cs-note);
+  --td-ask-line: #57431f;
+  --td-ask-fill: #57431f;
+  --td-stop: #ff8a8a;
+  --td-stop-bg: var(--cs-before);
+}
+
+.td-switch {
+  display: flex;
+  align-self: flex-start;
+  padding: 2px;
+  border: 1px solid var(--td-line);
+  border-radius: 100px;
+}
+
+.td-part {
+  width: 134px;
+  height: 38px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background: transparent;
+  color: var(--td-soft);
+  font: 500 16px/1 var(--cs-font);
+  cursor: pointer;
+}
+
+.td-part[aria-pressed="true"] {
+  border-color: var(--td-chip-line);
+  background: var(--td-chip);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 3%);
+  color: var(--td-ink);
+}
+
+.td-part:focus-visible,
+.td-range:focus-visible ~ .td-handle {
+  outline: 2px solid var(--cs-focus);
+  outline-offset: 2px;
+}
+
+.td-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+  color: var(--td-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.td-label {
+  font-weight: 500;
+}
+
+.td-value {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  margin-left: auto;
+  border: 2px solid var(--tone);
+  border-radius: 50%;
+  color: var(--tone);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.td-slider {
+  position: relative;
+  height: 36px;
+  margin: 6px 17px 0;
+}
+
+/* The invisible thumb's centre travels the same 5px insets as the handle. */
+.td-range {
+  position: absolute;
+  top: 0;
+  left: -9px;
+  width: calc(100% + 18px);
+  height: 36px;
+  margin: 0;
+  opacity: 0;
+  appearance: none;
+  cursor: grab;
+  z-index: 1;
+}
+
+.td-range:active {
+  cursor: grabbing;
+}
+
+.td-range::-webkit-slider-thumb {
+  width: 28px;
+  height: 36px;
+  appearance: none;
+}
+
+.td-range::-moz-range-thumb {
+  width: 28px;
+  height: 36px;
+  border: 0;
+}
+
+.td-zone {
+  position: absolute;
+  top: 14px;
+  box-sizing: border-box;
+  height: 8px;
+  border: 1px solid;
+}
+
+.td-zone.is-ask {
+  left: 5px;
+  width: calc((100% - 10px) * var(--at));
+  border-color: var(--td-ask-line);
+  background: var(--td-ask-fill);
+}
+
+.td-zone.is-ok {
+  right: 5px;
+  width: calc((100% - 10px) * (1 - var(--at)));
+  border-color: var(--td-ok-line);
+  background: var(--td-ok-fill);
+}
+
+.td-dot {
+  position: absolute;
+  top: 13px;
+  left: calc(5px + (100% - 10px) * var(--fit));
+  box-sizing: border-box;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.td-dot.is-ok {
+  background: var(--td-ok);
+}
+
+.td-dot.is-ask {
+  background: var(--td-ask);
+}
+
+.td-dot.is-off {
+  width: 9px;
+  height: 9px;
+  margin-top: 1px;
+  border: 1px solid var(--td-soft);
+  background: var(--td-card);
+}
+
+.td-handle {
+  position: absolute;
+  top: 0;
+  left: calc(5px + (100% - 10px) * var(--at));
+  width: 10px;
+  height: 36px;
+  border-radius: 5px;
+  background: var(--td-card);
+  transform: translateX(-50%);
+}
+
+.td-handle::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 4px;
+  height: 31px;
+  border-radius: 2px;
+  background: var(--td-ink);
+}
+
+.td-axis {
+  position: relative;
+  height: 21px;
+  margin: 6px 17px 0;
+  color: var(--td-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.td-axis span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.td-axis span:nth-child(1) {
+  left: 5px;
+  transform: none;
+}
+
+.td-axis span:nth-child(2) {
+  left: calc(5px + (100% - 10px) / 3);
+}
+
+.td-axis span:nth-child(3) {
+  left: calc(5px + (100% - 10px) * 2 / 3);
+}
+
+.td-axis span:nth-child(4) {
+  right: 10px;
+  transform: none;
+}
+
+.cs-system .td-options {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  list-style: none;
+}
+
+.td-option {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px 136px;
+  align-items: center;
+  column-gap: 12px;
+  min-height: 40px;
+  padding: 7px 13px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.td-option.is-picked {
+  border-color: var(--tone-line);
+  background: var(--tone-bg);
+}
+
+.td-name {
+  color: var(--td-ink);
+  font-weight: 600;
+}
+
+.td-name.is-off {
+  color: var(--td-soft);
+}
+
+.td-fit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.td-fit.is-ok {
+  color: var(--td-ok);
+}
+
+.td-fit.is-ask {
+  color: var(--td-ask);
+}
+
+.td-fit.is-ok::before,
+.td-fit.is-ask::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.td-fit.is-off {
+  color: var(--td-soft);
+  font-weight: 400;
+}
+
+.td-note {
+  color: var(--td-soft);
+  line-height: 1.6;
+  text-align: right;
+}
+
+.td-note.is-picked {
+  color: var(--td-ink);
+}
+
+.cs-system .td-result {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 1px solid var(--td-line);
+}
+
+.td-pill {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 9px;
+  border-radius: 100px;
+  background: var(--tone-bg);
+  color: var(--tone);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.td-pill::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.td-result-text {
+  color: var(--td-ink);
+  font-size: 16.5px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.cs-system .td-caption {
+  margin-top: 14px;
+  color: var(--td-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* The card's own width decides this, as it is narrower beside the panel than on a tablet. */
+@container td (max-width: 479px) {
+  .td-switch {
+    align-self: stretch;
+  }
+
+  .td-part {
+    flex: 1 1 0;
+    width: auto;
+  }
+
+  .td-slider,
+  .td-axis {
+    margin-right: 9px;
+    margin-left: 9px;
+  }
+
+  .td-option {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 2px;
+  }
+
+  .td-note {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .cs-system .td-result {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.cs-system .fg-frame-ChannelsFrame {
+  align-items: stretch;
+}
+
+/* Beside the threshold card the panel is narrower than Figma's, so its long lines wrap. */
+.cs-system .fg-frame-DecidesFrame {
+  height: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.cs-system .fg-frame-DecidesFrame p {
+  white-space: normal;
+}
+
+/* Steps grow with their wrapped text, and each connector follows to the next number. */
+.cs-system .fg-frame-DecidesFrame :is(.fg-e1efa2, .fg-2d3882, .fg-552dac) {
+  padding-bottom: 14px;
+}
+
+.cs-system .fg-frame-DecidesFrame .fg-c95b33 {
+  align-self: stretch;
+  height: auto;
+}
+
+.cs-system .fg-frame-DecidesFrame :is(.fg-ab37af, .fg-3cbe58) {
+  bottom: -14px;
+  height: auto;
+}
+
+.cs-system .fg-assume {
+  margin-top: 4px;
+  color: #696d6b;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.fg-assume strong {
+  color: #1d1f1e;
+  font-weight: 600;
+}
+
+.fg-assume-tag {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 0 9px;
+  border-radius: 99px;
+  background: #fff0d0;
+  color: #946000;
+}
+
+html[data-theme="dark"] .fg-assume-tag {
+  background: var(--cs-note);
+  color: var(--cs-note-ink);
+}
+
+html[data-theme="dark"] .fg-assume strong {
+  color: var(--cs-text);
+}

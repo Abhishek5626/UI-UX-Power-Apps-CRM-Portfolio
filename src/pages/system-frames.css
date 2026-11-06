@@ -1,0 +1,374 @@
+/* System frames from Figma "Portfolio 2026", values copied from Dev Mode. */
+.cs-system .sx-states {
+  border: 1px solid rgb(255 255 255 / 0.65);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.91);
+  box-shadow: 0 2px 3px rgb(63 92 73 / 0.07);
+}
+
+html[data-theme="dark"] .cs-system .sx-states,
+html[data-theme="dark"] .cs-system .sx-voice {
+  border-color: var(--cs-border);
+  background: var(--cs-surface);
+}
+
+.sx-states-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 15px 23px;
+  border-bottom: 1px solid rgb(216 224 222 / 0.65);
+}
+
+.cs-system .sx-states-text {
+  flex: 0 1 490px;
+  color: #666868;
+  font-size: 14.5px;
+  line-height: 23px;
+}
+
+.sx-states-text strong,
+.sx-voice-text strong {
+  color: #202222;
+  font-weight: 600;
+}
+
+.cs-system .sx-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.sx-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 99px;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.sx-pill::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.sx-pill.is-go {
+  background: #ddf2e4;
+  color: #217c3b;
+}
+
+.sx-pill.is-look {
+  background: #fff0ce;
+  color: #7e5108;
+}
+
+.sx-pill.is-person {
+  background: #ece9ff;
+  color: #3c2db0;
+}
+
+.sx-pill.is-stop {
+  background: #fde3e2;
+  color: #a2221d;
+}
+
+.sx-pill.is-closed {
+  background: #eeeeec;
+  color: #62635f;
+}
+
+.sx-pill.is-action {
+  background: #ebf0ff;
+  color: #204bb9;
+}
+
+.cs-system .sx-states-note {
+  padding: 14px 23px;
+  color: #717575;
+  font-size: 12.5px;
+  line-height: 18px;
+}
+
+.cs-system .sx-voice {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgb(244 247 246 / 0.9);
+}
+
+.cs-system .sx-voice-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: #666868;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.cs-system .sx-voice-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: #202222;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.sx-voice-tag {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 99px;
+  background: #fff0cd;
+  color: #946008;
+  font-size: 12.5px;
+  font-weight: 400;
+}
+
+.cs-system .sx-voice-text,
+.cs-system .sx-voice-note {
+  color: #666868;
+  font-size: 14.5px;
+  line-height: 22px;
+}
+
+.cs-system .sx-voice-note {
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid rgb(216 224 222 / 0.8);
+}
+
+html[data-theme="dark"] .sx-states-text,
+html[data-theme="dark"] .sx-states-note,
+html[data-theme="dark"] .sx-voice-label,
+html[data-theme="dark"] .sx-voice-text,
+html[data-theme="dark"] .sx-voice-note {
+  color: var(--cs-text-muted);
+}
+
+html[data-theme="dark"] .sx-states-text strong,
+html[data-theme="dark"] .sx-voice-text strong,
+html[data-theme="dark"] .sx-voice-title {
+  color: var(--cs-text);
+}
+
+/* Figma 270:92, values copied from Dev Mode. */
+.ef {
+  --ef-ink: #1d1e1c;
+  --ef-soft: #676866;
+  --ef-line: #e2e8e5;
+  --ef-marker: #191b19;
+  --ef-marker-ink: #fff;
+  --ef-gate: #fff0d0;
+  --ef-gate-ink: #936000;
+  overflow: hidden;
+  border: 1px solid #e8ece9;
+  border-radius: 16px;
+  background: rgb(250 252 251 / 94%);
+  box-shadow: 0 5px 16px rgb(73 98 84 / 8%);
+  container: ef / inline-size;
+}
+
+html[data-theme="dark"] .ef {
+  --ef-ink: var(--cs-text);
+  --ef-soft: var(--cs-text-soft);
+  --ef-line: var(--cs-divider);
+  --ef-marker: var(--cs-text);
+  --ef-marker-ink: var(--cs-surface);
+  --ef-gate: var(--cs-note);
+  --ef-gate-ink: var(--cs-note-ink);
+  border-color: var(--cs-divider);
+  background: var(--cs-surface);
+}
+
+.ef-source {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 23px 24px 24px;
+  border-bottom: 1px solid var(--ef-line);
+}
+
+.cs-system .ef-label {
+  color: var(--ef-soft);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.cs-system .ef-truth {
+  color: var(--ef-ink);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.1px;
+}
+
+.cs-system .ef-note {
+  color: var(--ef-soft);
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.cs-system .ef-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  padding: 24px;
+  list-style: none;
+}
+
+/* Runs from the first marker's centre to the last marker's. */
+.ef-steps::before {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  width: calc((100% - 120px) / 4 * 3 + 72px);
+  height: 1px;
+  background: var(--ef-line);
+}
+
+.ef-step {
+  position: relative;
+  min-width: 0;
+}
+
+.ef-marker {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ef-marker);
+  color: var(--ef-marker-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ef-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 12px;
+}
+
+.cs-system .ef-title {
+  color: var(--ef-ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.cs-system .ef-text {
+  color: var(--ef-soft);
+  font-size: 15px;
+  line-height: 23px;
+}
+
+.ef-text strong,
+.ef-gate-text strong {
+  color: var(--ef-ink);
+  font-weight: 600;
+}
+
+.cs-system .ef-example {
+  color: var(--ef-soft);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.ef-example span {
+  color: var(--ef-ink);
+}
+
+.ef-gate {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 57px;
+  box-sizing: border-box;
+  padding: 12px 24px;
+  border-top: 1px solid var(--ef-line);
+}
+
+.ef-badge {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 7px;
+  height: 24px;
+  padding: 0 9px;
+  border-radius: 100px;
+  background: var(--ef-gate);
+  color: var(--ef-gate-ink);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.ef-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cs-system .ef-gate-text {
+  flex: 1 0 0;
+  min-width: 0;
+  color: var(--ef-ink);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+/* One role wraps at this width, so all 4 keep 2 lines and the titles stay level. */
+@container ef (640px <= width <= 800px) {
+  .cs-system .ef-step .ef-note {
+    min-height: 38px;
+  }
+}
+
+@container ef (max-width: 639px) {
+  .cs-system .ef-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ef-steps::before {
+    display: none;
+  }
+
+  .ef-gate {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cs-system .ef-gate-text {
+    flex: none;
+  }
+}
+
+@container ef (max-width: 439px) {
+  .cs-system .ef-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

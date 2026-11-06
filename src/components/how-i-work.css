@@ -1,0 +1,344 @@
+/*
+  "How I Work" modal, Figma nodes 100-478 and 102-613: a frosted shell holding
+  a header, pill tabs and a lighter inner panel. The frames are 791px wide;
+  narrower screens stack the panel's columns.
+*/
+.how-i-work {
+  --hiw-shell: color-mix(in srgb, var(--theme-surface) 42%, transparent);
+  --hiw-edge: rgb(255 255 255 / 0.55);
+  --hiw-panel: #e6e8ee;
+  --hiw-item: #f3f4f8;
+  --hiw-tab: var(--theme-surface);
+  --hiw-soft-text: color-mix(in srgb, var(--theme-text) 72%, transparent);
+
+  box-sizing: border-box;
+  width: min(791px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 20px;
+  background: transparent;
+  color: var(--theme-text);
+  animation: how-i-work-in 280ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html[data-theme="dark"] .how-i-work {
+  --hiw-shell: color-mix(in srgb, var(--theme-surface-raised) 55%, transparent);
+  --hiw-edge: rgb(255 255 255 / 0.12);
+  --hiw-panel: var(--theme-surface);
+  --hiw-item: var(--theme-chip);
+  --hiw-tab: var(--theme-chip);
+}
+
+.how-i-work::backdrop {
+  background: color-mix(in srgb, var(--theme-border-strong) 62%, transparent);
+  backdrop-filter: blur(25px) saturate(1.3);
+  -webkit-backdrop-filter: blur(25px) saturate(1.3);
+  animation: how-i-work-fade 280ms ease;
+}
+
+html[data-theme="dark"] .how-i-work::backdrop {
+  background: color-mix(in srgb, var(--theme-page) 62%, transparent);
+}
+
+.how-i-work.is-closing {
+  animation: how-i-work-out 160ms ease forwards;
+}
+
+.how-i-work.is-closing::backdrop {
+  animation: how-i-work-fade 160ms ease reverse forwards;
+}
+
+@keyframes how-i-work-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@keyframes how-i-work-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@keyframes how-i-work-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes how-i-work-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.how-i-work-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+  max-height: calc(100dvh - 24px);
+  padding: 12px;
+  border: 1px solid var(--hiw-edge);
+  border-radius: inherit;
+  background: var(--hiw-shell);
+}
+
+.how-i-work-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.how-i-work-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.how-i-work-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Comfortable tap target without changing the drawn size. */
+.how-i-work-close::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+
+.how-i-work-close svg {
+  transform: rotate(45deg);
+}
+
+.how-i-work-tabs {
+  display: flex;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.how-i-work-tab {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hiw-tab) 30%, transparent);
+  color: var(--hiw-soft-text);
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.how-i-work-tab[aria-selected="true"] {
+  background: var(--hiw-tab);
+  color: var(--theme-text);
+}
+
+/* Transform and paint only, so the tabs and panel never reflow. */
+@media (hover: hover) and (pointer: fine) {
+  .how-i-work-tab:hover {
+    background: color-mix(in srgb, var(--hiw-tab) 70%, transparent);
+    color: var(--theme-text);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  }
+
+  .how-i-work-tab[aria-selected="true"]:hover {
+    background: var(--hiw-tab);
+  }
+}
+
+.how-i-work-tab:active {
+  transform: scale(0.97);
+}
+
+.how-i-work-close:focus-visible,
+.how-i-work-tab:focus-visible,
+.how-i-work-panel:focus-visible {
+  outline: 2px solid var(--theme-text);
+  outline-offset: 2px;
+}
+
+/* Stage and panel fill the shell, so the panel tracks its height mid-resize. */
+.how-i-work-stage {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.how-i-work-panel {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  padding: 14px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  border-radius: 12px;
+  background: var(--hiw-panel);
+}
+
+.how-i-work-panel[hidden] {
+  display: none;
+}
+
+/* Lies over the incoming panel; the shared background keeps the fade seamless. */
+.how-i-work-panel.is-leaving {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  animation: how-i-work-fade 120ms ease reverse forwards;
+}
+
+.how-i-work-panel.is-entering {
+  overflow: hidden;
+}
+
+.how-i-work-panel.is-entering > * {
+  animation: how-i-work-content-in 220ms cubic-bezier(0.25, 1, 0.5, 1) 100ms both;
+}
+
+.how-i-work-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.how-i-work-heading {
+  margin: 0;
+  font-family: "Aeonik Pro", Inter, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.how-i-work-summary,
+.how-i-work-item-body {
+  margin: 0;
+  color: var(--hiw-soft-text);
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.how-i-work-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.how-i-work-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--hiw-item);
+}
+
+.how-i-work-item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.how-i-work-item-title {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.how-i-work-tag {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  min-width: 24px;
+  height: 20px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  background: var(--hiw-panel);
+  color: var(--hiw-soft-text);
+  font-family: Inter, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+@media (min-width: 640px) {
+  .how-i-work-panel.is-process {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .how-i-work-panel.is-process > * {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .how-i-work-panel.is-best-where .how-i-work-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-i-work,
+  .how-i-work::backdrop,
+  .how-i-work.is-closing,
+  .how-i-work.is-closing::backdrop {
+    animation: none;
+  }
+
+  .how-i-work-tab {
+    transition: none;
+  }
+
+  .how-i-work-tab:hover,
+  .how-i-work-tab:active {
+    transform: none;
+  }
+}

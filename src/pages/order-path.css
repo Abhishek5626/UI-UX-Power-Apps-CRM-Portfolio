@@ -1,0 +1,536 @@
+/* "Follow the order" path: every value measured from the reference, in the site's own font. */
+.cs-system .op {
+  position: relative;
+  padding: 24px 24px 0;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: var(--fx-panel);
+  box-shadow: 0 1px 2px rgb(31 61 46 / 0.06), 0 12px 32px -12px rgb(31 61 46 / 0.18);
+  container-type: inline-size;
+}
+
+.op-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.op-board {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-system .op-side {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  height: 24px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cs-system .op-side.is-workshop {
+  margin-bottom: 16px;
+  background: var(--fx-workshop-bg);
+  color: var(--fx-workshop-fg);
+  box-shadow: inset 0 0 0 1px var(--fx-workshop-line);
+}
+
+.cs-system .op-side.is-merchant {
+  margin-top: 12px;
+  background: var(--fx-merchant-bg);
+  color: var(--fx-merchant-fg);
+  box-shadow: inset 0 0 0 1px var(--fx-merchant-line);
+}
+
+.op-wires {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.op-track {
+  fill: none;
+  stroke: var(--fx-ink-4);
+  stroke-opacity: 0.7;
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+}
+
+.op .fx-wire {
+  stroke-opacity: 0.6;
+}
+
+.op-head {
+  fill: var(--fx-ink-4);
+}
+
+.op .fx-wire-trace {
+  stroke-width: 2px;
+}
+
+.cs-system .op-nodes {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto 72px auto;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  column-gap: 8px;
+  list-style: none;
+}
+
+.op-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.op-item.is-workshop {
+  grid-row: 1;
+  grid-column: var(--col);
+}
+
+.op-item.is-merchant {
+  grid-row: 3;
+  grid-column: var(--col);
+  align-items: center;
+}
+
+.op-item.is-merchant:first-child {
+  align-items: flex-start;
+}
+
+.op-item.is-merchant:last-child {
+  align-items: flex-end;
+}
+
+.op-node {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px 8px 12px;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+  background: color-mix(in oklab, var(--fx-card) 94%, transparent);
+  color: var(--fx-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms cubic-bezier(0.2, 0, 0, 1), background-color 150ms cubic-bezier(0.2, 0, 0, 1), box-shadow 250ms cubic-bezier(0.2, 0, 0, 1), transform 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.op-item.is-merchant .op-node {
+  flex: 0 0 auto;
+  max-width: 176px;
+  padding: 8px 12px;
+}
+
+.op-item.is-merchant:first-child .op-node {
+  max-width: none;
+}
+
+.op-item.is-person .op-node {
+  border-color: var(--fx-merchant-line);
+  background: var(--fx-merchant-bg);
+  color: var(--fx-merchant-fg);
+}
+
+.op-node:active {
+  transform: scale(0.98);
+}
+
+.op-node:focus-visible {
+  outline-color: var(--fx-ink);
+}
+
+.op-node[data-on] {
+  border-color: var(--fx-ink);
+  background: var(--fx-card);
+  box-shadow: 0 0 0 1px var(--fx-ink), 0 10px 24px -14px #0000004d;
+}
+
+.op-item.is-person .op-node[data-on] {
+  border-color: var(--fx-merchant-fg);
+  background: var(--fx-merchant-bg);
+  box-shadow: 0 0 0 1px var(--fx-merchant-fg);
+}
+
+.op-node-top {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.op-code {
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  min-width: 30px;
+  height: 22px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.62);
+  box-shadow: inset 0 0 0 1px var(--fx-border);
+  color: var(--fx-ink);
+  font-size: 13px;
+  line-height: 1;
+}
+
+html[data-theme="dark"] .op-code {
+  background: var(--fx-chip);
+}
+
+.op-star {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  fill: var(--fx-ink);
+}
+
+.op-kind {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--fx-chip);
+  color: var(--fx-ink);
+}
+
+.op-item.is-person .op-kind {
+  background: var(--fx-merchant-bg);
+  color: var(--fx-merchant-fg);
+}
+
+.op-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  text-wrap: balance;
+}
+
+.op-pill.fx-pill {
+  min-height: 22px;
+  margin-top: auto;
+  padding-right: 8px;
+  white-space: nowrap;
+}
+
+.op-pill.is-none {
+  padding-left: 8px;
+  background: rgb(255 255 255 / 0.62);
+  box-shadow: inset 0 0 0 1px var(--fx-border);
+  color: var(--fx-ink-2);
+}
+
+html[data-theme="dark"] .op-pill.is-none {
+  background: var(--fx-chip);
+}
+
+.op-pill.is-none::before {
+  display: none;
+}
+
+.op-note {
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.op-item.is-person .op-note {
+  color: inherit;
+  opacity: 0.85;
+}
+
+.op-side-tag,
+.op-line {
+  display: none;
+}
+
+.op-marker {
+  order: 2;
+  align-self: center;
+  width: 10px;
+  height: 10px;
+  margin-top: 12px;
+  border-radius: 50%;
+  background: var(--fx-card);
+  box-shadow: inset 0 0 0 1.5px var(--fx-ink-3);
+  transition: background-color 250ms cubic-bezier(0.2, 0, 0, 1), box-shadow 250ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.op-item:has(.op-node[data-on]) .op-marker {
+  background: var(--fx-ink);
+  box-shadow: inset 0 0 0 1.5px var(--fx-ink);
+}
+
+.op-item.is-merchant .op-marker {
+  visibility: hidden;
+  position: absolute;
+}
+
+.op-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.cs-system .op-caption {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 80px;
+  margin-top: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--fx-hairline);
+}
+
+.op-caption .op-code {
+  margin-top: 1px;
+}
+
+.op-caption-label {
+  flex: 0 0 auto;
+  min-width: 30px;
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 23px;
+}
+
+.op-caption-text {
+  max-width: 72ch;
+  color: var(--fx-ink);
+  font-size: 15px;
+  line-height: 23px;
+  text-wrap: pretty;
+}
+
+.op-control {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0 24px;
+  border-top: 1px solid var(--fx-hairline);
+}
+
+.cs-system .op-control-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.cs-system .op-cells {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  list-style: none;
+}
+
+.op-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.cs-system .op-cell-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fx-ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 23px;
+}
+
+.cs-system .op-cell-text {
+  color: var(--fx-ink-2);
+  font-size: 15px;
+  line-height: 23px;
+  text-wrap: pretty;
+}
+
+.op-cell-text strong {
+  color: var(--fx-ink);
+  font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .op-node:hover {
+    border-color: color-mix(in oklab, var(--fx-ink) 22%, transparent);
+    background: var(--fx-card);
+  }
+
+  .op-item.is-person .op-node:hover {
+    border-color: var(--fx-merchant-fg);
+    background: var(--fx-merchant-bg);
+  }
+}
+
+@container (max-width: 720px) {
+  .cs-system .op {
+    padding: 16px 16px 0;
+  }
+
+  .op .fx-play {
+    min-height: 44px;
+  }
+
+  .cs-system .op-side,
+  .cs-system .op-caption,
+  .op .fx-word {
+    display: none;
+  }
+
+  .op-board {
+    padding-top: 8px;
+  }
+
+  .cs-system .op-nodes {
+    grid-template-rows: none;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .op-item,
+  .op-item.is-workshop,
+  .op-item.is-merchant,
+  .op-item.is-merchant:first-child,
+  .op-item.is-merchant:last-child {
+    display: grid;
+    grid-area: auto / 1;
+    grid-template-columns: 20px minmax(0, 1fr);
+    align-items: start;
+    column-gap: 12px;
+    padding-bottom: 16px;
+  }
+
+  .op-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .op-marker,
+  .op-item.is-merchant .op-marker {
+    position: static;
+    grid-area: 1 / 1;
+    justify-self: center;
+    margin-top: 14px;
+    visibility: visible;
+  }
+
+  .op-item.is-merchant .op-marker {
+    margin-top: 36px;
+    border-radius: 3px;
+    background: var(--fx-merchant-bg);
+    box-shadow: inset 0 0 0 1.5px var(--fx-merchant-fg);
+  }
+
+  .op-item.is-merchant:has(.op-node[data-on]) .op-marker {
+    background: var(--fx-merchant-fg);
+  }
+
+  .op-node,
+  .op-item.is-merchant .op-node,
+  .op-item.is-merchant:first-child .op-node,
+  .op-item.is-person .op-node {
+    flex-flow: row wrap;
+    grid-area: 1 / 2;
+    align-items: center;
+    gap: 4px 8px;
+    max-width: none;
+    min-height: 44px;
+    padding: 8px 12px;
+    border-color: transparent;
+    background: none;
+  }
+
+  .op-node[data-on],
+  .op-item.is-person .op-node[data-on] {
+    border-color: transparent;
+    background: rgb(255 255 255 / 0.62);
+    box-shadow: inset 0 0 0 1px var(--fx-border);
+  }
+
+  .op-node-top {
+    align-self: auto;
+  }
+
+  .op-kind {
+    margin-left: 0;
+  }
+
+  .op-pill.fx-pill {
+    margin-top: 0;
+  }
+
+  .op-side-tag {
+    display: block;
+    flex-basis: 100%;
+    order: -1;
+    color: var(--fx-merchant-fg);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+  }
+
+  .op-note {
+    flex-basis: 100%;
+  }
+
+  .op-item.is-open .op-line {
+    display: block;
+    grid-area: 2 / 2;
+    padding: 8px 12px 0;
+    color: var(--fx-ink-2);
+    font-size: 15px;
+    line-height: 23px;
+    text-wrap: pretty;
+  }
+
+  .cs-system .op-cells {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .op-control {
+    margin-top: 16px;
+  }
+}
+
+/* As on the reference: no control and no travelling parts. */
+@media (prefers-reduced-motion: reduce) {
+  .op .fx-play,
+  .op .fx-wire-trace,
+  .op .fx-wire-light,
+  .op .fx-wire-ring {
+    display: none;
+  }
+
+  .op-node,
+  .op-marker {
+    transition: none;
+  }
+}

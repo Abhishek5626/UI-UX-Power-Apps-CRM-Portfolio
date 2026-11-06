@@ -1,0 +1,529 @@
+/* Quik concept figures. Site tokens only, so light and dark both work. Container text is 13px. */
+.cs-system .qf {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 24px;
+  border: 1px solid var(--cs-border);
+  border-radius: 18px;
+  background: var(--cs-surface-soft);
+  color: var(--cs-text);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.cs-system .qf p,
+.cs-system .qf ol,
+.cs-system .qf ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-system .qf .qf-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.cs-system .qf .qf-label {
+  color: var(--cs-text-soft);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.cs-system .qf .qf-note {
+  color: var(--cs-text-soft);
+  font-size: 12px;
+}
+
+.qf b {
+  font-weight: 600;
+}
+
+.qf-num {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cs-chip);
+  color: var(--cs-text-soft);
+  font-size: 12px;
+}
+
+.qf-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--cs-border);
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.qf-card.is-chosen {
+  border-color: var(--cs-side-a-ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cs-side-a-ink) 18%, transparent);
+}
+
+.qf-pill {
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--cs-chip);
+  color: var(--cs-text-soft);
+  font-size: 12px;
+}
+
+.qf-pill.is-on {
+  background: var(--cs-side-a);
+  color: var(--cs-side-a-ink);
+}
+
+.qf-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.qf-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.qf-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.qf-arrow {
+  align-self: center;
+  color: var(--cs-text-soft);
+  font-size: 18px;
+}
+
+/* 1. First hour */
+.qf-hour {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.qf-hour li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: 2px solid var(--cs-border);
+}
+
+.qf-hour-bar {
+  display: flex;
+  gap: 3px;
+  height: 8px;
+}
+
+.qf-hour-bar i {
+  width: 14px;
+  border-radius: 2px;
+  background: var(--cs-side-a-ink);
+}
+
+.qf-hour small {
+  color: var(--cs-text-soft);
+  font-size: 12px;
+}
+
+.qf-rank {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--cs-surface);
+}
+
+.qf-rank ol {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  counter-reset: rank;
+}
+
+.qf-rank li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  counter-increment: rank;
+}
+
+.qf-rank li::before {
+  content: counter(rank);
+  color: var(--cs-side-a-ink);
+  font-weight: 600;
+}
+
+.qf-rank li span {
+  color: var(--cs-text-soft);
+}
+
+/* 2. Directions: tiny wireframes */
+.qf-wire {
+  display: grid;
+  gap: 4px;
+  height: 84px;
+  padding: 6px;
+  border-radius: 8px;
+  background: var(--cs-chip);
+}
+
+.qf-wire i {
+  border-radius: 4px;
+  background: var(--cs-surface);
+}
+
+.qf-wire.is-dash {
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.qf-wire.is-dash i:nth-child(1) {
+  grid-row: span 2;
+}
+
+.qf-wire.is-dash i:nth-child(3) {
+  background: var(--cs-side-a);
+}
+
+.qf-wire.is-app {
+  grid-template-columns: 1fr 12px 1fr;
+}
+
+.qf-wire.is-app i:nth-child(2) {
+  background: transparent;
+}
+
+.qf-wire.is-app i:nth-child(3) {
+  background: var(--cs-side-a);
+}
+
+.qf-wire.is-work {
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.qf-wire.is-work i:nth-child(2) {
+  background: var(--cs-side-a);
+}
+
+/* 3. Building blocks */
+.qf-blocks,
+.qf-schema {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.qf-parts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 150px;
+}
+
+.qf-parts li {
+  padding: 8px 12px;
+  border-left: 3px solid var(--panel);
+  border-radius: 6px;
+  background: var(--cs-surface);
+}
+
+.qf [data-panel="left"] { --panel: var(--cs-text-soft); }
+.qf [data-panel="centre"] { --panel: var(--cs-side-a-ink); }
+.qf [data-panel="right"] { --panel: var(--cs-side-b-ink); }
+
+.qf-panels {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  gap: 8px;
+  min-width: 0;
+}
+
+.qf-panels > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-top: 3px solid var(--panel);
+  border-radius: 8px;
+  background: var(--cs-surface);
+}
+
+/* 4. Action schema */
+.qf-code {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  overflow-x: auto;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--cs-surface);
+  font: 12px/20px "JetBrains Mono", ui-monospace, monospace;
+}
+
+.qf-views {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.qf-views .qf-card > span {
+  color: var(--cs-text-soft);
+}
+
+.qf-term code {
+  font: 12px/20px "JetBrains Mono", ui-monospace, monospace;
+  overflow-wrap: anywhere;
+}
+
+.qf-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.qf-buttons i {
+  padding: 4px 10px;
+  border: 1px solid var(--cs-border);
+  border-radius: 6px;
+  font-style: normal;
+}
+
+.qf-buttons i:first-child {
+  border-color: var(--cs-side-a-ink);
+  background: var(--cs-side-a-ink);
+  color: var(--cs-surface);
+}
+
+/* 5 and 6. Plan step in three looks */
+.qf-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--cs-surface);
+}
+
+.qf-step > div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.qf-step span:not(.qf-num) {
+  color: var(--cs-text-soft);
+  font-size: 12px;
+}
+
+.qf-step > i {
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--cs-side-a-ink);
+  color: var(--cs-surface);
+  font-style: normal;
+}
+
+.qf-step.is-dense {
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--cs-text-soft);
+  border-radius: 2px;
+  font: 12px/16px "JetBrains Mono", ui-monospace, monospace;
+}
+
+.qf-step.is-dense > i {
+  border-radius: 2px;
+}
+
+.qf-step.is-open {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 18px;
+  font-size: 15px;
+}
+
+.qf-step.is-open > i {
+  border-radius: 99px;
+}
+
+.qf-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.qf-side.is-before {
+  background: var(--cs-before);
+}
+
+.qf-side.is-after {
+  background: var(--cs-after);
+}
+
+.qf-old {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--cs-text-soft);
+  border-radius: 8px;
+  background: var(--cs-surface);
+}
+
+.qf-old-row {
+  display: flex;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--cs-border);
+  border-radius: 6px;
+}
+
+.qf-icon {
+  color: var(--cs-side-b-ink);
+}
+
+.qf-buttons.is-loud i {
+  border-color: var(--cs-side-b-ink);
+  background: var(--cs-side-b);
+  color: var(--cs-side-b-ink);
+}
+
+@media (max-width: 760px) {
+  .cs-system .qf {
+    padding: 16px;
+  }
+
+  .qf-hour {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .qf-three,
+  .qf-two {
+    grid-template-columns: 1fr;
+  }
+
+  .qf-blocks,
+  .qf-schema {
+    flex-direction: column;
+  }
+
+  .qf-arrow {
+    transform: rotate(90deg);
+  }
+
+  .qf-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*
+  Wireframe diagram look: a plain canvas, grey regions holding white boxes with thin
+  dark outlines, and window bars on documents. Content stays Quik's own.
+*/
+.qf {
+  --qf-line: color-mix(in srgb, var(--cs-text) 78%, transparent);
+  --qf-region: color-mix(in srgb, var(--cs-text) 6%, var(--cs-surface));
+}
+
+.cs-system .qf {
+  border: 0;
+  border-radius: 0;
+  background: var(--cs-surface);
+}
+
+.cs-system .qf .qf-title {
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.qf-hour,
+.qf-rank,
+.qf-grid,
+.qf-blocks,
+.qf-schema {
+  padding: 20px;
+  border-radius: 8px;
+  background: var(--qf-region);
+}
+
+.qf-card,
+.qf-parts li,
+.qf-panels > div,
+.qf-code,
+.qf-step,
+.qf-old,
+.qf-hour li {
+  border: 1px solid var(--qf-line);
+  border-radius: 4px;
+  background: var(--cs-surface);
+  box-shadow: none;
+}
+
+.qf-hour li {
+  padding: 12px;
+}
+
+.qf-parts li {
+  border-left-width: 1px;
+}
+
+.qf-panels > div {
+  border-top-width: 1px;
+}
+
+/* A document gets a window bar with three dots. */
+.qf-card,
+.qf-code,
+.qf-old {
+  position: relative;
+  padding-top: 30px;
+}
+
+.qf-card::before,
+.qf-code::before,
+.qf-old::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 18px;
+  border-bottom: 1px solid var(--qf-line);
+  border-radius: 3px 3px 0 0;
+  background:
+    radial-gradient(circle, var(--cs-text) 2.5px, transparent 3px) 8px 50% / 10px 10px no-repeat,
+    radial-gradient(circle, var(--cs-text) 2.5px, transparent 3px) 20px 50% / 10px 10px no-repeat,
+    radial-gradient(circle, var(--cs-text) 2.5px, transparent 3px) 32px 50% / 10px 10px no-repeat,
+    color-mix(in srgb, var(--cs-text) 12%, var(--cs-surface));
+}
+
+.qf-card.is-chosen {
+  border-width: 2px;
+  border-color: var(--cs-text);
+  box-shadow: none;
+}
+
+.qf-side {
+  border: 1px dashed var(--qf-line);
+}
+
+.qf-arrow {
+  font-size: 14px;
+}

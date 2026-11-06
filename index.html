@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var theme = "light";
+        try {
+          var stored = localStorage.getItem("project-view-theme");
+          if (stored === "light" || stored === "dark") {
+            theme = stored;
+          }
+        } catch (error) {
+          theme = "light";
+        }
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+
+        // Every full load of the landing page; a case study deep link goes straight in.
+        if (!/^#\/?case-study/.test(location.hash)) {
+          var root = document.documentElement;
+          root.dataset.loader = "on";
+          // The app never booted (a failed script): don't leave the screen up.
+          setTimeout(function () {
+            if (root.dataset.loader === "on") delete root.dataset.loader;
+          }, 10000);
+        }
+      })();
+    </script>
+    <style>
+      html,
+      body {
+        background: #f0f0f0;
+      }
+      html[data-theme="dark"],
+      html[data-theme="dark"] body {
+        background: #000000;
+      }
+
+      @font-face {
+        font-family: "Aeonik Pro";
+        src: url("/fonts/aeonik-pro.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      #page-loader {
+        --page-loader-bg: #f0f0f0;
+        --page-loader-ink: #121212;
+        --page-loader-pad: clamp(16px, 2.8vw, 40px);
+        --page-loader-ease: cubic-bezier(0.76, 0, 0.24, 1);
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        inset: 0;
+        overflow: hidden;
+        background: var(--page-loader-bg);
+        color: var(--page-loader-ink);
+        font-family: "Aeonik Pro", Inter, sans-serif;
+        font-weight: 400;
+        /* Nothing here is interactive, so input and focus reach the page. */
+        pointer-events: none;
+        transition: transform 800ms var(--page-loader-ease);
+      }
+
+      html[data-theme="dark"] #page-loader {
+        --page-loader-bg: #000000;
+        --page-loader-ink: #ffffff;
+      }
+
+      html[data-loader] #page-loader {
+        display: block;
+      }
+
+      .page-loader-text {
+        margin: 0;
+        padding: var(--page-loader-pad);
+        font-size: clamp(32px, 6.6vw, 100px);
+        line-height: 0.92;
+        text-transform: uppercase;
+        transition: opacity 300ms ease;
+      }
+
+      .page-loader-text span {
+        display: inline;
+      }
+
+      .page-loader-percent {
+        position: absolute;
+        bottom: var(--page-loader-pad);
+        left: var(--page-loader-pad);
+        font-size: clamp(56px, 7.6vw, 110px);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        transform: translateX(
+          calc(
+            var(--page-loader-progress, 0) *
+              (100vw - 100% - 2 * var(--page-loader-pad))
+          )
+        );
+        transition: opacity 300ms ease;
+      }
+
+      .page-loader-panel {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--page-loader-ink);
+        color: var(--page-loader-bg);
+        font-size: clamp(32px, 5vw, 72px);
+        letter-spacing: -0.03em;
+        transform: translateY(100%);
+        transition: transform 500ms var(--page-loader-ease) 300ms;
+      }
+
+      #page-loader.is-exit .page-loader-text,
+      #page-loader.is-exit .page-loader-percent {
+        opacity: 0;
+      }
+
+      #page-loader.is-exit .page-loader-panel {
+        transform: none;
+      }
+
+      #page-loader.is-leaving {
+        transform: translateY(-100%);
+      }
+
+      @media (min-width: 761px) {
+        .page-loader-text span {
+          display: block;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #page-loader {
+          transition: opacity 200ms linear;
+        }
+
+        .page-loader-percent {
+          transform: none;
+        }
+
+        #page-loader.is-leaving {
+          opacity: 0;
+          transform: none;
+        }
+      }
+    </style>
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/aeonik-pro.woff2"
+      crossorigin
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Urbanist:wght@400;500;600&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+      onerror="this.dataset.failed='1'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Urbanist:wght@400;500;600&display=swap"
+      />
+    </noscript>
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Geist:wght@300..700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&amp;family=Geist:wght@300..700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" /></noscript>
+    <link rel="preload" as="image" href="/landing/about-me-portrait.webp" fetchpriority="high" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Abhishek Kashid, a senior design consultant."
+    />
+    <title>Abhishek Kashid</title>
+  </head>
+  <body>
+    <div id="page-loader" aria-hidden="true">
+      <p class="page-loader-text">
+        <span>I build diverse software,</span>
+        <span>spanning wearables</span>
+        <span>and mobile applications</span>
+      </p>
+      <div class="page-loader-percent">0%</div>
+      <div class="page-loader-panel">Abhishek Kashid</div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

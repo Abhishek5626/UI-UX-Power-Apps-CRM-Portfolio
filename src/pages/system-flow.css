@@ -1,0 +1,414 @@
+/* "How it connects" diagram: values measured from the reference, in the site's own font. */
+.cs-system .sf {
+  position: relative;
+  padding: 24px 32px;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: var(--fx-panel);
+  box-shadow: 0 1px 2px rgb(31 61 46 / 0.06), 0 12px 32px -12px rgb(31 61 46 / 0.18);
+  container-type: inline-size;
+}
+
+.sf > .fx-play {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 4;
+}
+
+.sf-board {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 88px;
+}
+
+.sf-wires {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sf-arrow {
+  fill: var(--fx-ink-4);
+}
+
+.cs-system .sf-process {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  flex: 3 1 0px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  min-width: 0;
+  list-style: none;
+}
+
+.sf-card,
+.sf-core {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: linear-gradient(145deg, color-mix(in oklab, var(--fx-ink) 7%, var(--fx-card)) 0%, var(--fx-card) 50%);
+}
+
+.sf-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--fx-chip);
+  color: var(--fx-ink);
+}
+
+.sf-name {
+  color: var(--fx-ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
+  text-wrap: balance;
+}
+
+.sf-note {
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+  text-wrap: pretty;
+}
+
+.sf-core {
+  position: relative;
+  z-index: 2;
+  flex: 1.45 1 0px;
+  gap: 12px;
+  border-color: color-mix(in oklab, var(--fx-ink) 28%, transparent);
+}
+
+.sf-core-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cs-system .sf-layers {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.sf-layer {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 8px;
+  margin: 0 -8px;
+  padding: 8px;
+  border-radius: 16px;
+}
+
+.sf-layer + .sf-layer {
+  border-top: 1px solid var(--fx-hairline);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.sf-layer-num {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--fx-ink);
+  color: var(--fx-card);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.sf-layer-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sf-layer-name {
+  color: var(--fx-ink);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.sf-layer-note {
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.cs-system .sf-ai {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 -8px -8px;
+  padding: 8px;
+  border-radius: 16px;
+  background: var(--fx-chip);
+  color: var(--fx-ink);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.cs-system .sf-channels {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1.06 1 0px;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin: 0 0 0 32px;
+  list-style: none;
+}
+
+.sf-channel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: var(--fx-card);
+  color: var(--fx-ink);
+}
+
+.sf-channel.is-new {
+  border-style: dashed;
+  border-color: var(--fx-ink-4);
+  background: none;
+}
+
+.sf-channel-icon {
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  color: var(--fx-ink-2);
+}
+
+.sf-channel-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sf-channel-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.sf-channel-note {
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.sf-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.cs-system .sf-caption {
+  display: grid;
+  place-items: center;
+  min-height: 40px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--fx-hairline);
+  text-align: center;
+}
+
+.sf-caption-text {
+  max-width: 52ch;
+  color: var(--fx-ink-2);
+  font-size: 15px;
+  line-height: 23px;
+  text-wrap: balance;
+  animation: sf-caption-in 400ms cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+.sf-caption-text.is-rest {
+  color: var(--fx-ink);
+}
+
+.sf-caption-text strong {
+  font-weight: 600;
+}
+
+@keyframes sf-caption-in {
+  0% {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateY(4px);
+  }
+}
+
+.sf-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--fx-hairline);
+}
+
+.cs-system .sf-foot-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 32px;
+  list-style: none;
+}
+
+.sf-foot-item {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 12px;
+  min-width: 0;
+}
+
+.sf-foot-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--fx-chip);
+  color: var(--fx-ink);
+}
+
+.cs-system .sf-foot-text,
+.cs-system .sf-not-yet {
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 20px;
+  text-wrap: pretty;
+}
+
+.sf-foot-text strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--fx-ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 23px;
+}
+
+.cs-system .sf-not-yet {
+  padding-top: 12px;
+  border-top: 1px solid var(--fx-hairline);
+}
+
+.sf-not-yet strong {
+  color: var(--fx-ink);
+  font-weight: 600;
+}
+
+@container (max-width: 800px) {
+  .sf-board {
+    flex-wrap: wrap;
+    row-gap: 72px;
+    padding-right: 36px;
+  }
+
+  .cs-system .sf-process {
+    flex: 1 1 100%;
+  }
+}
+
+@container (max-width: 640px) {
+  .cs-system .sf-foot-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@container (max-width: 480px) {
+  .sf-board {
+    flex-flow: column;
+    align-items: stretch;
+    gap: 48px;
+    padding-top: 0;
+  }
+
+  .cs-system .sf-process {
+    flex: 0 0 auto;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  .sf-core,
+  .cs-system .sf-channels {
+    flex: 0 0 auto;
+  }
+
+  .sf-card {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 0;
+    padding: 12px 16px;
+  }
+
+  .sf-icon {
+    grid-row: 1 / span 2;
+    margin: 0;
+  }
+
+  .cs-system .sf-channels {
+    margin: -24px 0 0;
+    padding-left: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cs-system .sf {
+    padding: 48px 16px 16px;
+  }
+
+  .sf > .fx-play {
+    top: 10px;
+    min-height: 44px;
+  }
+}
+
+/* As on the reference: no control and no travelling parts. */
+@media (prefers-reduced-motion: reduce) {
+  .sf > .fx-play,
+  .sf .fx-wire-trace,
+  .sf .fx-wire-light {
+    display: none;
+  }
+
+  .sf-caption-text {
+    animation: none;
+  }
+}

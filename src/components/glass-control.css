@@ -1,0 +1,364 @@
+@property --glass-rim-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: -75deg;
+}
+
+/*
+  Reusable glass fill + hover from https://glass-button.learnframer.site/
+  Opt-in only via .glass-control or the explicit control list below.
+  Layout, type, and sizing stay in each component stylesheet.
+*/
+html .glass-control,
+html .shipped-badge,
+html .portfolio-nav-toggle-face,
+html .project-drawer-glass,
+html .cs1-chips li,
+html .cs2 .cs2-chips li,
+html .cs1-modules-filter,
+html .cs1-modules-more,
+html .cs1-modules-chevron,
+html .cs1-touch,
+html .cs2 .cs2-touch,
+html .cs1-next-chip,
+html .cs2 .cs2-next-chip,
+html .next-chip,
+html .touch,
+html .connect,
+html .tobe-pill,
+html .q-pill,
+html .music-card-play,
+html .view-project-badge,
+html .work-experience-reset {
+  --glass-rim-angle: -75deg;
+  position: relative;
+  isolation: isolate;
+  border: 0;
+  background: var(--theme-glass);
+  box-shadow: var(--theme-glass-shadow);
+  color: var(--theme-text);
+  backdrop-filter: blur(var(--theme-glass-blur));
+  -webkit-backdrop-filter: blur(var(--theme-glass-blur));
+  transition:
+    box-shadow var(--theme-glass-duration) var(--theme-glass-ease),
+    backdrop-filter var(--theme-glass-duration) var(--theme-glass-ease),
+    -webkit-backdrop-filter var(--theme-glass-duration) var(--theme-glass-ease),
+    transform 0.15s ease-out,
+    color var(--theme-duration) var(--theme-ease),
+    opacity var(--theme-duration) var(--theme-ease);
+}
+
+/*
+  The project badge borrows the glass look but is a pointer-following
+  overlay: keep it fixed to the viewport (the shared `position: relative`
+  above dropped it into page flow, below the full-height landing page) and
+  leave transform/opacity to its per-frame spring — CSS transitions on those
+  would lag and fight it.
+*/
+html .view-project-badge {
+  position: fixed;
+  transition:
+    box-shadow var(--theme-glass-duration) var(--theme-glass-ease),
+    backdrop-filter var(--theme-glass-duration) var(--theme-glass-ease),
+    -webkit-backdrop-filter var(--theme-glass-duration) var(--theme-glass-ease),
+    color var(--theme-duration) var(--theme-ease);
+}
+
+html .glass-control::after,
+html .shipped-badge::after,
+html .portfolio-nav-toggle-face::after,
+html .project-drawer-glass::after,
+html .cs1-chips li::after,
+html .cs2 .cs2-chips li::after,
+html .cs1-modules-filter::after,
+html .cs1-modules-more::after,
+html .cs1-modules-chevron::after,
+html .cs1-touch::after,
+html .cs2 .cs2-touch::after,
+html .cs1-next-chip::after,
+html .cs2 .cs2-next-chip::after,
+html .next-chip::after,
+html .touch::after,
+html .connect::after,
+html .tobe-pill::after,
+html .q-pill::after,
+html .music-card-play::after,
+html .view-project-badge::after,
+html .work-experience-reset::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: -0.5px;
+  box-sizing: border-box;
+  border-radius: inherit;
+  padding: 1px;
+  background:
+    conic-gradient(
+      from var(--glass-rim-angle) at 50% 50%,
+      rgba(0, 0, 0, 0.5),
+      transparent 5% 40%,
+      rgba(0, 0, 0, 0.5) 50%,
+      transparent 60% 95%,
+      rgba(0, 0, 0, 0.5)
+    ),
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transition: --glass-rim-angle 0.5s ease;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+html[data-theme="dark"] .glass-control::after,
+html[data-theme="dark"] .shipped-badge::after,
+html[data-theme="dark"] .portfolio-nav-toggle-face::after,
+html[data-theme="dark"] .project-drawer-glass::after,
+html[data-theme="dark"] .cs1-chips li::after,
+html[data-theme="dark"] .cs2 .cs2-chips li::after,
+html[data-theme="dark"] .cs1-modules-filter::after,
+html[data-theme="dark"] .cs1-modules-more::after,
+html[data-theme="dark"] .cs1-modules-chevron::after,
+html[data-theme="dark"] .cs1-touch::after,
+html[data-theme="dark"] .cs2 .cs2-touch::after,
+html[data-theme="dark"] .cs1-next-chip::after,
+html[data-theme="dark"] .cs2 .cs2-next-chip::after,
+html[data-theme="dark"] .next-chip::after,
+html[data-theme="dark"] .touch::after,
+html[data-theme="dark"] .connect::after,
+html[data-theme="dark"] .tobe-pill::after,
+html[data-theme="dark"] .q-pill::after,
+html[data-theme="dark"] .music-card-play::after,
+html[data-theme="dark"] .view-project-badge::after,
+html[data-theme="dark"] .work-experience-reset::after {
+  /* dark rim */
+  background:
+    conic-gradient(
+      from var(--glass-rim-angle) at 50% 50%,
+      rgba(255, 255, 255, 0.7),
+      transparent 5% 40%,
+      rgba(255, 255, 255, 0.7) 50%,
+      transparent 60% 95%,
+      rgba(255, 255, 255, 0.7)
+    ),
+    linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+}
+
+/* Keep labels/icons above the rim */
+.glass-control > *,
+.shipped-badge > *,
+.portfolio-nav-toggle-face > *,
+.project-drawer-glass > *,
+.cs1-chips li > *,
+.cs2 .cs2-chips li > *,
+.cs1-modules-filter,
+.cs1-modules-more,
+.cs1-modules-chevron > *,
+.cs1-touch > *,
+.cs2 .cs2-touch > *,
+.cs1-next-chip > *,
+.cs2 .cs2-next-chip > *,
+.next-chip > *,
+.touch > *,
+.connect > *,
+.tobe-pill > *,
+.q-pill > *,
+.music-card-play > *,
+.view-project-badge > *,
+.work-experience-reset > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Filter/more buttons are text nodes — raise paint via z-index on self */
+.cs1-modules-filter,
+.cs1-modules-more,
+.cs1-touch,
+.cs2 .cs2-touch,
+.touch,
+.connect {
+  z-index: 0;
+}
+
+/* Informational badges: glass fill only, no press/hover chrome */
+.shipped-badge,
+.cs1-chips li,
+.cs2 .cs2-chips li,
+.cs1-next-chip,
+.cs2 .cs2-next-chip,
+.next-chip,
+.q-pill {
+  cursor: default;
+}
+
+/* Controls that sit on dark media / stages stay light for contrast */
+html .cs1-modules-filter,
+html .cs1-modules-more,
+html .cs1-modules-chevron,
+html .cs1-next-chip,
+html .cs2 .cs2-next-chip,
+html .next-chip,
+html .music-card-play,
+html .tobe-pill {
+  color: #fff;
+}
+
+html .q-pill {
+  color: var(--theme-text-muted);
+}
+
+/* Interactive controls */
+.glass-control:not(.is-static),
+.portfolio-nav-toggle,
+.project-drawer-glass,
+.cs1-modules-filter,
+.cs1-modules-more:not(:disabled),
+.cs1-modules-chevron,
+.cs1-touch,
+.cs2 .cs2-touch,
+.touch,
+.connect,
+.tobe-pill,
+.music-card-play:not(:disabled),
+.work-experience-reset {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.glass-control:not(.is-static):focus-visible,
+.portfolio-nav-toggle:focus-visible .portfolio-nav-toggle-face,
+.project-drawer-glass:focus-visible,
+.cs1-modules-filter:focus-visible,
+.cs1-modules-more:focus-visible,
+.cs1-modules-chevron:focus-visible,
+.cs1-touch:focus-visible,
+.cs2 .cs2-touch:focus-visible,
+.touch:focus-visible,
+.connect:focus-visible,
+.tobe-pill:focus-visible,
+.music-card-play:focus-visible,
+.work-experience-reset:focus-visible {
+  outline: 2px solid var(--theme-text);
+  outline-offset: 3px;
+}
+
+.glass-control:not(.is-static):active,
+.portfolio-nav-toggle:active .portfolio-nav-toggle-face,
+.project-drawer-glass:active,
+.cs1-modules-filter:active,
+.cs1-modules-more:active:not(:disabled),
+.cs1-modules-chevron:active,
+.cs1-touch:active,
+.cs2 .cs2-touch:active,
+.touch:active,
+.connect:active,
+.tobe-pill:active,
+.music-card-play:active:not(:disabled),
+.work-experience-reset:active {
+  transform: scale(0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glass-control:not(.is-static):hover,
+  .portfolio-nav-toggle:hover .portfolio-nav-toggle-face,
+  .project-drawer-glass:hover,
+  .cs1-modules-filter:hover,
+  .cs1-modules-more:hover:not(:disabled),
+  .cs1-modules-chevron:hover,
+  .cs1-touch:hover,
+  .cs2 .cs2-touch:hover,
+  .touch:hover,
+  .connect:hover,
+  .tobe-pill:hover,
+  .music-card-play:hover:not(:disabled),
+  .work-experience-reset:hover,
+  .shipped-badge:hover {
+    --glass-rim-angle: -125deg;
+    box-shadow: var(--theme-glass-shadow-hover);
+    backdrop-filter: blur(var(--theme-glass-blur-hover));
+    -webkit-backdrop-filter: blur(var(--theme-glass-blur-hover));
+  }
+
+  .cs1-modules-filter.is-active {
+    --glass-rim-angle: -125deg;
+    box-shadow: var(--theme-glass-shadow-hover);
+  }
+}
+
+/* Hide legacy decorative layers that fight the shared rim */
+.cs1-touch::before,
+.cs2 .cs2-touch::before,
+.tobe-pill-glow,
+.tobe-pill-sheen,
+.tobe-pill-fill {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-control,
+  .shipped-badge,
+  .portfolio-nav-toggle-face,
+  .project-drawer-glass,
+  .cs1-chips li,
+  .cs2 .cs2-chips li,
+  .cs1-modules-filter,
+  .cs1-modules-more,
+  .cs1-modules-chevron,
+  .cs1-touch,
+  .cs2 .cs2-touch,
+  .cs1-next-chip,
+  .cs2 .cs2-next-chip,
+  .next-chip,
+  .touch,
+  .connect,
+  .tobe-pill,
+  .q-pill,
+  .music-card-play,
+  .view-project-badge,
+  .work-experience-reset,
+  .glass-control::after,
+  .shipped-badge::after,
+  .portfolio-nav-toggle-face::after,
+  .project-drawer-glass::after,
+  .cs1-chips li::after,
+  .cs2 .cs2-chips li::after,
+  .cs1-modules-filter::after,
+  .cs1-modules-more::after,
+  .cs1-modules-chevron::after,
+  .cs1-touch::after,
+  .cs2 .cs2-touch::after,
+  .cs1-next-chip::after,
+  .cs2 .cs2-next-chip::after,
+  .next-chip::after,
+  .touch::after,
+  .connect::after,
+  .tobe-pill::after,
+  .q-pill::after,
+  .music-card-play::after,
+  .view-project-badge::after,
+  .work-experience-reset::after {
+    transition: none;
+  }
+
+  .glass-control:not(.is-static):active,
+  .portfolio-nav-toggle:active .portfolio-nav-toggle-face,
+  .project-drawer-glass:active,
+  .cs1-modules-filter:active,
+  .cs1-modules-more:active:not(:disabled),
+  .cs1-modules-chevron:active,
+  .cs1-touch:active,
+  .cs2 .cs2-touch:active,
+  .touch:active,
+  .connect:active,
+  .tobe-pill:active,
+  .music-card-play:active:not(:disabled),
+  .work-experience-reset:active {
+    transform: none;
+  }
+}

@@ -1,0 +1,324 @@
+/*
+  "How the research works" panel. Section-specific: values measured from the
+  reference, not the case study tokens. Sizes follow the panel's own width,
+  because the table of contents changes how much room it gets.
+*/
+.rf-frame {
+  container: rf-frame / inline-size;
+}
+
+.rf {
+  --rf-gap: clamp(48px, 7.8cqw, 72px);
+  --rf-light-end: translateX(100%);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px clamp(16px, 3.4cqw, 32px) 32px;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: var(--fx-panel);
+  box-shadow: 0 1px 2px rgb(31 61 46 / 0.06), 0 12px 32px -12px rgb(31 61 46 / 0.18);
+}
+
+.rf-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 144px;
+}
+
+.rf-label {
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.rf-text {
+  max-width: 617px;
+  color: var(--fx-ink-2);
+  font-size: 15px;
+  line-height: 23px;
+  text-wrap: pretty;
+}
+
+.rf > .fx-play {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 4;
+}
+
+.rf-board {
+  position: relative;
+  padding-bottom: 56px;
+}
+
+.rf-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--rf-gap);
+  list-style: none;
+}
+
+.rf-cell {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+
+.rf-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: linear-gradient(145deg, color-mix(in oklab, var(--fx-ink) 7%, var(--fx-card)) 0%, var(--fx-card) 50%);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.rf-card:focus-visible {
+  outline-color: var(--fx-ink);
+}
+
+.rf-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--fx-chip);
+  color: var(--fx-ink);
+}
+
+.rf-title {
+  color: var(--fx-ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 23px;
+}
+
+.rf-figure {
+  margin-top: 4px;
+  color: var(--fx-ink);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 34px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.rf-unit {
+  margin-bottom: 8px;
+  color: var(--fx-ink);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 23px;
+}
+
+.rf-note {
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+  text-wrap: pretty;
+}
+
+.rf-wire {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: var(--rf-gap);
+  transform: translateY(-1px);
+}
+
+.rf-line {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--fx-border);
+}
+
+.rf-trace {
+  position: absolute;
+  inset: 0;
+  background: var(--fx-ink);
+  transform: scaleX(0);
+  transform-origin: 0 center;
+}
+
+.rf-light {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.rf-light::after {
+  margin: -4px 0 0 -4px;
+}
+
+.rf-word {
+  max-width: 100%;
+  color: var(--fx-ink-3);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Runs from the middle of card 4 back to the middle of card 2. */
+.rf-loop {
+  position: absolute;
+  right: calc(12.5% - var(--rf-gap) * 3 / 8);
+  bottom: 0;
+  left: calc(37.5% - var(--rf-gap) / 8);
+  height: 56px;
+  pointer-events: none;
+}
+
+.rf-loop-svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.rf-loop-svg path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1px;
+}
+
+.rf-loop-base {
+  stroke: var(--fx-border);
+}
+
+.rf-loop-trace {
+  stroke: var(--fx-ink);
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.rf-loop-svg .rf-loop-trace {
+  stroke-linecap: butt;
+}
+
+.rf-loop-arrow {
+  stroke: var(--fx-ink-3);
+}
+
+.rf-loop-light {
+  opacity: 0;
+  offset-anchor: center;
+  offset-rotate: 0deg;
+}
+
+.rf-loop-word {
+  position: absolute;
+  right: calc(12.5% - var(--rf-gap) * 3 / 8);
+  bottom: 0;
+  left: calc(37.5% - var(--rf-gap) / 8);
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rf-card:hover {
+    border-color: color-mix(in oklab, var(--fx-ink) 28%, transparent);
+  }
+}
+
+/* Too narrow for four cards with wires between them. */
+@container rf-frame (max-width: 679px) {
+  .rf {
+    --rf-light-end: translateY(100%);
+
+    padding: 24px 16px;
+  }
+
+  .rf-head {
+    padding-top: 24px;
+    padding-right: 0;
+  }
+
+  .rf > .fx-play {
+    top: 10px;
+    min-height: 44px;
+  }
+
+  .rf-board {
+    padding-bottom: 0;
+  }
+
+  .rf-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rf-cell {
+    flex-direction: column;
+  }
+
+  .rf-card {
+    margin-bottom: 48px;
+  }
+
+  .rf-cell:last-child .rf-card {
+    margin-bottom: 0;
+  }
+
+  .rf-wire {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 32px;
+    flex-direction: row;
+    width: auto;
+    height: 48px;
+    transform: none;
+  }
+
+  .rf-line {
+    width: 1px;
+    height: 100%;
+  }
+
+  .rf-trace {
+    transform: scaleY(0);
+    transform-origin: 50% 0;
+  }
+
+  .rf-loop {
+    display: none;
+  }
+
+  /* The drawn loop doesn't fit, so its message stays as text. */
+  .rf-loop-word {
+    position: static;
+    margin-top: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rf-card {
+    transition: none;
+  }
+}

@@ -1,0 +1,85 @@
+.shipped-badge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  margin: 0;
+  padding: 10px 20px;
+  border-radius: 999px;
+  color: #121212;
+  font-family: "Open Runde", Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.shipped-badge.is-on-media,
+html[data-theme="dark"] .shipped-badge {
+  color: #fff;
+}
+
+.shipped-badge-dot,
+.shipped-badge-label {
+  position: relative;
+  z-index: 2;
+}
+
+.shipped-badge-dot {
+  display: block;
+  flex: 0 0 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  /* Solid fill on ::after so the ::before glow paints behind it. */
+  background: transparent;
+}
+
+.shipped-badge-dot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(8px * 4 / 3);
+  height: calc(8px * 4 / 3);
+  border-radius: 50%;
+  background: #22c55e;
+  filter: blur(4px);
+  opacity: 0.5;
+  transform: translate(-50%, -50%) scale(1);
+  animation: shipped-dot-glow-breathe 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.shipped-badge-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #22c55e;
+  pointer-events: none;
+}
+
+@keyframes shipped-dot-glow-breathe {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shipped-badge-dot::before {
+    animation: none;
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

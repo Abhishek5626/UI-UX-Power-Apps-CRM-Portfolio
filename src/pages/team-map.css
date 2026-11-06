@@ -1,0 +1,304 @@
+/* "Lead and delegate" decision table: values measured from the reference, in the site's own font. */
+.cs-system .tm {
+  --tm-person: #3a2f9e;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 32px;
+  border: 1px solid var(--fx-border);
+  border-radius: 16px;
+  background: var(--fx-panel);
+  box-shadow: 0 1px 2px rgb(31 61 46 / 0.06), 0 12px 32px -12px rgb(31 61 46 / 0.18);
+  container: tm / inline-size;
+}
+
+html[data-theme="dark"] .tm {
+  --tm-person: var(--cs-side-a-ink);
+}
+
+.tm-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.cs-system .tm-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+  list-style: none;
+}
+
+.tm-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tm-top .fx-play {
+  margin-right: -12px;
+  margin-left: auto;
+}
+
+.tm-mark-icon {
+  position: relative;
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.tm-mark-icon[data-mark="o"] {
+  background: var(--tm-person);
+}
+
+.tm-mark-icon[data-mark="a"] {
+  box-shadow: inset 0 0 0 1.5px var(--tm-person);
+}
+
+.tm-mark-icon[data-mark="w"] {
+  width: 14px;
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--tm-person) 55%, var(--fx-card));
+}
+
+.tm-mark-icon[data-mark="s"] {
+  width: 18px;
+  height: 18px;
+  background: var(--fx-ink);
+  color: var(--fx-card);
+}
+
+.cs-system .tm-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.tm-corner {
+  width: 34%;
+}
+
+.tm-role {
+  padding: 8px;
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.tm-role.is-me {
+  border-radius: 16px 16px 0 0;
+  color: var(--fx-ink);
+}
+
+.tm-role.is-me,
+.tm-cell.is-me,
+.tm-gap.is-me {
+  background: color-mix(in oklab, var(--fx-ink) 4%, transparent);
+}
+
+.tm-group-label {
+  padding: 8px 0 4px;
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: left;
+}
+
+.tm-group + .tm-group .tm-group-label {
+  padding-top: 12px;
+}
+
+.tm-row > * {
+  border-top: 1px solid var(--fx-hairline);
+  transition: opacity 250ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.tm-row.is-ahead > * {
+  opacity: 0.4;
+}
+
+.tm-row-head {
+  padding: 6px 16px 6px 12px;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: top;
+}
+
+.tm-row-text {
+  display: block;
+  color: var(--fx-ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 23px;
+  text-wrap: pretty;
+}
+
+.tm-where {
+  display: block;
+  color: var(--fx-ink-2);
+  font-size: 13px;
+  line-height: 18px;
+  text-wrap: pretty;
+}
+
+.tm-cell {
+  padding: 6px 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tm-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tm-chip-role,
+.tm-mark-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.tm-row.is-now .tm-cell.is-key .tm-mark-icon::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1.5px solid var(--tm-person);
+  border-radius: 50%;
+  opacity: 0;
+  animation: tm-ring 700ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes tm-ring {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  30% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+@container tm (max-width: 704px) {
+  .cs-system .tm-table,
+  .tm-table thead,
+  .tm-table tbody,
+  .tm-table tr,
+  .tm-table th,
+  .tm-table td {
+    display: block;
+    width: auto;
+  }
+
+  .cs-system .tm-table thead,
+  .tm-gap,
+  .tm-cell.is-empty {
+    display: none;
+  }
+
+  .tm-group-label {
+    padding: 16px 0 4px;
+  }
+
+  .tm-table .tm-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 6px 12px;
+    border-top: 1px solid var(--fx-hairline);
+  }
+
+  .tm-row > * {
+    border-top: 0;
+  }
+
+  .tm-table .tm-row-head {
+    flex: 0 0 100%;
+    padding: 0 0 2px;
+  }
+
+  .tm-cell,
+  .tm-cell.is-me {
+    padding: 0;
+    background: none;
+  }
+
+  .tm-mark {
+    gap: 6px;
+    min-height: 26px;
+    padding: 2px 10px 2px 6px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--tm-person) 8%, transparent);
+  }
+
+  .tm-chip-role,
+  .tm-mark-label {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .tm-chip-role {
+    color: var(--tm-person);
+    font-weight: 600;
+  }
+
+  .tm-mark-label {
+    color: var(--tm-person);
+  }
+}
+
+@media (max-width: 767px) {
+  .cs-system .tm {
+    padding: 16px;
+  }
+
+  .tm-top .fx-play {
+    min-height: 44px;
+  }
+}
+
+/* As on the reference: no control, and everything at rest. */
+@media (prefers-reduced-motion: reduce) {
+  .tm-top .fx-play {
+    display: none;
+  }
+
+  .tm-row > * {
+    transition: none;
+  }
+
+  .tm-row.is-now .tm-cell.is-key .tm-mark-icon::after {
+    animation: none;
+  }
+}

@@ -1,0 +1,146 @@
+/*
+  Landing page cards in dark mode: lavender edge, charcoal fill, soft glow and faint
+  contour lines. Stroke and wash are layers that fade, so switching theme stays
+  smooth and light mode paints nothing new. Artwork cards (media, music) keep their
+  own fill and take only the edge.
+*/
+:is(
+    .about-me-card,
+    .project-card,
+    .work-experience,
+    .music-card,
+    .testimonial-card,
+    .theme-status
+  ) {
+  position: relative;
+}
+
+:is(
+    .about-me-card,
+    .project-card,
+    .work-experience,
+    .music-card,
+    .testimonial-card,
+    .theme-status
+  )::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    126deg,
+    rgb(221 181 252 / 0.85),
+    rgb(221 181 252 / 0.16) 42%,
+    rgb(255 255 255 / 0.07) 70%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--theme-duration) var(--theme-ease);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+}
+
+html[data-theme="dark"]
+  :is(
+    .about-me-card,
+    .project-card,
+    .work-experience,
+    .music-card,
+    .testimonial-card,
+    .theme-status
+  ) {
+  border-color: transparent;
+  background: #1a1a1a;
+}
+
+html[data-theme="dark"]
+  :is(
+    .about-me-card,
+    .project-card,
+    .work-experience,
+    .music-card,
+    .testimonial-card,
+    .theme-status
+  )::before {
+  opacity: 0.85;
+}
+
+html[data-theme="dark"]
+  :is(
+    .about-me-surface,
+    .project-card-surface:not(.is-media),
+    .project-card-surface.is-media.is-light,
+    .work-experience-surface,
+    .testimonial-surface,
+    .theme-status-surface
+  ) {
+  background-color: #1a1a1a;
+}
+
+/* Glow and contours, behind each charcoal card's content. */
+:is(
+    .about-me-surface,
+    .project-card-surface:not(.is-media),
+    .project-card-surface.is-media.is-light,
+    .work-experience-surface,
+    .testimonial-surface,
+    .theme-status-surface
+  ) {
+  isolation: isolate;
+}
+
+:is(
+    .about-me-surface,
+    .project-card-surface:not(.is-media),
+    .project-card-surface.is-media.is-light,
+    .work-experience-surface,
+    .testimonial-surface,
+    .theme-status-surface
+  )::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(110% 70% at 0% 0%, rgb(221 181 252 / 0.13), transparent 70%),
+    radial-gradient(80% 40% at 100% 100%, rgb(170 140 255 / 0.1), transparent 75%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 66' preserveAspectRatio='none' fill='none' stroke='%23ddb5fc' stroke-opacity='.18'%3E%3Cpath d='M120 66C134 36 200 14 320 10'/%3E%3Cpath d='M176 66c12-20 60-32 144-36'/%3E%3Cpath d='M232 66c10-10 40-16 88-18'/%3E%3C/svg%3E")
+      right bottom / min(100%, 320px) 66px no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--theme-duration) var(--theme-ease);
+}
+
+html[data-theme="dark"]
+  :is(
+    .about-me-surface,
+    .project-card-surface:not(.is-media),
+    .project-card-surface.is-media.is-light,
+    .work-experience-surface,
+    .testimonial-surface,
+    .theme-status-surface
+  )::after {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="dark"]
+    :is(
+    .about-me-card,
+    .project-card,
+    .work-experience,
+    .music-card,
+    .testimonial-card,
+    .theme-status
+  ):hover::before {
+    opacity: 1;
+  }
+}

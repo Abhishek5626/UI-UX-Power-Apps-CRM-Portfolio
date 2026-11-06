@@ -1,0 +1,106 @@
+/* The portfolio-type skill's fonts and scale on the landing page. Sizes respect its fixed card heights. */
+html .project-fisheye-field *,
+html .portfolio-nav *,
+html .how-i-work-panel *,
+html .view-project-badge,
+html .view-project-badge *,
+html .ask-dock *,
+html .ask-panel * {
+  font-family: Geist, system-ui, sans-serif;
+  letter-spacing: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+.project-fisheye-field .hero-headline,
+.project-fisheye-field .hero-role-engineer,
+.project-fisheye-field .project-card-statement {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 44px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+}
+
+.project-fisheye-field .hero-headline,
+.project-fisheye-field .project-card-statement {
+  line-height: 48px;
+}
+
+.project-fisheye-field .hero-role-design {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 44px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.3px;
+}
+
+.project-fisheye-field .project-card-title {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.3px;
+}
+
+.project-fisheye-field .hero-summary {
+  font-size: 15px;
+  line-height: 23px;
+}
+
+/* These two sit in fixed-height cards, so they stay a step smaller than body text. */
+.project-fisheye-field .strategy-detail-copy {
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.project-fisheye-field .testimonial-surface p {
+  font-size: 15px;
+  line-height: 23px;
+}
+
+.project-fisheye-field .strategy-option {
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.project-fisheye-field :is(.theme-status-label, .design-strategy-title, .project-card-label, .work-experience-label, .music-card-label, .testimonial-label) {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.project-fisheye-field :is(.work-experience-role, .music-card-title, .testimonial-name) {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.project-fisheye-field :is(.work-experience-year, .music-card-artist, .testimonial-role, .project-card-summary, .about-me-how-i-work) {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.project-fisheye-field .shipped-badge {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+/* Fraunces runs wider than the old face, and the hero's title has to stay on one line. */
+@media (min-width: 761px) {
+  .project-fisheye-field .hero-headline,
+  .project-fisheye-field .hero-role-engineer,
+  .project-fisheye-field .hero-role-design {
+    font-size: 40px;
+  }
+
+  .project-fisheye-field .hero-headline {
+    line-height: 44px;
+  }
+}
+
+@media (max-width: 760px) {
+  .project-fisheye-field :is(.hero-headline, .hero-role-engineer, .hero-role-design, .project-card-statement) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}

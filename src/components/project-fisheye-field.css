@@ -1,0 +1,403 @@
+/* Whole-page infinite fisheye field. Only the nav and drawer sit above it. */
+
+/* The field pans itself; the document must never scroll underneath it
+   (the collapsed nav panel otherwise extends the page past the fold). */
+html:has(.landing-page.is-fisheye-page) {
+  overflow: hidden;
+}
+
+.landing-page.is-fisheye-page {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.landing-fisheye-main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.page-fisheye-field {
+  background: var(--theme-page);
+}
+
+.project-fisheye-field {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: none;
+  cursor: grab;
+  /*
+    The field is this page's scroll surface (the document never scrolls), so
+    one-finger pans must reach its pointer handlers; pinch-zoom stays native.
+  */
+  touch-action: pinch-zoom;
+}
+
+/* Only a recognised drag blocks selection and shows the grabbing hand. */
+.project-fisheye-field[data-dragging='true'],
+.project-fisheye-field[data-dragging='true'] * {
+  cursor: grabbing !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.project-fisheye-field:focus-visible {
+  box-shadow: inset 0 0 0 2px
+    color-mix(in srgb, var(--theme-text) 55%, transparent);
+}
+
+.project-fisheye-hint {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.project-fisheye-plane {
+  position: absolute;
+  inset: 0;
+}
+
+/* Half the reference vignette, matching the halved lens strength. */
+.project-fisheye-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    transparent 48%,
+    rgba(42, 35, 24, 0.065) 100%
+  );
+}
+
+:root[data-theme='dark'] .project-fisheye-vignette {
+  background: radial-gradient(
+    circle at center,
+    transparent 48%,
+    rgba(0, 0, 0, 0.14) 100%
+  );
+}
+
+/*
+  The hero keeps its Figma height (173), so on narrow screens its 584px
+  design is scaled as one piece instead of reflowing taller. It never grows
+  past 1 and always fits inside the viewport gutters.
+*/
+.fisheye-hero-tile {
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.fisheye-hero-tile > .hero-introduction {
+  flex: none;
+  width: 584px;
+  transform-origin: 0 0;
+  transform: scale(
+    min(
+      1,
+      var(--fisheye-scale, 1),
+      calc((var(--fisheye-view-w, 1440) - 70) / 584)
+    )
+  );
+}
+
+/* Tiles sit on the page's flat colour, where a backdrop blur changes nothing. */
+.project-fisheye-plane {
+  --landing-glass-blur: none;
+}
+
+.project-fisheye-tile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--fisheye-cell-w, 280px);
+  height: var(--fisheye-cell-h, 240px);
+  transform-origin: 0 0;
+  will-change: transform;
+  visibility: hidden;
+}
+
+.project-fisheye-tile > *,
+.project-fisheye-entrance > * {
+  width: 100%;
+  height: 100%;
+}
+
+/*
+  Load swoop layer (animated from LandingPage). Cards stay hidden while the
+  page is pending so the final layout never flashes before the swoop. If the
+  script never starts or stalls, the CSS fallback reveals them after 4s.
+*/
+.project-fisheye-entrance {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.is-entrance-pending .project-fisheye-entrance {
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: project-fisheye-entrance-failsafe 0s linear 4s forwards;
+}
+
+/* The stall timer only starts counting once the first-load screen has gone. */
+html[data-loader] .is-entrance-pending .project-fisheye-entrance {
+  animation: none;
+}
+
+@keyframes project-fisheye-entrance-failsafe {
+  to {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.project-fisheye-tile .project-card,
+.project-fisheye-tile .about-me-card,
+.project-fisheye-tile .work-experience,
+.project-fisheye-tile .music-card,
+.project-fisheye-tile .design-strategy,
+.project-fisheye-tile .testimonial-card {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.project-fisheye-tile .project-card.is-showcase {
+  height: 100%;
+}
+
+.project-fisheye-tile .project-card-surface,
+.project-fisheye-tile .about-me-surface,
+.project-fisheye-tile .work-experience-surface,
+.project-fisheye-tile .music-card-surface,
+.project-fisheye-tile .testimonial-surface {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/*
+  Figma node 54:616: 10px inset and a two-line quote inside 191px. The live
+  quote is longer, so clamp it to the same two lines rather than grow the card.
+*/
+.project-fisheye-tile .testimonial-surface {
+  gap: 13px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.project-fisheye-tile .testimonial-quote p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.project-fisheye-tile .project-card-surface.is-media {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.project-fisheye-links {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+  Keyboard equivalent of hovering a project: the list shows while focused.
+  Top centre, because the page-level progressive blur covers the bottom edge
+  and this field's isolated stacking context can't rise above it.
+*/
+.project-fisheye-links:focus-within {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  z-index: 21;
+  justify-content: center;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: auto;
+  max-width: calc(100vw - 32px);
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+.project-fisheye-links:focus-within a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--theme-surface);
+  box-shadow: var(--theme-glass-shadow);
+  color: var(--theme-text);
+  font: 500 14px/1.2 Inter, sans-serif;
+}
+
+.project-fisheye-links a:focus-visible {
+  outline: 2px solid var(--theme-text);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-fisheye-tile {
+    will-change: auto;
+  }
+
+  .project-fisheye-entrance {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/*
+  Phone layout (Figma node 92-2): the same field as desktop, laid out as a
+  two-axis sheet of columns. Card heights are the frame's; hero text scales
+  with the screen so its line breaks hold on narrower phones.
+*/
+@media (max-width: 760px) {
+  /* Statement cards set their desktop height inline; the tile decides here. */
+  .is-mobile-stack .project-fisheye-tile .project-card {
+    height: 100% !important;
+  }
+
+  .is-mobile-stack .project-fisheye-tile .project-card-statement {
+    max-width: 150px;
+    font-size: 30px;
+    line-height: 34px;
+  }
+
+  /* Capped so two rows leave the same 16px under the logos as at the sides. */
+  .is-mobile-stack .project-fisheye-tile .tool-grid {
+    grid-template-columns: repeat(4, minmax(0, 64px));
+    justify-content: space-between;
+  }
+
+  /* Small pills over a flat card: a blur re-run every frame of a pan shows nothing. */
+  html .is-mobile-stack .project-fisheye-tile .shipped-badge,
+  html .is-mobile-stack .project-fisheye-tile .work-experience-reset {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* The frame's 212px testimonial has room for one more line than desktop. */
+  .is-mobile-stack .project-fisheye-tile .testimonial-quote p {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .mobile-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .mobile-hero .hero-headline,
+  .mobile-hero .hero-role {
+    display: inline;
+  }
+
+  .mobile-hero .hero-headline {
+    font-size: min(38px, 9.67vw);
+    line-height: 1.29;
+  }
+
+  .mobile-hero .hero-role {
+    display: block;
+    font-size: min(24px, 6.1vw);
+    line-height: 1.29;
+    white-space: nowrap;
+  }
+
+  .mobile-hero .hero-role-design {
+    font-family: "PP Mori", "Aeonik Pro", Inter, sans-serif;
+    font-style: normal;
+  }
+
+  .mobile-hero .hero-summary {
+    line-height: 20px;
+  }
+
+  /*
+    The real toggle, scaled as one piece to the frame's 38px height. It stays
+    above the open menu's scrim (60), as in Figma node 106-774.
+  */
+  .mobile-theme-toggle {
+    position: fixed;
+    top: max(16px, env(safe-area-inset-top));
+    right: max(16px, env(safe-area-inset-right));
+    z-index: 61;
+    width: 38px;
+    height: 38px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Comfortable tap target without changing the drawn size. */
+  .mobile-theme-toggle::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+  }
+
+  .mobile-theme-toggle .theme-toggle {
+    --toggle-width: 56px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: scale(0.6786);
+    transform-origin: top right;
+  }
+
+  .mobile-theme-toggle:focus-visible {
+    outline: 2px solid var(--theme-text);
+    outline-offset: 2px;
+    border-radius: 999px;
+  }
+
+  html[data-mobile-nav='hidden'] .mobile-theme-toggle:not(:focus-visible) {
+    transform: translate3d(
+      0,
+      calc(-100% - max(16px, env(safe-area-inset-top)) - 8px),
+      0
+    );
+  }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .mobile-theme-toggle {
+    transition: none;
+  }
+}

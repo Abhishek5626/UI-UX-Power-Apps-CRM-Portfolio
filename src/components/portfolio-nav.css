@@ -1,0 +1,465 @@
+.portfolio-nav .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.portfolio-nav {
+  --nav-tile: #f0f1f6;
+  --nav-tile-hover: #f3f4f8;
+  --nav-tile-chip: var(--theme-surface);
+  --nav-card-edge: rgb(255 255 255 / 0.7);
+  --nav-noise: 0.14;
+  /* Framer springs: cards duration 1 / bounce 0.2; circle duration 0.4 / bounce 0.2 */
+  --nav-card-ease: cubic-bezier(0.22, 1.4, 0.36, 1);
+  --nav-card-duration: 1s;
+  --nav-circle-ease: cubic-bezier(0.22, 1.35, 0.36, 1);
+  --nav-circle-duration: 0.4s;
+  --nav-scrim: color-mix(in srgb, var(--theme-border-strong) 62%, transparent);
+  --nav-bar-pad: 44px;
+  --nav-toggle-w: 38px;
+  /* Figma "Desktop - 2": 194×207 cards, 18px apart, shrinking to fit. */
+  --nav-bar-gap: 18px;
+  --nav-card-gap: 18px;
+  --nav-card-w: min(
+    194px,
+    calc(
+      (100vw - var(--nav-bar-pad) * 2 - var(--nav-toggle-w) - var(--nav-bar-gap) - var(--nav-card-gap) * 3) / 4
+    )
+  );
+  --nav-card-h: calc(var(--nav-card-w) * 207 / 194);
+  --nav-card-pad: 12px 13px;
+  --nav-card-radius: 8px;
+
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+html[data-theme="dark"] .portfolio-nav {
+  --nav-tile: var(--theme-surface);
+  --nav-tile-hover: var(--theme-border);
+  --nav-tile-chip: var(--theme-chip);
+  --nav-card-edge: var(--theme-border);
+  --nav-noise: 0.1;
+  --nav-scrim: color-mix(in srgb, var(--theme-page) 62%, transparent);
+}
+
+.portfolio-nav-scrim {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  backdrop-filter: blur(0) saturate(1);
+  -webkit-backdrop-filter: blur(0) saturate(1);
+  opacity: 0;
+  transition:
+    background-color var(--nav-card-duration) var(--nav-card-ease),
+    backdrop-filter var(--nav-card-duration) var(--nav-card-ease),
+    -webkit-backdrop-filter var(--nav-card-duration) var(--nav-card-ease),
+    opacity var(--nav-card-duration) var(--nav-card-ease);
+  pointer-events: none;
+}
+
+.portfolio-nav.is-open .portfolio-nav-scrim {
+  background: var(--nav-scrim);
+  backdrop-filter: blur(25px) saturate(1.3);
+  -webkit-backdrop-filter: blur(25px) saturate(1.3);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/*
+  Bottom dock matching Framer `.framer-17bce4m`:
+  row, align end, gap 24px, padding 44px.
+*/
+.portfolio-nav-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: var(--nav-bar-gap);
+  box-sizing: border-box;
+  padding: max(var(--nav-bar-pad), env(safe-area-inset-bottom))
+    max(var(--nav-bar-pad), env(safe-area-inset-right))
+    max(var(--nav-bar-pad), env(safe-area-inset-bottom))
+    max(var(--nav-bar-pad), env(safe-area-inset-left));
+  pointer-events: none;
+}
+
+.portfolio-nav-toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--theme-text);
+  cursor: pointer;
+  outline: none;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.portfolio-nav-toggle-face {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--theme-text);
+}
+
+.portfolio-nav-toggle-icon {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  /* Framer Plus = rotate -180; Close = rotate 45 (plus becomes X) */
+  transform: rotate(-180deg);
+  transition: transform var(--nav-circle-duration) var(--nav-circle-ease);
+}
+
+.portfolio-nav-toggle-icon svg {
+  display: block;
+}
+
+.portfolio-nav.is-open .portfolio-nav-toggle-icon {
+  transform: rotate(45deg);
+}
+
+.portfolio-nav-toggle:active .portfolio-nav-toggle-face {
+  transform: scale(0.9);
+}
+
+.portfolio-nav-panel {
+  position: relative;
+  flex: 0 1 auto;
+  min-width: 0;
+  pointer-events: none;
+}
+
+.portfolio-nav.is-open .portfolio-nav-panel {
+  pointer-events: auto;
+}
+
+/* Horizontal card row — matches Framer `.framer-135ofiv` desktop open */
+.portfolio-nav-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: var(--nav-card-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+  Rise from below (not from the right).
+  Open delays 0.1–0.25s; close delays 0.15→0.
+*/
+.portfolio-nav-item {
+  flex: 0 0 auto;
+  opacity: 0;
+  transform: translate3d(0, 100%, 0);
+  transition:
+    opacity var(--nav-card-duration) var(--nav-card-ease),
+    transform var(--nav-card-duration) var(--nav-card-ease);
+  transition-delay: var(--nav-close-delay, 0s);
+  pointer-events: none;
+}
+
+.portfolio-nav.is-open .portfolio-nav-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: var(--nav-open-delay, 0.1s);
+  pointer-events: auto;
+}
+
+.portfolio-nav-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: var(--nav-card-w);
+  height: var(--nav-card-h);
+  margin: 0;
+  padding: var(--nav-card-pad);
+  border: 1px solid var(--nav-card-edge);
+  border-radius: var(--nav-card-radius);
+  background: var(--nav-tile);
+  color: var(--theme-text);
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background-color 220ms ease, transform 220ms var(--nav-card-ease);
+}
+
+/* Static film grain, kept under the card's content and out of hit-testing. */
+.portfolio-nav-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--nav-noise);
+  pointer-events: none;
+}
+
+.portfolio-nav-card:hover {
+  background: var(--nav-tile-hover);
+  transform: translateY(-2px);
+}
+
+.portfolio-nav-card:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.portfolio-nav-card.is-active {
+  border-color: var(--theme-text-muted);
+}
+
+.portfolio-nav-card:focus-visible {
+  outline: 2px solid var(--theme-text);
+  outline-offset: 2px;
+}
+
+.portfolio-nav-card-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--nav-tile-chip);
+  color: var(--theme-text-muted);
+  font-family: Inter, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.portfolio-nav-card-label {
+  max-width: 100%;
+  font-family: "Aeonik Pro", Inter, sans-serif;
+  color: color-mix(in srgb, var(--theme-text) 85%, transparent);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* The row's cards shrink with the screen before it would clip. */
+@media (max-width: 900px) {
+  .portfolio-nav {
+    --nav-bar-pad: 28px;
+  }
+}
+
+/* Phones: a 2x2 grid, since four cards in a row can't fit their labels. */
+@media (max-width: 640px) {
+  .portfolio-nav {
+    --nav-bar-pad: 16px;
+    --nav-bar-gap: 10px;
+    --nav-card-gap: 8px;
+    --nav-card-w: min(
+      194px,
+      calc(
+        (100vw - var(--nav-bar-pad) * 2 - var(--nav-toggle-w) - var(--nav-bar-gap) - var(--nav-card-gap)) / 2
+      )
+    );
+    --nav-card-pad: 10px;
+  }
+
+  .portfolio-nav-list {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+  }
+
+  .portfolio-nav-card-label {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-nav-scrim,
+  .portfolio-nav-item,
+  .portfolio-nav-card,
+  .portfolio-nav-toggle-face,
+  .portfolio-nav-toggle-icon,
+  .portfolio-nav-toggle-face::after {
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .portfolio-nav-item {
+    transform: none;
+  }
+
+  .portfolio-nav-toggle:active .portfolio-nav-toggle-face,
+  .portfolio-nav-card:hover,
+  .portfolio-nav-card:active {
+    transform: none;
+  }
+}
+
+/*
+  Phone layout (Figma node 92-2): the circular menu sits top-left and slides
+  away on downward scroll. The case-study drawer keeps the bottom dock.
+*/
+@media (max-width: 760px) {
+  /* Figma node 106-774: full-width 205px cards under the plus, 18px apart. */
+  html .portfolio-nav {
+    --nav-card-w: 100%;
+    --nav-card-h: 205px;
+    --nav-card-gap: 18px;
+    --nav-card-pad: 12px 14px;
+    --nav-top-zone: calc(max(16px, env(safe-area-inset-top)) + 54px);
+  }
+
+  html .portfolio-nav-bar {
+    top: 0;
+    align-items: flex-start;
+    padding: max(16px, env(safe-area-inset-top))
+      max(16px, env(safe-area-inset-right)) 16px
+      max(16px, env(safe-area-inset-left));
+  }
+
+  /* The cards outgrow the screen, so the whole screen scrolls under the controls. */
+  html .portfolio-nav-panel {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    box-sizing: border-box;
+    padding: var(--nav-top-zone) max(16px, env(safe-area-inset-right))
+      calc(16px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-padding-block: var(--nav-top-zone) 16px;
+    scrollbar-width: none;
+    touch-action: pan-y;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--nav-top-zone));
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--nav-top-zone));
+  }
+
+  /* The shared bottom-edge blur, flipped to sit behind the top controls. */
+  .portfolio-nav-top-blur {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--nav-circle-duration) ease,
+      visibility var(--nav-circle-duration);
+  }
+
+  .portfolio-nav.is-open .portfolio-nav-top-blur {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .portfolio-nav-top-blur.is-absolute .progressive-blur-edge {
+    top: 0;
+    bottom: auto;
+    height: var(--nav-top-zone);
+    transform: scaleY(-1);
+  }
+
+  html .portfolio-nav-toggle {
+    z-index: 3;
+  }
+
+  html .portfolio-nav-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html .portfolio-nav-card-label {
+    font-size: 22px;
+  }
+
+  html .portfolio-nav-toggle,
+  html .portfolio-nav-toggle-face {
+    width: 38px;
+    height: 38px;
+  }
+
+  html .portfolio-nav-toggle {
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Comfortable tap target without changing the drawn size. */
+  html .portfolio-nav-toggle::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+  }
+
+  html[data-mobile-nav='hidden']:not(:has(.project-drawer))
+    .portfolio-nav:not(.is-open)
+    .portfolio-nav-toggle:not(:focus-visible) {
+    transform: translate3d(
+      0,
+      calc(-100% - max(16px, env(safe-area-inset-top)) - 8px),
+      0
+    );
+  }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  html .portfolio-nav-toggle {
+    transition: none;
+  }
+}
+
+/* Desktop: 30% larger circle, sitting lower with equal left and bottom insets. */
+@media (width > 760px) {
+  .portfolio-nav {
+    --nav-bar-pad: 32px;
+    --nav-toggle-w: 46.8px;
+  }
+
+  .portfolio-nav-toggle,
+  .portfolio-nav-toggle-face {
+    width: 46.8px;
+    height: 46.8px;
+  }
+
+  .portfolio-nav-toggle-icon,
+  .portfolio-nav-toggle-icon svg {
+    width: 15.6px;
+    height: 15.6px;
+  }
+}
+
+@media (width > 760px) and (max-width: 900px) {
+  .portfolio-nav {
+    --nav-bar-pad: 20px;
+  }
+}

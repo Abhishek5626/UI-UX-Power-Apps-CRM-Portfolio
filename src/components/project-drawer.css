@@ -1,0 +1,296 @@
+.landing-stage {
+  --landing-page-bg: var(--theme-page);
+  min-height: 100vh;
+  background: var(--theme-page);
+  transition: background-color var(--theme-duration) var(--theme-ease);
+}
+
+.landing-stage.is-entrance-pending {
+  overflow: clip;
+}
+
+.landing-stage-canvas {
+  min-height: 100vh;
+  opacity: 1;
+  transform: scale(1);
+  transform-origin: center center;
+}
+
+.landing-stage-canvas.is-covered {
+  animation: project-backdrop-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.landing-stage-canvas.is-revealing {
+  animation: project-backdrop-out 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.project-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  background: var(--theme-page);
+  color: var(--theme-text);
+  transform: translate3d(0, 100%, 0);
+  transition: background-color var(--theme-duration) var(--theme-ease);
+}
+
+.project-drawer.is-entering {
+  animation: project-drawer-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.project-drawer.is-exiting {
+  animation: project-drawer-out 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes project-drawer-in {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes project-drawer-out {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes project-backdrop-in {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0.4;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes project-backdrop-out {
+  from {
+    opacity: 0.4;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.project-drawer-scroll {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-top: 88px;
+  scroll-padding-bottom: 96px;
+  scrollbar-width: none;
+}
+
+.project-drawer-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.project-drawer-scroll .case-study {
+  min-height: 100%;
+  padding-top: 88px;
+  padding-bottom: 112px;
+}
+
+.project-drawer-content.is-in {
+  animation: project-drawer-content-in 0.8s cubic-bezier(0.05, 0.7, 0.1, 1) 0.2s both;
+}
+
+.project-drawer-content.is-out {
+  animation: project-drawer-content-out 0.8s cubic-bezier(0.05, 0.7, 0.1, 1) both;
+  pointer-events: none;
+}
+
+.project-drawer-content.is-next.is-in,
+.project-drawer-content.is-prev.is-in,
+.project-drawer-content.is-next.is-out,
+.project-drawer-content.is-prev.is-out {
+  animation-duration: 0.52s;
+  animation-delay: 0s;
+}
+
+.project-drawer-content.is-next.is-in {
+  animation-name: project-drawer-next-in;
+}
+
+.project-drawer-content.is-next.is-out {
+  animation-name: project-drawer-next-out;
+}
+
+.project-drawer-content.is-prev.is-in {
+  animation-name: project-drawer-prev-in;
+}
+
+.project-drawer-content.is-prev.is-out {
+  animation-name: project-drawer-prev-out;
+}
+
+@keyframes project-drawer-content-in {
+  from {
+    transform: translate3d(0, 160px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes project-drawer-content-out {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, -35px, 0);
+  }
+}
+
+@keyframes project-drawer-next-out {
+  to {
+    opacity: 0;
+    transform: translate3d(-72px, 0, 0);
+  }
+}
+
+@keyframes project-drawer-next-in {
+  from {
+    opacity: 0;
+    transform: translate3d(72px, 0, 0);
+  }
+}
+
+@keyframes project-drawer-prev-out {
+  to {
+    opacity: 0;
+    transform: translate3d(72px, 0, 0);
+  }
+}
+
+@keyframes project-drawer-prev-in {
+  from {
+    opacity: 0;
+    transform: translate3d(-72px, 0, 0);
+  }
+}
+
+.project-drawer-tools,
+.project-drawer-nav {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+}
+
+.project-drawer-tools {
+  top: max(24px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  gap: 16px;
+}
+
+.project-drawer-nav {
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  gap: 12px;
+}
+
+.project-drawer-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.project-drawer-glass {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 999px;
+  color: var(--theme-text);
+}
+
+.project-drawer {
+  --control-size: 47px;
+}
+
+.project-drawer-control {
+  width: var(--control-size);
+  height: var(--control-size);
+}
+
+/* A round button rather than a sliding switch, as its box is now square. */
+.project-drawer-theme.theme-toggle.is-compact {
+  --toggle-width: var(--control-size);
+  --toggle-height: var(--control-size);
+  --toggle-pad: calc((var(--control-size) - 38px) / 2);
+  border-radius: 50%;
+}
+
+@media (max-width: 760px) {
+  .project-drawer {
+    --control-size: 38px;
+  }
+
+  .project-drawer-tools {
+    top: max(16px, env(safe-area-inset-top));
+    gap: 12px;
+  }
+
+  .project-drawer-control,
+  .project-drawer-theme {
+    position: relative;
+  }
+
+  .project-drawer-control::before,
+  .project-drawer-theme::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+  }
+}
+
+@media (min-width: 768px) {
+  .project-drawer-tools {
+    top: max(32px, env(safe-area-inset-top));
+    right: max(32px, env(safe-area-inset-right));
+  }
+
+  .project-drawer-nav {
+    right: max(32px, env(safe-area-inset-right));
+    bottom: max(32px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-drawer-content.is-in,
+  .project-drawer-content.is-out {
+    animation: none;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
