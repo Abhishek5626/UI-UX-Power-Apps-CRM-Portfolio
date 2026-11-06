@@ -49,9 +49,6 @@ html[data-theme='dark'] .work-experience-surface::before {
   z-index: 1;
 }
 
-html:not([data-theme='dark']) .work-experience .project-card-icon {
-  background: var(--landing-glass-fill), rgba(255, 255, 255, 0.1);
-}
 
 .work-experience-heading {
   display: flex;
@@ -63,7 +60,7 @@ html:not([data-theme='dark']) .work-experience .project-card-icon {
 .work-experience-label {
   margin: 0;
   color: #2f2d2d;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -73,7 +70,7 @@ html:not([data-theme='dark']) .work-experience .project-card-icon {
 .work-experience-year {
   margin-left: auto;
   color: #6e6d6d;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 12px;
   font-weight: 400;
   font-variant-numeric: tabular-nums;
@@ -180,7 +177,7 @@ html:not([data-theme='dark']) .work-experience .project-card-icon {
   margin: 0;
   overflow: hidden;
   color: #666;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -195,7 +192,7 @@ html:not([data-theme='dark']) .work-experience .project-card-icon {
   margin: 0;
   overflow: hidden;
   color: #2f2d2d;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 17px;
   font-weight: 500;
   letter-spacing: -0.04em;
@@ -253,14 +250,14 @@ html:not([data-theme='dark']) .work-experience .project-card-icon {
 }
 
 .work-experience-amount {
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
 .work-experience-unit {
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 10px;
   font-weight: 500;
   opacity: 0.8;

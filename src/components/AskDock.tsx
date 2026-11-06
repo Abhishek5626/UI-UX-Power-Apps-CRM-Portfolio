@@ -12,7 +12,7 @@ const suggestions = [
   { label: 'Adoption', question: 'Why does nobody use the AI we shipped?' },
 ]
 
-/** The case studies with their own facts in api/ask.ts. Each gets its own chat. */
+/** The case studies (and the How I Work page) with their own facts in api/ask.ts. Each gets its own chat. */
 export const askStudies = {
   'case-study-4': {
     greeting: 'I’m Abhishek’s AI assistant. Ask me anything about the Agentic AI case study.',
@@ -32,6 +32,16 @@ export const askStudies = {
       { label: 'Results', question: 'What results is it aiming for?' },
       { label: 'Easier', question: 'How does it make life easier for people using Quik?' },
       { label: 'Time', question: 'How fast could a new user launch with it?' },
+    ],
+  },
+  'how-i-work': {
+    greeting: 'I’m Abhishek’s AI assistant. Ask me anything about how Abhishek works.',
+    prompt: 'How do you work with PMs and engineers?',
+    suggestions: [
+      { label: 'Teamwork', question: 'How do you work with PMs and engineers?' },
+      { label: 'Handoff', question: 'How do you hand designs over to engineers?' },
+      { label: 'Best fit', question: 'Where do you do your best work?' },
+      { label: 'Complexity', question: 'How do you handle dense, complex products?' },
     ],
   },
 } as const
@@ -119,7 +129,7 @@ export function AskDock({ hidden, study = null }: { hidden: boolean; study?: Ask
   const closingRef = useRef(false)
 
   // The landing page pans rather than scrolls, so direction comes from the wheel, drags and keys.
-  // A case study scrolls its drawer, so direction there comes from the scroll position.
+  // A case study scrolls its drawer (and How I Work its sheet), so direction there comes from the scroll position.
   useEffect(() => {
     if (hidden) return
     let travelled = 0
@@ -132,7 +142,7 @@ export function AskDock({ hidden, study = null }: { hidden: boolean; study?: Ask
     }
     const onField = (target: EventTarget | null) => target instanceof Element && target.closest('.project-fisheye-field')
     const onScroll = (event: Event) => {
-      if (!(event.target instanceof Element) || !event.target.matches('.project-drawer-scroll')) return
+      if (!(event.target instanceof Element) || !event.target.matches('.project-drawer-scroll, dialog.sheet-dialog')) return
       const y = event.target.scrollTop
       move(y - lastY)
       lastY = y
@@ -313,6 +323,8 @@ export function AskDock({ hidden, study = null }: { hidden: boolean; study?: Ask
             </button>
             {contact.resume && !study ? (
               <a className="ask-chip ask-dock-resume" href={contact.resume} download="Abhishek Kashid Resume.pdf">
+                {/* Glow and iridescent ring (ask-dock.css); spans, as the phone layout uses ::before for the tap area. */}
+                <span className="ask-resume-ring" aria-hidden="true" />
                 <Send />
                 Download Resume
               </a>

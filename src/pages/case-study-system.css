@@ -19,7 +19,7 @@
   --cs-chip: #f4f4f4;
   --cs-border: #efefef;
   --cs-border-soft: #f6f6f6;
-  --cs-font: Geist, system-ui, sans-serif;
+  --cs-font: var(--font-family);
   --cs-heading: #191919;
   --cs-text: #191919;
   --cs-text-soft: #616161;

@@ -1,6 +1,6 @@
 /*
-  The case study's type, measured from surinder.design/saga/case by matching its text to the
-  same text here. Loaded after every panel so one file decides each size.
+  The case study's type: Open Runde and the scale from dousanmiao.com's case study pages.
+  Loaded after every panel so one file decides each size.
 */
 @font-face {
   font-family: "Departure Mono";
@@ -20,83 +20,83 @@
 }
 
 .cs-system .cs-content :is(.cs-h1) {
-  font-family: Fraunces, Georgia, serif;
-  font-size: 44px;
-  font-weight: 500;
-  line-height: 48px;
-  letter-spacing: -0.3px;
+  font-family: var(--font-family);
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 64.4px;
+  letter-spacing: -2.8px;
 }
 
 .cs-system .cs-content .cs-h2 {
-  font-family: Fraunces, Georgia, serif;
+  font-family: var(--font-family);
   font-size: 24px;
-  font-weight: 500;
-  line-height: 28px;
-  letter-spacing: -0.3px;
+  font-weight: 700;
+  line-height: 32px;
 }
 
 .cs-system .cs-content .cs-b1 {
   color: var(--cs-text-soft);
   font-size: 16px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 26px;
 }
 
 .cs-system .cs-content .cs-chapter > .cs-block:first-child > .cs-block-head .cs-b1,
 .cs-system .cs-content .cs-opening-summary {
   max-width: 720px;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 28px;
+  letter-spacing: -0.4px;
 }
 
 .cs-system .cs-content .shipped-badge {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 18px;
+  line-height: 20px;
 }
 
 .cs-system .cs-content .jb-head .jb-chip {
-  font-family: "Departure Mono", ui-monospace, monospace;
-  font-size: 13px;
+  font-family: var(--font-family);
+  font-size: 14px;
   line-height: 24px;
 }
 
 .cs-system .cs-content .jb-foot .jb-chip,
 .cs-system .cs-content .jb-link,
 .cs-system .cs-content .jb-legend-item .jb-chip {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 13px;
+  line-height: 14px;
 }
 
 .cs-system .cs-content th {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 20px;
 }
 
 .cs-system .cs-content td {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 20px;
 }
 
 .cs-system .cs-content :is(.cs-always-list, .cs-person-list, .jb-bands) li {
-  line-height: 23px;
+  line-height: 26px;
 }
 
 .cs-system .cs-content .cs-always-list,
 .cs-system .cs-content .cs-person-list {
-  font-size: 15px;
-  line-height: 23px;
+  font-size: 16px;
+  line-height: 26px;
 }
 
 .cs-system .cs-content .cs-role-points {
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .cs-system .cs-content .jb-points {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 20px;
 }
 
@@ -105,29 +105,29 @@
 }
 
 .cs-system .cs-content .jb-bands li {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 13px;
+  line-height: 14px;
 }
 
 .cs-system .cs-content .pf-agent-label p {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 18px;
+  line-height: 20px;
 }
 
 .cs-system .cs-content .pg-part strong,
 .cs-system .cs-content .pg-voice dd,
 .cs-system .cs-content .pg-facts dd {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 20px;
 }
 
 .cs-system .cs-content .pg-voice dt,
 .cs-system .cs-content .pg-facts dt {
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .cs-system .cs-content .pg-file,
@@ -139,40 +139,40 @@
 }
 
 .cs-system .cs-content .td-axis span {
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 /* Navigation */
 .cs-system .cs-toc .cs-toc-number {
-  font-family: "Departure Mono", ui-monospace, monospace;
+  font-family: var(--font-family);
   font-size: 12px;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 20px;
   letter-spacing: 0.3px;
 }
 
 .cs-system .cs-toc .cs-toc-name {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 22px;
 }
 
 .cs-system .cs-toc .cs-toc-detail {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 20px;
 }
 
 .cs-system .cs-toc .cs-toc-note {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 18px;
+  line-height: 20px;
 }
 
 .cs-system .cs-content .pg-source,
 .cs-system .cs-content .vp-stamp {
-  font-family: "Departure Mono", ui-monospace, monospace;
+  font-family: var(--font-family);
   font-size: 11px;
   font-weight: 400;
   line-height: 11px;
@@ -181,44 +181,43 @@
 
 .cs-system .cs-content .pg-row-code {
   font-family: "Departure Mono", ui-monospace, monospace;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 13px;
+  line-height: 14px;
 }
 
 .cs-system .cs-content .op-code,
 .cs-system .cs-content .vb-dot {
-  font-family: "Departure Mono", ui-monospace, monospace;
-  font-size: 13px;
+  font-family: var(--font-family);
+  font-size: 14px;
   font-weight: 400;
   line-height: 24px;
 }
 
 .cs-system .cs-content .cs-pass {
-  font-family: Fraunces, Georgia, serif;
-  font-size: 18px;
-  font-weight: 500;
+  font-family: var(--font-family);
+  font-size: 20px;
+  font-weight: 700;
   line-height: 28px;
-  letter-spacing: -0.3px;
 }
 
 .cs-system .cs-content .fg-5351d3,
 .cs-system .cs-content .ft-figure,
 .cs-system .cs-content .jb-title,
 .cs-system .cs-content .rf-figure {
-  font-family: Fraunces, Georgia, serif;
-  font-size: 28px;
-  font-weight: 500;
-  line-height: 34px;
-  letter-spacing: -0.3px;
+  font-family: var(--font-family);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 40px;
+  letter-spacing: -0.64px;
 }
 
 .cs-system .cs-content .vp-title {
-  font-family: Fraunces, Georgia, serif;
+  font-family: var(--font-family);
   font-size: 32px;
-  font-weight: 500;
-  line-height: 40px;
-  letter-spacing: -0.3px;
+  font-weight: 600;
+  line-height: 38.4px;
+  letter-spacing: -0.8px;
 }
 
 .cs-system .cs-content .jb-mark {
@@ -286,9 +285,9 @@
 .cs-system .cs-content .jb-tag,
 .cs-system .cs-content .pf-mark,
 .cs-system .cs-content .sx-pill {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 13px;
+  line-height: 14px;
 }
 
 .cs-system .cs-content .ef-marker,
@@ -299,20 +298,20 @@
 .cs-system .cs-content .fg-bf81d7,
 .cs-system .cs-content .td-pill,
 .cs-system .cs-content .tf-check-num {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  line-height: 13px;
+  line-height: 14px;
 }
 
 .cs-system .cs-content .rf-word,
 .cs-system .cs-content .ts-word {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 16px;
 }
 
 .cs-system .cs-content .jb-label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 16px;
 }
@@ -357,9 +356,9 @@
 .cs-system .cs-content .vb-owner,
 .cs-system .cs-content .vb-when,
 .cs-system .cs-content .vp-step {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 20px;
 }
 
 .cs-system .cs-content .af-for,
@@ -402,9 +401,9 @@
 .cs-system .cs-content .ts-foot-label,
 .cs-system .cs-content .ts-layer,
 .cs-system .cs-content .vb-me-label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 18px;
+  line-height: 20px;
 }
 
 .cs-system .cs-content .cs-role-header,
@@ -421,39 +420,39 @@
 .cs-system .cs-content .sr-quick-button,
 .cs-system .cs-content .sr-sender,
 .cs-system .cs-content .vb-me-text {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  line-height: 18px;
+  line-height: 20px;
 }
 
 .cs-system .cs-content .sf-not-yet,
 .cs-system .cs-content .sx-states-note {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 20px;
 }
 
 .cs-system .cs-content .sr-gives {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 20px;
 }
 
 .cs-system .cs-content .tf-fit {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 22px;
 }
 
 .cs-system .cs-content .fx-play {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 24px;
 }
 
 .cs-system .cs-content .jb-why,
 .cs-system .cs-content .ts-button {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 24px;
 }
@@ -477,13 +476,13 @@
 }
 
 .cs-system .cs-content .ft-num {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 15px;
 }
 
 .cs-system .cs-content .vp-receipt-name {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 20px;
 }
@@ -498,13 +497,13 @@
 .cs-system .cs-content .pg-receipt-title,
 .cs-system .cs-content .tf-agent-name,
 .cs-system .cs-content .vp-receipt-price {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 20px;
 }
 
 .cs-system .cs-content .cs-toc-name {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 22px;
 }
@@ -518,7 +517,7 @@
 .cs-system .cs-content .sf-name,
 .cs-system .cs-content .sx-voice-title,
 .cs-system .cs-content .tf-part {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 22px;
 }
@@ -548,16 +547,16 @@
 .cs-system .cs-content .sx-voice-note,
 .cs-system .cs-content .sx-voice-text,
 .cs-system .cs-content .td-note {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 23px;
+  line-height: 26px;
 }
 
 .cs-system .cs-content .cs-meta-title,
 .cs-system .cs-content .rf-unit {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 23px;
+  line-height: 26px;
 }
 
 .cs-system .cs-content .af-node-name,
@@ -583,21 +582,21 @@
 .cs-system .cs-content .td-name,
 .cs-system .cs-content .tm-row-text,
 .cs-system .cs-content .ts-note {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  line-height: 23px;
+  line-height: 26px;
 }
 
 .cs-system .cs-content .pg-option,
 .cs-system .cs-content .td-part,
 .cs-system .cs-content .td-result-text {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 24px;
 }
 
 .cs-system .cs-content .ft-suffix {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 34px;
 }
@@ -610,7 +609,7 @@
 .cs-system .cs-content .vp-turn {
   font-size: 16px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 26px;
 }
 
 .cs-system .cs-content .vp-agent-name {
@@ -631,7 +630,7 @@
 .cs-system .cs-content .td-value {
   font-size: 18px;
   font-weight: 500;
-  line-height: 18px;
+  line-height: 20px;
 }
 
 .cs-system .cs-content .ef-truth,
@@ -705,28 +704,30 @@
 .cs-system .cs-content .pg-file,
 .cs-system .cs-content .sr-file-name {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 20px;
 }
 
 .cs-system .cs-content .sr-md-title {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 20px;
 }
 
 @media (max-width: 809px) {
   .cs-system .cs-content :is(.cs-h1) {
-    font-size: 32px;
-    line-height: 40px;
+    font-size: 36px;
+    line-height: 42px;
+    letter-spacing: -1.8px;
   }
 
   .cs-system .cs-content .cs-chapter > .cs-block:first-child > .cs-block-head .cs-b1,
   .cs-system .cs-content .cs-opening-summary {
     font-size: 16px;
-    line-height: 24px;
+    line-height: 26px;
+    letter-spacing: normal;
   }
 
   .cs-system .cs-content :is(.ft-figure, .rf-figure, .fg-5351d3) {
@@ -757,7 +758,7 @@
 }
 
 .cs-system .cs-content .cs-decision-rows li {
-  font-size: 15px;
-  line-height: 23px;
+  font-size: 16px;
+  line-height: 26px;
 }
 

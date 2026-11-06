@@ -1,3 +1,32 @@
+/* Open Runde (SIL OFL, see public/fonts/OpenRunde-LICENSE.txt), the type used site-wide after dousanmiao.com. */
+@font-face {
+  font-family: "Open Runde";
+  src: url("/fonts/OpenRunde-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Open Runde";
+  src: url("/fonts/OpenRunde-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Open Runde";
+  src: url("/fonts/OpenRunde-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Open Runde";
+  src: url("/fonts/OpenRunde-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
 /*
   Design foundation.
   Change these variables to edit color, typography, spacing, and content width.
@@ -56,7 +85,7 @@
   --color-border: var(--theme-border);
   --color-focus: var(--theme-text);
 
-  --font-family: "Segoe UI", system-ui, sans-serif;
+  --font-family: "Open Runde", Inter, system-ui, sans-serif;
   --font-size: 1.0625rem;
   --line-height: 1.6;
   --heading-line-height: 1.25;

@@ -43,7 +43,7 @@
 
 .cs2 .cs2-title-row h1 {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 36px;
   font-weight: 500;
   line-height: 50.4px;
@@ -244,7 +244,7 @@
 .cs2 .cs2-split h2 {
   width: 558px;
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 500;
   line-height: 38.4px;
@@ -1380,7 +1380,7 @@
   overflow: hidden;
   border-radius: 8px;
   color: #b8b8b8;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 .cs2 .cs2-dash-side {
@@ -2215,7 +2215,7 @@ html:not([data-theme="dark"]) .cs2 .cs2-stage {
   padding: 0 24px;
   border-radius: 99px;
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 500;
   line-height: 16.8px;

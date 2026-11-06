@@ -215,6 +215,55 @@ html[data-loader] .is-entrance-pending .project-fisheye-entrance {
   aspect-ratio: auto;
 }
 
+/*
+  Tiles keep their Figma heights while widths follow the screen, so cards whose
+  content scales with width must fit the height instead, or they leave a gap at
+  one width and overflow at another.
+*/
+
+/* Statement cards carry a fixed height from the old grid; in the field they fill the tile like every other card. */
+.project-fisheye-tile .project-card-statement-layout {
+  height: 100% !important;
+}
+
+/* Tools: the logo squares take whichever is smaller, a quarter of the width or half the height, so two rows always fit. */
+.project-fisheye-tile .project-card-tools-shipped .tool-enter {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.project-fisheye-tile .project-card-tools-shipped .tool-grid {
+  flex: 1 1 0;
+  min-height: 0;
+  container-type: size;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  align-content: center;
+}
+
+.project-fisheye-tile .project-card-tools-shipped .tool-tile {
+  width: min(calc((100cqw - 24px) / 4), calc((100cqh - 10px) / 2));
+}
+
+/* About Me: the photo takes whatever height the header and flags leave. */
+.project-fisheye-tile .about-me-photo {
+  flex: 1 1 0;
+  min-height: 0;
+  aspect-ratio: auto;
+}
+
+/* Work experience: the role and badge sit on the bottom edge. */
+.project-fisheye-tile .work-experience-footer {
+  margin-top: auto;
+}
+
+/* Statement cards keep their animated backdrops (text wall, AI graph) inside the rounded card. */
+.project-fisheye-tile .project-card-statement-layout .project-card-surface {
+  overflow: hidden;
+}
+
 .project-fisheye-links {
   position: absolute;
   width: 1px;
@@ -293,6 +342,16 @@ html[data-loader] .is-entrance-pending .project-fisheye-entrance {
     line-height: 34px;
   }
 
+  /* Phone statement cards are short and wide: the AI graph sits right of the 150px title instead of above it. */
+  .is-mobile-stack .project-fisheye-tile .project-card-surface.is-spacious > .ai-graph {
+    position: absolute;
+    aspect-ratio: 468 / 256;
+    top: 22px;
+    right: 4px;
+    left: auto;
+    width: 56%;
+  }
+
   /* Capped so two rows leave the same 16px under the logos as at the sides. */
   .is-mobile-stack .project-fisheye-tile .tool-grid {
     grid-template-columns: repeat(4, minmax(0, 64px));
@@ -336,7 +395,7 @@ html[data-loader] .is-entrance-pending .project-fisheye-entrance {
   }
 
   .mobile-hero .hero-role-design {
-    font-family: "PP Mori", "Aeonik Pro", Inter, sans-serif;
+    font-family: var(--font-family);
     font-style: normal;
   }
 

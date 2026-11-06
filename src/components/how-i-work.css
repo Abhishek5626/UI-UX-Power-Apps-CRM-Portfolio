@@ -91,46 +91,6 @@ html[data-theme="dark"] .how-i-work::backdrop {
   background: var(--hiw-shell);
 }
 
-.how-i-work-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.how-i-work-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  font-family: Inter, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-.how-i-work-close {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* Comfortable tap target without changing the drawn size. */
-.how-i-work-close::before {
-  content: "";
-  position: absolute;
-  inset: -8px;
-}
-
-.how-i-work-close svg {
-  transform: rotate(45deg);
-}
-
 .how-i-work-tabs {
   display: flex;
   gap: 4px;
@@ -145,10 +105,10 @@ html[data-theme="dark"] .how-i-work::backdrop {
   border-radius: 999px;
   background: color-mix(in srgb, var(--hiw-tab) 30%, transparent);
   color: var(--hiw-soft-text);
-  font-family: Inter, sans-serif;
-  font-size: 13px;
+  font-family: var(--font-family);
+  font-size: 14px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 20px;
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -160,7 +120,7 @@ html[data-theme="dark"] .how-i-work::backdrop {
     transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.how-i-work-tab[aria-selected="true"] {
+.how-i-work-tab:is([aria-selected="true"], [aria-pressed="true"]) {
   background: var(--hiw-tab);
   color: var(--theme-text);
 }
@@ -174,7 +134,7 @@ html[data-theme="dark"] .how-i-work::backdrop {
     box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
   }
 
-  .how-i-work-tab[aria-selected="true"]:hover {
+  .how-i-work-tab:is([aria-selected="true"], [aria-pressed="true"]):hover {
     background: var(--hiw-tab);
   }
 }
@@ -183,7 +143,6 @@ html[data-theme="dark"] .how-i-work::backdrop {
   transform: scale(0.97);
 }
 
-.how-i-work-close:focus-visible,
 .how-i-work-tab:focus-visible,
 .how-i-work-panel:focus-visible {
   outline: 2px solid var(--theme-text);
@@ -243,7 +202,7 @@ html[data-theme="dark"] .how-i-work::backdrop {
 
 .how-i-work-heading {
   margin: 0;
-  font-family: "Aeonik Pro", Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 20px;
   font-weight: 400;
   line-height: 1.25;
@@ -254,7 +213,7 @@ html[data-theme="dark"] .how-i-work::backdrop {
 .how-i-work-item-body {
   margin: 0;
   color: var(--hiw-soft-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 13px;
   line-height: 1.45;
 }
@@ -285,7 +244,7 @@ html[data-theme="dark"] .how-i-work::backdrop {
 
 .how-i-work-item-title {
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 13px;
   font-weight: 500;
   line-height: 1.3;
@@ -303,7 +262,7 @@ html[data-theme="dark"] .how-i-work::backdrop {
   border-radius: 6px;
   background: var(--hiw-panel);
   color: var(--hiw-soft-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 10px;
   font-weight: 500;
   line-height: 1;
@@ -340,5 +299,210 @@ html[data-theme="dark"] .how-i-work::backdrop {
   .how-i-work-tab:hover,
   .how-i-work-tab:active {
     transform: none;
+  }
+}
+
+/* As a full-screen sheet the panel fills it, with the case study pages' padding. */
+/* Top padding centres the 36px tabs on the drawer controls' row (measured centre: 55.5px), so the page starts on that row. */
+dialog.sheet-dialog.how-i-work {
+  padding: 38px 46px 96px;
+}
+
+/* No outer box in the sheet: the content sits straight on the glass. */
+dialog.sheet-dialog .how-i-work-shell {
+  width: auto;
+  min-height: 100%;
+  max-height: none;
+  /* 22px below the tabs-and-controls row; the controls end 5px lower than the tabs. */
+  gap: 27px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+@media (max-width: 809px) {
+  dialog.sheet-dialog.how-i-work {
+    padding-inline: 16px;
+  }
+}
+
+/* Phones: the nav button and controls fill the top row, so the tabs start on the row below. */
+@media (max-width: 760px) {
+  dialog.sheet-dialog.how-i-work {
+    padding-top: 78px;
+  }
+
+  dialog.sheet-dialog .how-i-work-shell {
+    gap: 23px;
+  }
+}
+
+/*
+  In the sheet, the panel box goes: its text and cards sit on the glass. Type
+  follows the case study pages (case-study-type.css), the
+  type scale after dousanmiao.com (Open Runde).
+*/
+@font-face {
+  font-family: "Departure Mono";
+  src: url("/fonts/departure-mono.woff2") format("woff2");
+  font-display: swap;
+}
+
+dialog.sheet-dialog .how-i-work-panel {
+  gap: 32px;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+
+dialog.sheet-dialog .how-i-work-heading {
+  font-family: var(--font-family);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 40px;
+  letter-spacing: -0.64px;
+}
+
+dialog.sheet-dialog .how-i-work-summary {
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.2px;
+}
+
+dialog.sheet-dialog .how-i-work-item {
+  gap: 12px;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+dialog.sheet-dialog .how-i-work-item-title {
+  font-family: var(--font-family);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+dialog.sheet-dialog .how-i-work-item-body {
+  font-size: 16px;
+  line-height: 26px;
+}
+
+dialog.sheet-dialog .how-i-work-tag {
+  height: 24px;
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+
+/*
+  Certificates (after signal-a.studio's recognitions list): intro and area filters on
+  the left, a ruled list on the right; name left, issuer and year right on each row.
+*/
+/* The area filters span the panel's top, tucked under the main tabs like All Projects' type filters. */
+.how-i-work-panel.is-certificates {
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.how-i-work-panel.is-certificates > .all-projects-filters {
+  flex: 0 0 100%;
+  margin-top: -12px;
+}
+
+.cert-list-wrap {
+  position: relative;
+}
+
+.cert-list {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--theme-border-strong);
+  list-style: none;
+}
+
+.cert-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--theme-border-strong);
+}
+
+/* Follows the pointer over the list, centred on it; script sets its translate. */
+.cert-logo {
+  position: absolute;
+  top: -80px;
+  left: -80px;
+  z-index: 2;
+  width: 160px;
+  height: 160px;
+  border-radius: 28px;
+  object-fit: cover;
+  opacity: 0;
+  scale: 0.6;
+  pointer-events: none;
+  transition: opacity 200ms ease, scale 260ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cert-logo.is-shown {
+  opacity: 1;
+  scale: 1;
+}
+
+.cert-logo:not([src]) {
+  display: none;
+}
+
+.cert-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: -0.4px;
+}
+
+.cert-detail {
+  flex: none;
+  color: var(--theme-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+/* Phones: the reference keeps one line per row; long names wrap and push the detail under them. */
+@media (max-width: 760px) {
+  .cert-row {
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    padding: 14px 0;
+  }
+
+  .cert-name {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+  }
+}
+
+/* Phones: three top tabs outgrow the width, so the row scrolls sideways instead of clipping. */
+@media (max-width: 760px) {
+  dialog.sheet-dialog .how-i-work-tabs:not(.all-projects-filters) {
+    flex: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  dialog.sheet-dialog .how-i-work-tabs:not(.all-projects-filters)::-webkit-scrollbar {
+    display: none;
   }
 }

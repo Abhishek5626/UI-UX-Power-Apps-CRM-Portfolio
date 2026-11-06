@@ -4,6 +4,7 @@ import {
   useId,
   useRef,
   useState,
+  type CSSProperties,
   type KeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react'
@@ -13,6 +14,7 @@ import {
   type YouTubePlayer,
 } from './youtubePlayerApi.ts'
 import './music-card.css'
+import { CardIcon } from './CardIcon.tsx'
 
 const track = {
   title: "L'Amour Toujours",
@@ -552,96 +554,111 @@ export function MusicCard() {
     }
   }
 
+  // The tonearm rests off the record (-8°), drops on the outer grooves when the track plays (6°),
+  // and tracks inward to just outside the label by the end (30°). Angles measured on the deck.
+  const armOn = playing || currentTime > 0
+  const armAngle = armOn ? 6 + progress * 24 : -8
+
   return (
-    <article ref={cardRef} className="music-card" data-hover-tile="" data-repel="">
+    <article
+      ref={cardRef}
+      className={['music-card', playing ? 'is-playing' : ''].filter(Boolean).join(' ')}
+      data-hover-tile=""
+      data-repel=""
+    >
       <div className="music-card-surface">
-        <img
-          className="music-card-art"
-          src={track.artwork}
-          alt=""
-          width={335}
-          height={597}
-          decoding="async"
-        />
-        <div className="music-card-heading">
-          <span className="music-card-icon" aria-hidden="true">
-            <img src="/landing/music-aperture.svg" alt="" width={14} height={14} />
-          </span>
-          <h2 className="music-card-label">My Fav Music</h2>
-          <div className="music-card-times">
-            <span>{formatTime(currentTime)}</span>
-            <span className="music-card-duration">
-              {duration > 0 ? formatTime(duration) : '--:--'}
+        {/* The turntable is decorative; the controls beside it carry the meaning. */}
+        <div className="music-card-deck" aria-hidden="true">
+          <span className="music-card-platter">
+            <span className="music-card-disc">
+              <img className="music-card-label-art" src={track.artwork} alt="" width={335} height={597} decoding="async" />
+              <span className="music-card-spindle" />
             </span>
-          </div>
+          </span>
+          <span className="music-card-arm" style={{ '--arm-angle': `${armAngle}deg` } as CSSProperties}>
+            <span className="music-card-arm-base" />
+            <span className="music-card-arm-rod" />
+            <span className="music-card-arm-head" />
+          </span>
+          <span className="music-card-knob" />
+          <span className="music-card-grille" />
         </div>
-        <div className="music-card-track">
+
+        <div className="music-card-panel">
+          <div className="music-card-heading">
+            <CardIcon name="twinkle" />
+            <h2 className="music-card-label">My Fav Music</h2>
+          </div>
           <div className="music-card-meta">
             <p id={titleId} className="music-card-title">
               {track.title}
             </p>
             <p className="music-card-artist">{track.artist}</p>
           </div>
+          {errorMessage ? (
+            <p className="music-card-error" role="status">
+              {errorMessage}{' '}
+              <a href={track.youtubeUrl} target="_blank" rel="noreferrer">
+                Open on YouTube
+              </a>
+            </p>
+          ) : null}
           {status === 'unavailable' ? null : (
-            <button
-              type="button"
-              className="music-card-play"
-              aria-label={
-                playing
-                  ? `Pause ${track.title} by ${track.artist}`
-                  : `Play ${track.title} by ${track.artist}`
-              }
-              aria-pressed={playing}
-              aria-describedby={statusId}
-              onClick={togglePlayback}
-            >
-              {status === 'loading' && !playing ? (
-                <span className="music-card-loading-dot" aria-hidden="true" />
-              ) : playing ? (
-                <PauseBars />
-              ) : (
-                <PlayTriangle />
-              )}
-            </button>
+            <>
+              <div className="music-card-progress">
+                <span className="music-card-time">{formatTime(currentTime)}</span>
+                <ProgressSeek
+                  progress={progress}
+                  playing={playing}
+                  disabled={!canSeek}
+                  labelledBy={titleId}
+                  onSeek={seekToRatio}
+                />
+                <span className="music-card-time">{duration > 0 ? formatTime(duration) : '--:--'}</span>
+              </div>
+              <div className="music-card-controls">
+                <button
+                  type="button"
+                  className="music-card-skip"
+                  aria-label={`Back ${SKIP_SECONDS} seconds`}
+                  disabled={!canSeek}
+                  onClick={() => skipBy(-SKIP_SECONDS)}
+                >
+                  <SkipBackIcon />
+                </button>
+                <button
+                  type="button"
+                  className="music-card-play"
+                  aria-label={
+                    playing
+                      ? `Pause ${track.title} by ${track.artist}`
+                      : `Play ${track.title} by ${track.artist}`
+                  }
+                  aria-pressed={playing}
+                  aria-describedby={statusId}
+                  onClick={togglePlayback}
+                >
+                  {status === 'loading' && !playing ? (
+                    <span className="music-card-loading-dot" aria-hidden="true" />
+                  ) : playing ? (
+                    <PauseBars />
+                  ) : (
+                    <PlayTriangle />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  className="music-card-skip"
+                  aria-label={`Forward ${SKIP_SECONDS} seconds`}
+                  disabled={!canSeek}
+                  onClick={() => skipBy(SKIP_SECONDS)}
+                >
+                  <SkipForwardIcon />
+                </button>
+              </div>
+            </>
           )}
         </div>
-        {errorMessage ? (
-          <p className="music-card-error" role="status">
-            {errorMessage}{' '}
-            <a href={track.youtubeUrl} target="_blank" rel="noreferrer">
-              Open on YouTube
-            </a>
-          </p>
-        ) : null}
-        {status === 'unavailable' ? null : (
-          <div className="music-card-controls">
-            <button
-              type="button"
-              className="music-card-skip"
-              aria-label={`Back ${SKIP_SECONDS} seconds`}
-              disabled={!canSeek}
-              onClick={() => skipBy(-SKIP_SECONDS)}
-            >
-              <SkipBackIcon />
-            </button>
-            <ProgressSeek
-              progress={progress}
-              playing={playing}
-              disabled={!canSeek}
-              labelledBy={titleId}
-              onSeek={seekToRatio}
-            />
-            <button
-              type="button"
-              className="music-card-skip"
-              aria-label={`Forward ${SKIP_SECONDS} seconds`}
-              disabled={!canSeek}
-              onClick={() => skipBy(SKIP_SECONDS)}
-            >
-              <SkipForwardIcon />
-            </button>
-          </div>
-        )}
       </div>
       <div ref={shellRef} className="music-card-yt-host" aria-hidden="true" />
       <p id={statusId} className="visually-hidden" role="status">

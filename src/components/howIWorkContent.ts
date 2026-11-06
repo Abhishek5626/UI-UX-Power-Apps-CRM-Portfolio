@@ -51,4 +51,21 @@ export const howIWorkContent = {
       },
     ],
   },
+  certificates: {
+    tab: 'Certificates',
+    heading: 'Certified in the tools I design and build with.',
+    summary:
+      'Credentials across CRM, the Power Platform, UI/UX and RELEX. Placeholder list for now.',
+    filters: ['All', 'CRM', 'Power', 'UI UX', 'RELEX'],
+    // shortcut: placeholder certificates, replace with the real names, issuers and years before launch.
+    items: [
+      { id: 'C.01', area: 'CRM', name: 'CRM certificate', detail: 'Issuer · 2025', logo: '/landing/tools/dynamics-365.webp' },
+      { id: 'C.02', area: 'CRM', name: 'CRM certificate', detail: 'Issuer · 2025', logo: '/landing/tools/dynamics-365.webp' },
+      { id: 'C.03', area: 'Power', name: 'Power Platform certificate', detail: 'Issuer · 2025', logo: '/landing/tools/power-apps.webp' },
+      { id: 'C.04', area: 'Power', name: 'Power Platform certificate', detail: 'Issuer · 2025', logo: '/landing/tools/power-apps.webp' },
+      { id: 'C.05', area: 'UI UX', name: 'UI UX certificate', detail: 'Issuer · 2025', logo: '/landing/tools/figma.webp' },
+      { id: 'C.06', area: 'UI UX', name: 'UI UX certificate', detail: 'Issuer · 2025', logo: '/landing/tools/figma.webp' },
+      { id: 'C.07', area: 'RELEX', name: 'RELEX certificate', detail: 'Issuer · 2025', logo: '/landing/tools/relex.webp' },
+    ],
+  },
 } as const

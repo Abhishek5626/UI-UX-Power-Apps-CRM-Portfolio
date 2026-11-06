@@ -10,7 +10,8 @@
   scroll-margin-top: 1.5rem;
 }
 
-.landing-page {
+.landing-page,
+.all-projects {
   --landing-ink: var(--theme-text);
   --landing-label: var(--theme-text);
   --landing-muted: var(--theme-text-muted);
@@ -39,7 +40,7 @@
   padding: 42px var(--landing-gutter) 34px;
   background-color: var(--landing-page-bg);
   color: var(--landing-ink);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 /*
@@ -203,7 +204,7 @@ html[data-theme="dark"] .about-me-surface::before {
 .hero-headline {
   margin: 0;
   color: var(--landing-ink);
-  font-family: "PP Mori", "Aeonik Pro", Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 46px;
   font-weight: 400;
   letter-spacing: -0.04em;
@@ -227,13 +228,13 @@ html[data-theme="dark"] .about-me-surface::before {
 }
 
 .hero-role-design {
-  font-family: "Editor's Note", "Iowan Old Style", Palatino, serif;
+  font-family: var(--font-family);
   font-style: italic;
   font-weight: 400;
 }
 
 .hero-role-engineer {
-  font-family: "PP Mori", "Aeonik Pro", Inter, sans-serif;
+  font-family: var(--font-family);
   font-style: normal;
 }
 
@@ -255,8 +256,8 @@ html[data-theme="dark"] .about-me-surface::before {
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  min-height: 56px;
-  padding: 6px 6px 6px var(--landing-surface-pad);
+  /* 59px overall, matching "Design Engineer"'s line height: 1px border + 2px gap + 3px padding each side, plus the 47px toggle. */
+  padding: 3px 3px 3px var(--landing-surface-pad);
   border: 0;
   border-radius: 18px;
   color: inherit;
@@ -264,6 +265,11 @@ html[data-theme="dark"] .about-me-surface::before {
   text-align: left;
   cursor: pointer;
   transition: background-color var(--theme-duration) var(--theme-ease);
+}
+
+/* The toggle at 47px tall (56px x 0.84); zoom keeps its proportions and shrinks its layout box too. */
+.theme-status-surface .theme-toggle {
+  zoom: 0.84;
 }
 
 .theme-status-label {
@@ -280,7 +286,7 @@ html[data-theme="dark"] .about-me-surface::before {
   margin: 0;
   max-width: 42em;
   color: var(--landing-ink);
-  font-family: Aeonik, "Aeonik Pro", Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -340,7 +346,7 @@ html[data-theme="dark"] .about-me-surface::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 500;
   line-height: 1.12;
@@ -473,7 +479,7 @@ html[data-theme="dark"] .about-me-surface::before {
 .project-card-label.is-display {
   min-width: 0;
   color: #fff;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.36px;
@@ -495,7 +501,7 @@ html[data-theme="dark"] .project-card-label.is-display.is-on-light {
 .project-card-summary {
   margin: 0;
   color: #9a9a9a;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 12px;
   font-weight: 400;
   letter-spacing: -0.24px;
@@ -629,7 +635,7 @@ html[data-theme="dark"] .tool-logo:not(.is-color) {
 
 .tool-name {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -674,6 +680,42 @@ html[data-theme="dark"] .tool-logo:not(.is-color) {
   object-fit: cover;
 }
 
+/* A video fills the whole card behind the header; the light surface's "> *" rule would put it in flow below it. */
+.project-card-surface.is-media > .project-card-media.is-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  height: 100%;
+}
+
+.project-card-media.is-fill video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+  The explainer's panels centre at about 50% across and 54% down the frame.
+  Scaling 1.3x and lifting 5.2% (0.04 x 1.3) puts that point at the card's middle
+  while the video still covers the card edge to edge.
+*/
+.project-card-agentic-ai .project-card-media.is-video video {
+  transform: translateY(-5.2%) scale(1.3);
+}
+
+/* The blurred copy shows only near the edges, ramping linearly from full at the edge to none 24% in. */
+.project-card-media.is-video video.is-edge {
+  filter: blur(10px);
+  -webkit-mask-image:
+    linear-gradient(to right, #000, transparent 24%, transparent 76%, #000),
+    linear-gradient(to bottom, #000, transparent 24%, transparent 76%, #000);
+  mask-image:
+    linear-gradient(to right, #000, transparent 24%, transparent 76%, #000),
+    linear-gradient(to bottom, #000, transparent 24%, transparent 76%, #000);
+}
+
 .project-card-building-in-code .project-card-label,
 .project-card-designing-ai-product .project-card-label,
 .project-card-storytelling-play .project-card-label {
@@ -689,7 +731,7 @@ html[data-theme="dark"] .tool-logo:not(.is-color) {
   margin: 0;
   color: var(--theme-text);
   transition: color var(--theme-duration) var(--theme-ease);
-  font-family: "PP Mori", "Aeonik Pro", Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 44px;
   font-weight: 400;
   letter-spacing: -0.04em;
@@ -797,9 +839,6 @@ html[data-theme="dark"] .about-me-how-i-work {
   font-weight: 500;
 }
 
-html:not([data-theme="dark"]) .about-me-card .project-card-icon {
-  background: var(--landing-glass-fill), var(--theme-chip);
-}
 
 /* Figma nodes 2-270 (desktop) and 106-1100 (phone). */
 .about-me-how-i-work {
@@ -808,7 +847,7 @@ html:not([data-theme="dark"]) .about-me-card .project-card-icon {
   border: 0;
   background: none;
   color: #2a45c8;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 13px;
   line-height: 1.2;
   white-space: nowrap;
@@ -921,4 +960,577 @@ html[data-theme="dark"] .about-me-place-face {
   [data-hover-tile].is-tile-active {
     --tile-scale: 1;
   }
+}
+
+/* Project card keyword marquee (Figma 348:811): pills scroll over a blurred fade at the card's bottom edge. */
+.project-card-surface.is-media .project-card-badges {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 2;
+  height: 54px;
+  overflow: hidden;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--project-badge-fade) 0%, transparent) 9%,
+    color-mix(in srgb, var(--project-badge-fade) 21%, transparent) 62%,
+    var(--project-badge-fade) 98%
+  );
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  /* The blur fades in from the top instead of starting at a hard line. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 45%);
+  mask-image: linear-gradient(to bottom, transparent, #000 45%);
+  pointer-events: none;
+  --project-badge-fade: var(--theme-surface);
+}
+
+.project-card-surface.is-media.is-dark .project-card-badges {
+  --project-badge-fade: #050119;
+}
+
+.project-card-badges-track {
+  display: flex;
+  width: max-content;
+  padding: 13px 0;
+  animation: project-card-badges 26s linear infinite;
+}
+
+.project-card:hover .project-card-badges-track,
+.project-card:focus-visible .project-card-badges-track {
+  animation-play-state: paused;
+}
+
+.project-card-badges-set {
+  display: flex;
+  flex: none;
+  gap: 8px;
+  padding-left: 12px;
+}
+
+.project-card-badge {
+  flex: none;
+  padding: 6px 10px;
+  border-radius: 25px;
+  background: linear-gradient(
+    134deg,
+    rgb(253 253 253 / 0.66) 8%,
+    rgb(241 245 253 / 0.66) 57%,
+    rgb(243 247 254 / 0.66) 116%
+  );
+  color: #3a3838;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.24px;
+  white-space: nowrap;
+}
+
+html[data-theme="dark"] .project-card-badge,
+.project-card-surface.is-media.is-dark .project-card-badge {
+  background: rgb(255 255 255 / 0.12);
+  color: #f1f1f4;
+}
+
+@keyframes project-card-badges {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card-badges-track { animation: none; }
+}
+
+/* All Projects card (Figma 352-825): one glass row, title left, View All right. */
+@property --all-projects-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.all-projects-card {
+  position: relative;
+  isolation: isolate;
+  height: 100%;
+  border-radius: 14px;
+}
+
+/*
+  A gradient stroke that flows round the edge (::before) over a soft glow of the
+  same colours (::after), so the card isn't missed. The stroke is the gradient
+  masked down to a 1.5px ring.
+*/
+.all-projects-card::before,
+.all-projects-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 2;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--all-projects-angle),
+    transparent 0deg,
+    #a479ff 50deg,
+    #79a7ff 110deg,
+    #ff79d9 170deg,
+    transparent 230deg,
+    transparent 360deg
+  );
+  pointer-events: none;
+  animation: all-projects-flow 3.2s linear infinite;
+}
+
+.all-projects-card::before {
+  padding: 1.5px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+}
+
+.all-projects-card::after {
+  z-index: -1;
+  inset: -2px;
+  filter: blur(10px);
+  opacity: 0.55;
+}
+
+@keyframes all-projects-flow {
+  to { --all-projects-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .all-projects-card::before,
+  .all-projects-card::after {
+    animation: none;
+  }
+}
+
+.project-card-surface.all-projects-card-surface {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 14px 10px;
+  border-radius: 12px;
+}
+
+.all-projects-card-title {
+  color: var(--theme-text);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.28px;
+}
+
+.all-projects-card-action {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #2a50db;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+  cursor: pointer;
+}
+
+/* The whole card is the button's click target. */
+.all-projects-card-action::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+html[data-theme="dark"] .all-projects-card-action {
+  color: #8aa4ff;
+}
+
+/* All Projects sheet (Figma 352-843). */
+/* All Projects sheet (Figma 352-843): laid out by How I Work's sheet classes (how-i-work.css). */
+dialog.sheet-dialog.all-projects {
+  font-family: var(--font-family);
+}
+
+/* Type filters: the same tab buttons, one size down. */
+.all-projects-filters {
+  flex-wrap: wrap;
+  margin-top: -12px;
+}
+
+.all-projects-filters .how-i-work-tab {
+  min-height: 30px;
+  padding: 0 12px;
+  font-size: 12px;
+}
+
+.all-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 423px));
+  gap: 14px;
+  animation: all-projects-grid-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes all-projects-grid-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+.all-projects-empty {
+  margin: 24px 0 0;
+  color: var(--theme-text-muted);
+  font-size: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .all-projects-grid { animation: none; }
+}
+
+.all-projects .project-card {
+  color: inherit;
+  text-decoration: none;
+}
+
+/*
+  Text wall behind "Building in Code", after reflect.app's hero: code that ripples.
+  Waves start at the centre and scramble and light up tokens as they pass, inside a
+  soft ellipse that fades (with a light blur) toward the edges. Glow is purple on
+  the light card and blue-violet on the dark one, over a matching radial wash.
+*/
+.project-card-surface.is-spacious > .project-card-text-wall {
+  --tw-text: #8b8b96;
+  --tw-glow: #7c3aed;
+  --tw-glow-shadow: rgb(124 58 237 / 0.55);
+  --tw-wash: rgb(139 92 246 / 0.12);
+  --tw-bracket-0: #a07a00;
+  --tw-bracket-1: #9a3fb0;
+  --tw-bracket-2: #2f6fd6;
+  --tw-keyword: #b4452f;
+  --tw-string: #3f5f8a;
+  --tw-tag: #3c7a52;
+  --tw-number: #3d63a8;
+  --tw-comment: #9a9aa4;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: inherit;
+  background: radial-gradient(ellipse 70% 45% at 50% 42%, var(--tw-wash), transparent 70%);
+  color: var(--tw-text);
+  font: 400 10px/16px "Departure Mono", ui-monospace, monospace;
+  white-space: pre;
+  pointer-events: none;
+  /* The lens: the whole wall fades out toward the card's edges. */
+  -webkit-mask-image: radial-gradient(ellipse 62% 52% at 50% 42%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 62% 52% at 50% 42%, #000 35%, transparent 100%);
+}
+
+html[data-theme="dark"] .project-card-surface.is-spacious > .project-card-text-wall {
+  --tw-text: rgb(165 172 230 / 0.42);
+  --tw-glow: #a5b4fc;
+  --tw-glow-shadow: rgb(129 140 248 / 0.85);
+  --tw-wash: rgb(99 102 241 / 0.28);
+  --tw-bracket-0: #ffd700;
+  --tw-bracket-1: #da70d6;
+  --tw-bracket-2: #179fff;
+  --tw-keyword: #ff7b72;
+  --tw-string: #a5d6ff;
+  --tw-tag: #7ee787;
+  --tw-number: #79c0ff;
+  --tw-comment: #8b949e;
+}
+
+.project-card-text-wall i {
+  font-style: normal;
+}
+
+.project-card-text-wall .is-bracket-0 { color: var(--tw-bracket-0); }
+.project-card-text-wall .is-bracket-1 { color: var(--tw-bracket-1); }
+.project-card-text-wall .is-bracket-2 { color: var(--tw-bracket-2); }
+.project-card-text-wall .is-keyword { color: var(--tw-keyword); }
+.project-card-text-wall .is-string { color: var(--tw-string); }
+.project-card-text-wall .is-tag { color: var(--tw-tag); }
+.project-card-text-wall .is-number { color: var(--tw-number); }
+.project-card-text-wall .is-comment { color: var(--tw-comment); }
+
+/* Lit tokens (a few always, and any the wave front is passing) override the syntax colour. */
+.project-card-text-wall i {
+  transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+
+.project-card-text-wall .is-glow,
+.project-card-text-wall .is-wave {
+  color: var(--tw-glow);
+  text-shadow:
+    0 0 6px var(--tw-glow-shadow),
+    0 0 14px var(--tw-glow-shadow);
+}
+
+.project-card-text-wall-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px;
+}
+
+/* Sharp in the middle, a blurred copy taking over toward the edges of the ellipse. */
+.project-card-text-wall-layer.is-sharp {
+  -webkit-mask-image: radial-gradient(ellipse 50% 32% at 50% 42%, #000 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 32% at 50% 42%, #000 45%, transparent 100%);
+}
+
+.project-card-text-wall-layer.is-soft {
+  filter: blur(3px);
+  -webkit-mask-image: radial-gradient(ellipse 50% 32% at 50% 42%, transparent 45%, #000 100%);
+  mask-image: radial-gradient(ellipse 50% 32% at 50% 42%, transparent 45%, #000 100%);
+}
+
+/*
+  AI tool graph behind "Designing AI Product" (after reflect.app's connected card).
+  Same build as the reference: 1s pops with cubic-bezier(.6,.6,0,1), 2s line draws,
+  labels sliding down out of their nodes. Timings come from each element's delay.
+*/
+.project-card-surface.is-spacious > .ai-graph {
+  --ai-ease: cubic-bezier(0.6, 0.6, 0, 1);
+  --ai-label-bg: rgb(255 255 255 / 0.85);
+  --ai-label-line: rgb(0 0 0 / 0.06);
+  --ai-label-text: #5f5f6b;
+  --ai-dot: rgb(20 20 40 / 0.09);
+  /* Fills the space between the header and the title (order puts it there), so its nodes centre in that gap. */
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+  order: 1;
+  min-height: 0;
+  pointer-events: none;
+  /* Reflect's faint dot grid, fading out at the edges. */
+  background-image: radial-gradient(circle, var(--ai-dot) 1px, transparent 1.5px);
+  background-size: 14px 14px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 46%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 46%, #000 30%, transparent 100%);
+}
+
+.project-card-surface.is-spacious > .ai-graph ~ .project-card-statement {
+  order: 2;
+}
+
+html[data-theme="dark"] .project-card-surface.is-spacious > .ai-graph {
+  --ai-label-bg: rgb(10 8 27 / 0.7);
+  --ai-label-line: rgb(255 255 255 / 0.05);
+  --ai-label-text: rgb(239 237 253 / 0.7);
+  --ai-dot: rgb(255 255 255 / 0.08);
+}
+
+.ai-graph-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ai-graph-lines path {
+  fill: none;
+  stroke-width: 1;
+  stroke-opacity: 0.45;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.ai-graph-node {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  translate: -50% -50%;
+  border: 1px solid rgba(var(--rgb), 0.12);
+  border-radius: 999px;
+  background: rgba(var(--rgb), 0.04);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transform: scale(0);
+}
+
+.ai-graph-node.is-centre {
+  width: 46px;
+  height: 46px;
+}
+
+.ai-graph-node-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(var(--rgb), 0), rgba(var(--rgb), 0.32)), rgba(var(--rgb), 0.02);
+  box-shadow:
+    0 0 20px rgba(var(--rgb), 0.3),
+    inset 0 0 5px rgba(var(--rgb), 0.25);
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.ai-graph-node.is-centre .ai-graph-node-inner {
+  width: 38px;
+  height: 38px;
+}
+
+.ai-graph-node-inner img,
+.ai-graph-node-inner svg {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ai-graph-node-inner svg {
+  border-radius: 0;
+}
+
+/* The AI blob: a spinning colour field inside a shape that keeps morphing. */
+.ai-graph-blob {
+  position: absolute;
+  inset: 3px;
+  background: conic-gradient(from 0deg, #a479ff, #79a7ff, #ff79d9, #79ffd0, #a479ff);
+  filter: blur(2px) saturate(1.2);
+  animation:
+    ai-blob-spin 6s linear infinite,
+    ai-blob-morph 5s ease-in-out infinite alternate;
+}
+
+.ai-graph-blob::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.75), transparent 55%);
+}
+
+.ai-graph-label {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  width: max-content;
+  padding: 2px 8px;
+  border: 1px solid var(--ai-label-line);
+  border-radius: 99px;
+  background: var(--ai-label-bg);
+  color: var(--ai-label-text);
+  font-size: 10px;
+  line-height: 14px;
+  opacity: 0;
+  transform: translate(-50%, -20px);
+}
+
+/* The build: each part animates to rest once the card is in view. */
+.ai-graph.is-playing .ai-graph-node {
+  animation: ai-graph-pop 1s var(--delay) var(--ai-ease) forwards;
+}
+
+.ai-graph.is-playing .ai-graph-node-inner {
+  animation: ai-graph-pop-inner 1s var(--delay) var(--ai-ease) forwards;
+}
+
+.ai-graph.is-playing .ai-graph-label {
+  animation: ai-graph-label 1s var(--delay) var(--ai-ease) forwards;
+}
+
+.ai-graph.is-playing .ai-graph-lines path:not(.ai-graph-flow) {
+  animation: ai-graph-line 2s var(--ai-ease) forwards;
+}
+
+/*
+  Feeding pulses: a short dash travels each line from the tool to the orb. The
+  path starts at the orb, so the dash runs from offset -1 (past the tool end) to
+  0.18 (past the orb), with a gap long enough that only one dash shows at a time.
+*/
+.ai-graph-lines path.ai-graph-flow {
+  stroke-width: 1.6;
+  stroke-opacity: 1;
+  stroke-linecap: round;
+  stroke-dasharray: 0.18 1.4;
+  stroke-dashoffset: -1;
+  filter: drop-shadow(0 0 3px currentColor);
+  opacity: 0;
+}
+
+.ai-graph.is-playing .ai-graph-lines path.ai-graph-flow {
+  animation: ai-graph-flow 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* The orb breathes as it is fed. */
+.ai-graph.is-playing .ai-graph-node.is-centre .ai-graph-node-inner {
+  animation:
+    ai-graph-pop-inner 1s var(--delay) var(--ai-ease) forwards,
+    ai-graph-feed 1.8s 2.5s ease-in-out infinite;
+}
+
+@keyframes ai-graph-pop {
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ai-graph-pop-inner {
+  to { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes ai-graph-label {
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes ai-graph-line {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes ai-graph-flow {
+  0% { stroke-dashoffset: -1; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { stroke-dashoffset: 0.18; opacity: 0; }
+}
+
+@keyframes ai-graph-feed {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(var(--rgb), 0.3),
+      inset 0 0 5px rgba(var(--rgb), 0.25);
+  }
+
+  50% {
+    box-shadow:
+      0 0 30px rgba(var(--rgb), 0.6),
+      inset 0 0 8px rgba(var(--rgb), 0.4);
+  }
+}
+
+@keyframes ai-blob-spin {
+  to { rotate: 360deg; }
+}
+
+@keyframes ai-blob-morph {
+  0% { border-radius: 50% 50% 50% 50%; }
+  33% { border-radius: 58% 42% 55% 45% / 45% 55% 42% 58%; }
+  66% { border-radius: 42% 58% 45% 55% / 58% 42% 55% 45%; }
+  100% { border-radius: 52% 48% 60% 40% / 40% 60% 48% 52%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-graph .ai-graph-node,
+  .ai-graph .ai-graph-node-inner,
+  .ai-graph .ai-graph-label,
+  .ai-graph .ai-graph-lines path,
+  .ai-graph-blob {
+    animation: none !important;
+  }
+
+  .ai-graph .ai-graph-node { opacity: 1; transform: none; }
+  .ai-graph .ai-graph-node-inner { transform: translate(-50%, -50%); }
+  .ai-graph .ai-graph-label { opacity: 1; transform: translate(-50%, 0); }
+  .ai-graph .ai-graph-lines path { stroke-dashoffset: 0; }
+  .ai-graph .ai-graph-lines path.ai-graph-flow { display: none; }
 }

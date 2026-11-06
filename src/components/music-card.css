@@ -1,7 +1,19 @@
+/*
+  "My Fav Music": a turntable on the left and simple controls on the right
+  (stacked on phones). The record spins while playing; the tonearm swings on
+  when the track starts and tracks inward with its progress (--arm-angle).
+*/
 .music-card {
   /* Replaced at runtime by a colour read from the artwork. */
   --music-accent: #b9c4e6;
   --music-accent-ink: #171c2e;
+  --mc-deck: #f3f3f1;
+  --mc-deck-line: rgb(0 0 0 / 0.035);
+  --mc-deck-edge: rgb(0 0 0 / 0.06);
+  --mc-text: var(--theme-text);
+  --mc-soft: color-mix(in srgb, var(--theme-text) 55%, transparent);
+  --mc-track: color-mix(in srgb, var(--theme-text) 16%, transparent);
+  --mc-wave: var(--music-accent-ink);
   position: relative;
   z-index: 0;
   display: flex;
@@ -12,60 +24,212 @@
   border: 1px solid var(--landing-glass-border);
   border-radius: 18px;
   background: transparent;
-  color: #fff;
+  color: var(--mc-text);
   backdrop-filter: var(--landing-glass-blur);
   -webkit-backdrop-filter: var(--landing-glass-blur);
   isolation: isolate;
 }
 
+html[data-theme="dark"] .music-card {
+  --mc-deck: #2a2c30;
+  --mc-deck-line: rgb(255 255 255 / 0.03);
+  --mc-deck-edge: rgb(255 255 255 / 0.06);
+  --mc-wave: var(--music-accent);
+}
+
 .music-card-surface {
   position: relative;
-  display: flex;
+  display: grid;
   flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 8px;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 16px;
   min-width: 0;
-  padding: var(--landing-surface-pad);
+  padding: 10px 16px 10px 10px;
   overflow: hidden;
   border-radius: 18px;
-  background: #272d42;
+  background: var(--theme-surface);
+  transition: background-color var(--theme-duration) var(--theme-ease);
 }
 
-/* The penguin's stretch of the portrait cover, darkened where text sits. */
-.music-card-art {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  width: 100%;
+/* ---------- Turntable ---------- */
+
+.music-card-deck {
+  position: relative;
   height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: 50% 88%;
-  pointer-events: none;
-  user-select: none;
+  aspect-ratio: 1;
+  border: 1px solid var(--mc-deck-edge);
+  border-radius: 14px;
+  background:
+    repeating-linear-gradient(0deg, var(--mc-deck-line) 0 1px, transparent 1px 14px),
+    repeating-linear-gradient(90deg, var(--mc-deck-line) 0 1px, transparent 1px 14px),
+    var(--mc-deck);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.6),
+    0 6px 14px rgb(0 0 0 / 0.08);
 }
 
-.music-card-surface::after {
+html[data-theme="dark"] .music-card-deck {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 6px 14px rgb(0 0 0 / 0.35);
+}
+
+/* The record sits left of centre so the arm has room on the right. */
+.music-card-platter {
+  position: absolute;
+  top: 11%;
+  left: 7%;
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow: 0 6px 14px rgb(0 0 0 / 0.3);
+}
+
+/* Light catching the grooves; it stays still while the record turns under it. */
+.music-card-platter::after {
   content: "";
   position: absolute;
-  z-index: 0;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.2) 45%,
-    rgba(0, 0, 0, 0.62)
+  border-radius: 50%;
+  background: conic-gradient(
+    from 20deg,
+    transparent 0 8%,
+    rgb(255 200 120 / 0.22) 14%,
+    transparent 22% 56%,
+    rgb(255 200 120 / 0.16) 64%,
+    transparent 72%
   );
   pointer-events: none;
 }
 
-.music-card-heading,
-.music-card-track,
-.music-card-controls,
-.music-card-error {
-  position: relative;
-  z-index: 1;
+.music-card-disc {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle, #141414 0 1px, #1e1e1e 1px 2.4px),
+    #161616;
+  animation: music-card-spin 2.2s linear infinite;
+  animation-play-state: paused;
+}
+
+.music-card.is-playing .music-card-disc {
+  animation-play-state: running;
+}
+
+.music-card-label-art {
+  position: absolute;
+  top: 31%;
+  left: 31%;
+  width: 38%;
+  height: 38%;
+  max-width: none;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 80%;
+}
+
+.music-card-spindle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4%;
+  height: 4%;
+  border-radius: 50%;
+  background: #f4f4f4;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25);
+  translate: -50% -50%;
+}
+
+/* Tonearm: pivots on its base (top right) and swings its head over the grooves. */
+.music-card-arm {
+  position: absolute;
+  top: 7%;
+  right: 8%;
+  width: 16%;
+  height: 62%;
+  transform-origin: 50% 13%;
+  rotate: var(--arm-angle, -8deg);
+  transition: rotate 0.9s cubic-bezier(0.3, 1.25, 0.5, 1);
+  filter: drop-shadow(0 3px 3px rgb(0 0 0 / 0.25));
+}
+
+.music-card-arm-base {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffffff, #d4d4d4 60%, #b9b9b9);
+}
+
+.music-card-arm-rod {
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  width: 3px;
+  height: 78%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #cfcfcf, #ffffff, #c4c4c4);
+  translate: -50% 0;
+}
+
+.music-card-arm-head {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 9px;
+  height: 14px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #f2f2f2, #d6d6d6);
+  translate: -50% 0;
+}
+
+/* The reference's red cue dot. */
+.music-card-arm-head::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e5484d;
+  translate: -50% 0;
+}
+
+.music-card-knob {
+  position: absolute;
+  bottom: 7%;
+  left: 7%;
+  width: 11%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffffff, #dcdcdc 65%, #c2c2c2);
+  box-shadow: 0 2px 3px rgb(0 0 0 / 0.18);
+}
+
+.music-card-grille {
+  position: absolute;
+  right: 8%;
+  bottom: 8%;
+  width: 12%;
+  height: 7%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--theme-text) 45%, transparent) 1px, transparent 1.3px) 0 0 / 25% 50%;
+}
+
+/* ---------- Controls ---------- */
+
+.music-card-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  padding-top: 4px;
 }
 
 .music-card-heading {
@@ -75,32 +239,10 @@
   min-height: 28px;
 }
 
-.music-card-icon {
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 28px;
-  border-radius: 8px;
-  background:
-    linear-gradient(
-      107deg,
-      rgba(253, 253, 253, 0.66) 8%,
-      rgba(241, 245, 253, 0.66) 57%,
-      rgba(243, 247, 254, 0.66) 116%
-    ),
-    rgba(255, 255, 255, 0.1);
-}
-
-.music-card-icon img {
-  display: block;
-}
-
 .music-card-label {
   margin: 0;
-  color: #fff;
-  font-family: Inter, sans-serif;
+  color: var(--mc-text);
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -108,37 +250,7 @@
   white-space: nowrap;
 }
 
-.music-card-times {
-  display: flex;
-  flex: none;
-  align-items: center;
-  margin-left: auto;
-  color: #fff;
-  font-family: Inter, sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: -0.04em;
-  line-height: 15px;
-  font-variant-numeric: tabular-nums;
-}
-
-.music-card-duration {
-  margin-left: 6px;
-  padding-left: 6px;
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.music-card-track {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: auto;
-}
-
 .music-card-meta {
-  flex: 1;
   min-width: 0;
 }
 
@@ -146,23 +258,46 @@
 .music-card-artist {
   margin: 0;
   overflow: hidden;
-  color: #fff;
-  font-family: Inter, sans-serif;
-  font-weight: 500;
-  letter-spacing: -0.04em;
+  font-family: var(--font-family);
+  letter-spacing: -0.03em;
   line-height: normal;
   text-overflow: ellipsis;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
   white-space: nowrap;
 }
 
 .music-card-title {
+  color: var(--mc-text);
   font-size: 16px;
+  font-weight: 600;
 }
 
 .music-card-artist {
   margin-top: 2px;
+  color: var(--mc-soft);
   font-size: 12px;
+  font-weight: 500;
+}
+
+.music-card-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.music-card-time {
+  flex: none;
+  color: var(--mc-soft);
+  font-family: var(--font-family);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.music-card-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
 }
 
 html .music-card .music-card-play {
@@ -170,13 +305,13 @@ html .music-card .music-card-play {
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 56px;
+  width: 40px;
   height: 40px;
   padding: 0;
-  border-radius: 12px;
+  border-radius: 50%;
   background: var(--music-accent);
   color: var(--music-accent-ink);
-  outline-color: #fff;
+  outline-color: var(--mc-text);
   /* Solid fill: there is nothing behind it to blur. */
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -201,13 +336,6 @@ html .music-card .music-card-play {
   animation: music-card-pulse 900ms ease-in-out infinite;
 }
 
-.music-card-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 -6px -6px;
-}
-
 .music-card-skip {
   display: flex;
   flex: none;
@@ -219,20 +347,20 @@ html .music-card .music-card-play {
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: #fff;
+  color: var(--mc-text);
   cursor: pointer;
   touch-action: manipulation;
 }
 
 .music-card-skip:focus-visible,
 .music-card-seek:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--mc-text);
   outline-offset: 2px;
 }
 
 .music-card-skip:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.4;
 }
 
 /* A 32px target around a thin line; sideways drags seek, vertical ones pan. */
@@ -262,7 +390,7 @@ html .music-card .music-card-play {
 .music-card-wave {
   position: absolute;
   inset: 0 auto 0 0;
-  background: var(--music-accent);
+  background: var(--mc-wave);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10'%3E%3Cpath d='M0 5Q6 0 12 5T24 5' fill='none' stroke='%23000' stroke-width='2.5'/%3E%3C/svg%3E") 0 0 / 24px 10px repeat-x;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10'%3E%3Cpath d='M0 5Q6 0 12 5T24 5' fill='none' stroke='%23000' stroke-width='2.5'/%3E%3C/svg%3E") 0 0 / 24px 10px repeat-x;
 }
@@ -277,7 +405,7 @@ html .music-card .music-card-play {
   right: 0;
   height: 2px;
   border-radius: 1px;
-  background: rgba(255, 255, 255, 0.45);
+  background: var(--mc-track);
 }
 
 .music-card-thumb {
@@ -286,22 +414,21 @@ html .music-card .music-card-play {
   width: 5px;
   height: 16px;
   border-radius: 3px;
-  background: var(--music-accent);
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+  background: var(--mc-wave);
+  box-shadow: 0 0 2px rgb(0 0 0 / 0.3);
   translate: -50% 0;
 }
 
 .music-card-error {
   margin: 0;
-  color: rgba(255, 255, 255, 0.92);
-  font-family: Inter, sans-serif;
+  color: var(--mc-soft);
+  font-family: var(--font-family);
   font-size: 11px;
   line-height: 1.35;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
 }
 
 .music-card-error a {
-  color: #fff;
+  color: var(--mc-text);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -315,6 +442,24 @@ html .music-card .music-card-play {
   pointer-events: none;
   border: 0;
   overflow: hidden;
+}
+
+/* Phones: same side-by-side layout with a smaller turntable, so the card stays short. */
+@media (max-width: 760px) {
+  .music-card-surface {
+    gap: 12px;
+    padding: 10px 12px 10px 10px;
+  }
+
+  .music-card-deck {
+    align-self: center;
+    width: 120px;
+    height: auto;
+  }
+}
+
+@keyframes music-card-spin {
+  to { rotate: 360deg; }
 }
 
 @keyframes music-card-wave {
@@ -338,8 +483,13 @@ html .music-card .music-card-play {
 
 @media (prefers-reduced-motion: reduce) {
   .music-card-surface,
-  .music-card-play {
+  .music-card-play,
+  .music-card-arm {
     transition: none;
+  }
+
+  .music-card-disc {
+    animation: none;
   }
 
   .music-card-loading-dot,

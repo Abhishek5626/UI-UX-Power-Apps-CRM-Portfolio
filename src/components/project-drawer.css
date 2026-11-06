@@ -294,3 +294,73 @@
     pointer-events: auto;
   }
 }
+
+/*
+  Full-screen sheet for native dialogs (All Projects, How I Work): slides up and
+  down exactly like the project drawer. dialog.sheet-dialog outranks a dialog's
+  own single-class sizing rules.
+*/
+dialog.sheet-dialog {
+  --control-size: 47px;
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--theme-text);
+  scrollbar-width: none;
+  /* backwards, not both: a leftover transform would trap fixed children (the chat dock) inside the sheet. */
+  animation: project-drawer-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+dialog.sheet-dialog::-webkit-scrollbar {
+  display: none;
+}
+
+dialog.sheet-dialog.is-closing {
+  animation: project-drawer-out 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/*
+  Frosted glass over the page. It lives on a pseudo-element: a backdrop-filter on
+  the sheet itself would trap the fixed controls below and make them scroll away.
+*/
+dialog.sheet-dialog::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--theme-page) 55%, transparent);
+  -webkit-backdrop-filter: blur(25px) saturate(1.3);
+  backdrop-filter: blur(25px) saturate(1.3);
+  pointer-events: none;
+}
+
+/* The sheet scrolls itself, so its drawer controls are pinned to the screen instead. */
+dialog.sheet-dialog .project-drawer-tools {
+  position: fixed;
+}
+
+@media (max-width: 760px) {
+  dialog.sheet-dialog {
+    --control-size: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.sheet-dialog,
+  dialog.sheet-dialog.is-closing {
+    animation: none;
+  }
+}

@@ -85,6 +85,19 @@ html[data-theme="dark"]
 }
 
 /* Glow and contours, behind each charcoal card's content. */
+/* Default contours: three arcs rising from the bottom-right. :where keeps this at zero specificity so the variants below win. */
+:where(
+    .about-me-surface,
+    .project-card-surface,
+    .work-experience-surface,
+    .testimonial-surface,
+    .theme-status-surface
+  ) {
+  --card-contours: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 66' preserveAspectRatio='none' fill='none' stroke='%23ddb5fc' stroke-opacity='.18'%3E%3Cpath d='M120 66C134 36 200 14 320 10'/%3E%3Cpath d='M176 66c12-20 60-32 144-36'/%3E%3Cpath d='M232 66c10-10 40-16 88-18'/%3E%3C/svg%3E");
+  --card-contours-at: right bottom;
+  --card-contours-size: min(100%, 320px) 66px;
+}
+
 :is(
     .about-me-surface,
     .project-card-surface:not(.is-media),
@@ -94,6 +107,35 @@ html[data-theme="dark"]
     .theme-status-surface
   ) {
   isolation: isolate;
+}
+
+/*
+  Variety: each card draws its contours in a different corner or shape, so
+  neighbouring cards never repeat. Top = mirrored down from the top-right,
+  left = mirrored from the bottom-left, tall = four longer sweeping arcs.
+*/
+:is(
+    .project-card-building-in-code,
+    .project-card-tools-shipped,
+    .all-projects-card,
+    .project-card-power-apps-crm
+  ) .project-card-surface,
+.testimonial-card .testimonial-surface {
+  --card-contours: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 66' preserveAspectRatio='none' fill='none' stroke='%23ddb5fc' stroke-opacity='.18'%3E%3Cpath d='M120 0C134 30 200 52 320 56'/%3E%3Cpath d='M176 0c12 20 60 32 144 36'/%3E%3Cpath d='M232 0c10 10 40 16 88 18'/%3E%3C/svg%3E");
+  --card-contours-at: right top;
+}
+
+.about-me-card .about-me-surface,
+.project-card-storytelling-play .project-card-surface,
+.theme-status .theme-status-surface {
+  --card-contours: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 66' preserveAspectRatio='none' fill='none' stroke='%23ddb5fc' stroke-opacity='.18'%3E%3Cpath d='M200 66C186 36 120 14 0 10'/%3E%3Cpath d='M144 66c-12-20-60-32-144-36'/%3E%3Cpath d='M88 66c-10-10-40-16-88-18'/%3E%3C/svg%3E");
+  --card-contours-at: left bottom;
+}
+
+.project-card-designing-ai-product .project-card-surface,
+.work-experience .work-experience-surface {
+  --card-contours: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 110' preserveAspectRatio='none' fill='none' stroke='%23ddb5fc' stroke-opacity='.16'%3E%3Cpath d='M60 110C80 60 190 24 320 16'/%3E%3Cpath d='M120 110c14-34 80-56 200-62'/%3E%3Cpath d='M180 110c12-22 60-36 140-40'/%3E%3Cpath d='M240 110c8-12 34-18 80-20'/%3E%3C/svg%3E");
+  --card-contours-size: min(100%, 320px) 110px;
 }
 
 :is(
@@ -112,8 +154,7 @@ html[data-theme="dark"]
   background:
     radial-gradient(110% 70% at 0% 0%, rgb(221 181 252 / 0.13), transparent 70%),
     radial-gradient(80% 40% at 100% 100%, rgb(170 140 255 / 0.1), transparent 75%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 66' preserveAspectRatio='none' fill='none' stroke='%23ddb5fc' stroke-opacity='.18'%3E%3Cpath d='M120 66C134 36 200 14 320 10'/%3E%3Cpath d='M176 66c12-20 60-32 144-36'/%3E%3Cpath d='M232 66c10-10 40-16 88-18'/%3E%3C/svg%3E")
-      right bottom / min(100%, 320px) 66px no-repeat;
+    var(--card-contours) var(--card-contours-at) / var(--card-contours-size) no-repeat;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--theme-duration) var(--theme-ease);

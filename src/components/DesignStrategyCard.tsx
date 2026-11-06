@@ -4,8 +4,8 @@ import {
   strategyOptions,
   type StrategyOptionContent,
 } from './designStrategyContent.ts'
-import { ShippedBadge } from './ShippedBadge.tsx'
 import './design-strategy.css'
+import { CardIcon } from './CardIcon.tsx'
 
 const optionCount = strategyOptions.length
 const stepDeg = 12
@@ -24,7 +24,7 @@ type StackRole = (typeof roles)[number]
 type StackSpec = {
   w: number
   h: number
-  bg: number
+  bg: string
   radius: string
   shadow: string
   pad: string
@@ -58,22 +58,30 @@ function springPushReturn(progress: number) {
   return Math.exp(-5 * p) * Math.cos(p * Math.PI * 2.5)
 }
 
-function buildSpecs(stackWidth: number): Record<StackRole, StackSpec> {
-  const activeW = Math.min(260, Math.max(188, stackWidth - 12))
-  const scale = activeW / 260
+/**
+ * Card sizes for the stack, fitted to the space it has. Width sets the scale; if
+ * the panel is short, the peeking back layers shrink first (they need 44px a side
+ * at full size), and the front card only shrinks once it alone would not fit with
+ * 8px of peek either side. So the stack never spills out of the panel.
+ */
+function buildSpecs(stackWidth: number, maxHeight = Infinity): Record<StackRole, StackSpec> {
+  const widthScale = Math.min(260, Math.max(188, stackWidth - 12)) / 260
+  const scale = Math.min(widthScale, (maxHeight - 16) / 175)
+  const activeW = 260 * scale
   const activeH = 175 * scale
+  const peek = Math.min(1, Math.max(0, (maxHeight - activeH) / 2) / (44 * scale))
   const nearW = 184 * scale
-  const nearH = 28 * scale
+  const nearH = 28 * scale * peek
   const farW = 134 * scale
-  const farH = 20 * scale
-  const overlap = 2 * scale
+  const farH = 20 * scale * peek
+  const overlap = 2 * scale * peek
   const nearY = activeH / 2 + nearH / 2 - overlap
   const farY = nearY + nearH / 2 + farH / 2 - overlap
   const bar = (
     w: number,
     h: number,
     y: number,
-    bg: number,
+    bg: string,
     radiusValue: string,
     shadow: string,
     z: number,
@@ -95,18 +103,18 @@ function buildSpecs(stackWidth: number): Record<StackRole, StackSpec> {
       farW,
       farH,
       -farY,
-      0.24,
+      'var(--ds-far)',
       `${14 * scale}px ${14 * scale}px 0 0`,
-      '0 -12px 8px 0 rgba(255, 243, 244, 0.35)',
+      '0 -12px 8px 0 color-mix(in srgb, var(--ds-panel) 35%, transparent)',
       2,
     ),
     nearTop: bar(
       nearW,
       nearH,
       -nearY,
-      0.44,
-      `${18 * scale}px ${18 * scale}px 0 0`,
-      '0 -12px 8px 0 rgba(255, 243, 244, 0.35)',
+      'var(--ds-near)',
+      `${14 * scale}px ${14 * scale}px 0 0`,
+      '0 -12px 8px 0 color-mix(in srgb, var(--ds-panel) 35%, transparent)',
       3,
     ),
     active: {
@@ -114,9 +122,9 @@ function buildSpecs(stackWidth: number): Record<StackRole, StackSpec> {
         activeW,
         activeH,
         0,
-        0.92,
-        `${32 * scale}px`,
-        'inset 0 -2px 0 0 rgba(255, 206, 209, 0.32), 0 -12px 8px 0 rgba(255, 243, 244, 0.35)',
+        'var(--ds-front)',
+        `${14 * scale}px`,
+        'inset 0 -2px 0 0 color-mix(in srgb, var(--ds-front) 60%, #6b5a8a 8%), 0 -12px 8px 0 color-mix(in srgb, var(--ds-panel) 35%, transparent)',
         4,
       ),
       pad: `${22 * scale}px ${28 * scale}px ${23 * scale}px`,
@@ -125,18 +133,18 @@ function buildSpecs(stackWidth: number): Record<StackRole, StackSpec> {
       nearW,
       nearH,
       nearY,
-      0.44,
-      `0 0 ${18 * scale}px ${18 * scale}px`,
-      'inset 0 -1.5px 0 0 rgba(255, 222, 224, 0.32)',
+      'var(--ds-near)',
+      `0 0 ${14 * scale}px ${14 * scale}px`,
+      'inset 0 -1.5px 0 0 color-mix(in srgb, var(--ds-near) 70%, transparent)',
       3,
     ),
     farBottom: bar(
       farW,
       farH,
       farY,
-      0.24,
+      'var(--ds-far)',
       `0 0 ${14 * scale}px ${14 * scale}px`,
-      'inset 0 -1.5px 0 0 rgba(255, 222, 224, 0.24)',
+      'inset 0 -1.5px 0 0 color-mix(in srgb, var(--ds-far) 55%, transparent)',
       2,
     ),
   }
@@ -149,7 +157,7 @@ function applySpec(el: HTMLDivElement, spec: StackSpec, animate: boolean) {
   el.style.width = `${spec.w}px`
   el.style.height = `${spec.h}px`
   el.style.padding = spec.pad
-  el.style.backgroundColor = `rgba(255, 222, 224, ${spec.bg})`
+  el.style.backgroundColor = spec.bg
   el.style.borderRadius = spec.radius
   el.style.boxShadow = spec.shadow
   el.style.zIndex = String(spec.z)
@@ -495,7 +503,7 @@ export function DesignStrategyCard() {
       if (button.dataset.sweeping === '1') return
       button.dataset.sweeping = '1'
       button.style.backgroundImage =
-        'linear-gradient(90deg, #211b1c 0%, #211b1c 44%, #fc8e95 50%, #211b1c 56%, #211b1c 100%)'
+        'linear-gradient(90deg, #211b1c 0%, #211b1c 44%, var(--ds-sweep) 50%, #211b1c 56%, #211b1c 100%)'
       button.style.backgroundSize = '200% auto'
       button.style.webkitBackgroundClip = 'text'
       button.style.backgroundClip = 'text'
@@ -926,13 +934,13 @@ export function DesignStrategyCard() {
 
     const measure = () => {
       halfLine = (buttons[0]?.offsetHeight || 25.6) / 2
-      specs = buildSpecs(stack.clientWidth || 272)
       const besideList = list.offsetHeight > frame.clientHeight * 0.8
+      // Beside the wheel, the stack is centred in the panel (CSS) and must fit its height less a 12px inset each side.
+      specs = buildSpecs(stack.clientWidth || 272, besideList ? frame.clientHeight - 24 : stack.clientHeight || Infinity)
       if (besideList) {
         const span = specs.farBottom.y - specs.farTop.y + specs.farBottom.h
-        const inset = 12
         stack.style.height = `${span}px`
-        centerY = inset + span / 2
+        centerY = list.offsetHeight / 2
       } else {
         stack.style.height = ''
         centerY = (list.offsetHeight || 250) / 2
@@ -1029,20 +1037,9 @@ export function DesignStrategyCard() {
       <div className="project-card-surface">
         <div className="project-card-header">
           <h2 id="design-strategy-title" className="design-strategy-title project-card-label">
-            <span className="project-card-icon" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path
-                  d="M8.3475 4.66667L11.6958 10.465M5.6525 4.66667H12.3492M4.305 7L7.65333 1.20167M5.6525 9.33333L2.30417 3.535M8.3475 9.33333H1.65083M9.695 7L6.34667 12.7983M12.8333 7C12.8333 10.2217 10.2217 12.8333 7 12.8333C3.77834 12.8333 1.16667 10.2217 1.16667 7C1.16667 3.77834 3.77834 1.16667 7 1.16667C10.2217 1.16667 12.8333 3.77834 12.8333 7Z"
-                  stroke="currentColor"
-                  strokeWidth="0.583333"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
+            <CardIcon name="compass" />
             Design Strategy
           </h2>
-          <ShippedBadge />
         </div>
         <div className="design-strategy-frame" ref={frameRef}>
           <div className="design-strategy-panel">

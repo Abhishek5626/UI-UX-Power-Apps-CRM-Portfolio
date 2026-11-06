@@ -1,10 +1,10 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
-import type { KeyboardEvent, MouseEvent } from 'react'
-import { ApertureMark } from './AboutMeCard.tsx'
+import type { KeyboardEvent, PointerEvent } from 'react'
+import { DrawerTools, useSheetKeys } from './ProjectDrawer.tsx'
 import { howIWorkContent } from './howIWorkContent.ts'
 import './how-i-work.css'
 
-const tabs = ['process', 'bestWhere'] as const
+const tabs = ['process', 'bestWhere', 'certificates'] as const
 const RESIZE_MS = 320
 
 export function HowIWorkDialog({
@@ -15,17 +15,23 @@ export function HowIWorkDialog({
   onClose: () => void
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
   const shellRef = useRef<HTMLDivElement>(null)
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
   const fromHeightRef = useRef<string | null>(null)
   const resizeRef = useRef<Animation | null>(null)
   const [active, setActive] = useState(0)
   const [leaving, setLeaving] = useState<number | null>(null)
+  const [certFilter, setCertFilter] = useState(0)
+  const certLogoRef = useRef<HTMLImageElement>(null)
   const id = useId()
-  const { process, bestWhere } = howIWorkContent
+  const { process, bestWhere, certificates } = howIWorkContent
+  const certArea = certificates.filters[certFilter]
 
+  // Not modal: like the project drawer, the nav and chat stay on top, and useSheetKeys keeps focus in scope.
   useEffect(() => {
-    dialogRef.current?.showModal()
+    dialogRef.current?.show()
+    closeRef.current?.focus({ preventScroll: true })
   }, [])
 
   // Tweens the shell between the two panels' heights, then hands back to auto
@@ -83,8 +89,22 @@ export function HowIWorkDialog({
     ).then(() => dialog.close())
   }
 
-  const onBackdropClick = (event: MouseEvent<HTMLDialogElement>) => {
-    if (event.target === event.currentTarget) requestClose()
+  useSheetKeys(dialogRef, requestClose)
+
+  // The hovered row's issuer logo follows the pointer, centred on it (signal-a.studio's recognitions list).
+  const moveCertLogo = (event: PointerEvent<HTMLDivElement>) => {
+    const logo = certLogoRef.current
+    const row = (event.target as Element).closest<HTMLElement>('.cert-row')
+    if (!logo || event.pointerType !== 'mouse') return
+    if (!row) {
+      logo.classList.remove('is-shown')
+      return
+    }
+    const src = row.dataset.logo ?? ''
+    if (logo.getAttribute('src') !== src) logo.src = src
+    const box = event.currentTarget.getBoundingClientRect()
+    logo.style.translate = `${event.clientX - box.left}px ${event.clientY - box.top}px`
+    logo.classList.add('is-shown')
   }
 
   const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -104,38 +124,19 @@ export function HowIWorkDialog({
   return (
     <dialog
       ref={dialogRef}
-      className="how-i-work"
+      className="sheet-dialog how-i-work"
       aria-labelledby={`${id}-title`}
-      onCancel={(event) => {
-        event.preventDefault()
-        requestClose()
-      }}
       onClose={() => {
         opener.focus({ preventScroll: true })
         onClose()
       }}
-      onClick={onBackdropClick}
     >
+      <DrawerTools closeLabel="Close How I Work" onClose={requestClose} closeRef={closeRef} />
       <div ref={shellRef} className="how-i-work-shell">
-        <header className="how-i-work-header">
-          <h2 id={`${id}-title`} className="how-i-work-title">
-            <ApertureMark />
-            {howIWorkContent.title}
-          </h2>
-          <button
-            type="button"
-            className="how-i-work-close glass-control"
-            aria-label="Close"
-            onClick={requestClose}
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-              <path
-                d="M6 0c.552 0 1 .448 1 1v4h4c.552 0 1 .448 1 1s-.448 1-1 1H7v4c0 .552-.448 1-1 1s-1-.448-1-1V7H1C.448 7 0 6.552 0 6s.448-1 1-1h4V1c0-.552.448-1 1-1Z"
-                fill="currentColor"
-              />
-            </svg>
-          </button>
-        </header>
+        {/* No visible header in the sheet; the title stays for screen readers and the tab list's label. */}
+        <h2 id={`${id}-title`} className="visually-hidden">
+          {howIWorkContent.title}
+        </h2>
 
         <div
           className="how-i-work-tabs"
@@ -209,6 +210,52 @@ export function HowIWorkDialog({
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div
+            role="tabpanel"
+            id={`${id}-panel-certificates`}
+            className={panelClass(2, 'is-process is-certificates')}
+            aria-labelledby={`${id}-tab-certificates`}
+            tabIndex={0}
+            hidden={active !== 2 && leaving !== 2}
+            inert={leaving === 2}
+          >
+            {/* Sub-tabs sit straight under the main tabs, as in All Projects. */}
+            <div className="how-i-work-tabs all-projects-filters" role="group" aria-label="Certificate area">
+              {certificates.filters.map((filter, index) => (
+                <button
+                  key={filter}
+                  type="button"
+                  className="how-i-work-tab"
+                  aria-pressed={index === certFilter}
+                  onClick={() => setCertFilter(index)}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+            <div className="how-i-work-intro">
+              <h3 className="how-i-work-heading">{certificates.heading}</h3>
+              <p className="how-i-work-summary">{certificates.summary}</p>
+            </div>
+            <div
+              className="cert-list-wrap"
+              onPointerMove={moveCertLogo}
+              onPointerLeave={() => certLogoRef.current?.classList.remove('is-shown')}
+            >
+              <ul className="cert-list" role="list" aria-live="polite">
+                {certificates.items
+                  .filter((item) => certFilter === 0 || item.area === certArea)
+                  .map((item) => (
+                    <li key={item.id} className="cert-row" data-logo={item.logo}>
+                      <span className="cert-name">{item.name}</span>
+                      <span className="cert-detail">{item.detail}</span>
+                    </li>
+                  ))}
+              </ul>
+              <img ref={certLogoRef} className="cert-logo" alt="" width={160} height={160} aria-hidden="true" />
+            </div>
           </div>
         </div>
       </div>

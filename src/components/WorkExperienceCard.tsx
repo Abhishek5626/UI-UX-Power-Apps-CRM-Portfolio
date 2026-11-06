@@ -6,6 +6,7 @@ import {
   timelineEnd,
 } from './workExperienceContent.ts'
 import './work-experience.css'
+import { CardIcon } from './CardIcon.tsx'
 
 /*
   Exposure-style ticker, after Smooth UI's Exposure Slider (MIT, Eduardo
@@ -236,17 +237,7 @@ export function WorkExperienceCard() {
     <article className="work-experience" data-hover-tile="" data-repel="">
       <div className="work-experience-surface">
         <div className="work-experience-heading">
-          <span className="project-card-icon" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path
-                d="M8.3475 4.66667L11.6958 10.465M5.6525 4.66667H12.3492M4.305 7L7.65333 1.20167M5.6525 9.33333L2.30417 3.535M8.3475 9.33333H1.65083M9.695 7L6.34667 12.7983M12.8333 7C12.8333 10.2217 10.2217 12.8333 7 12.8333C3.77834 12.8333 1.16667 10.2217 1.16667 7C1.16667 3.77834 3.77834 1.16667 7 1.16667C10.2217 1.16667 12.8333 3.77834 12.8333 7Z"
-                stroke="currentColor"
-                strokeWidth="0.583333"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
+          <CardIcon name="ring" />
           <h2 className="work-experience-label">Current</h2>
           <span className="work-experience-year">{position.year}</span>
           <button

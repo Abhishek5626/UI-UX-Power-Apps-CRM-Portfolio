@@ -2,6 +2,7 @@ import { useId } from 'react'
 import type { ReactNode } from 'react'
 import type { AboutPlaceId } from '../pages/landingContent.ts'
 import { howIWorkContent } from './howIWorkContent.ts'
+import { CardIcon } from './CardIcon.tsx'
 
 export type AboutMeCardContent = {
   label: string
@@ -109,7 +110,7 @@ export function AboutMeCard({
       <div className="about-me-surface">
         <span className="project-card-header">
           <span className="project-card-label">
-            <ApertureMark />
+            <CardIcon name="heart" />
             {content.label}
           </span>
           {onHowIWork ? (

@@ -54,7 +54,7 @@ html[data-theme="dark"] .cs-system {
 }
 
 .cs-system .cs-content .q-metric strong {
-  font-family: Fraunces, Georgia, serif;
+  font-family: var(--font-family);
   font-size: 28px;
   font-weight: 500;
   line-height: 34px;
@@ -67,7 +67,38 @@ html[data-theme="dark"] .cs-system {
 }
 
 .q-bento-image {
-  background: var(--q-metric-soft);
+  position: relative;
+  overflow: hidden;
+  background: #fbfbfe;
+}
+
+/* Two soft blue blobs drifting behind the agents panel. */
+.q-bento-image::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(circle at 30% 70%, rgb(110 135 230 / 0.45), transparent 30%),
+    radial-gradient(circle at 75% 30%, rgb(150 170 240 / 0.4), transparent 30%);
+  filter: blur(24px);
+  animation: q-blob 12s ease-in-out infinite alternate;
+}
+
+.q-bento-image img {
+  position: absolute;
+  left: 30%;
+  top: 16%;
+  width: 70%;
+  height: auto;
+  box-shadow: 0 0 24px rgb(80 100 200 / 0.12);
+}
+
+@keyframes q-blob {
+  to { transform: translate(10%, -8%) rotate(30deg) scale(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .q-bento-image::before { animation: none; }
 }
 
 /* Phones stack the opening as Agentic AI does: title, text, then role. */

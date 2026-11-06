@@ -1,10 +1,24 @@
 .design-strategy {
+  /* Figma 375:1032 (light, lavender) and 375:1043 (dark, periwinkle). The script paints the stack from these. */
+  --ds-panel: #f8f1fc;
+  --ds-front: #ecdcf6;
+  --ds-near: #f1e3f8;
+  --ds-far: #f3ebf8;
+  --ds-sweep: #b07ce8;
   position: relative;
   width: 100%;
   min-width: 0;
   container-type: inline-size;
   color: #211b1c;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
+}
+
+html[data-theme="dark"] .design-strategy {
+  --ds-panel: #e2e5f5;
+  --ds-front: #bec6f1;
+  --ds-near: #d2d5ec;
+  --ds-far: #d0d4ed;
+  --ds-sweep: #5b6bd6;
 }
 
 .design-strategy .project-card-surface {
@@ -29,24 +43,21 @@
 }
 
 .design-strategy-frame {
+  /* Fills whatever height the card has, so the panel below is exactly the visible area. */
+  flex: 1 1 0;
+  min-height: 0;
   width: 100%;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 14px;
 }
 
 .design-strategy-panel {
   position: relative;
-  /* 74px of card chrome (2+14 padding each side) keeps the outer card height stable. */
-  height: 290px;
+  height: 100%;
   overflow: hidden;
-  border-radius: 12px;
-  background: rgba(255, 230, 232, 0.48);
-}
-
-/* The reference blush is translucent over a light page. On the dark theme that
-   mix turns muddy, so keep the same pale panel the light page already shows. */
-html[data-theme="dark"] .design-strategy-panel {
-  background: #fff3f4;
+  border-radius: 14px;
+  background: var(--ds-panel);
+  transition: background-color var(--theme-duration) var(--theme-ease);
 }
 
 .design-strategy-panel::before {
@@ -56,8 +67,8 @@ html[data-theme="dark"] .design-strategy-panel {
   z-index: 5;
   border-radius: inherit;
   box-shadow:
-    rgb(255, 243, 244) 0 6px 14px 0 inset,
-    rgb(255, 243, 244) 0 -12px 24px 0 inset;
+    var(--ds-panel) 0 6px 14px 0 inset,
+    var(--ds-panel) 0 -12px 24px 0 inset;
   pointer-events: none;
 }
 
@@ -138,19 +149,14 @@ html[data-theme="dark"] .design-strategy-panel {
 
 .strategy-card-stack {
   position: absolute;
-  top: 12px;
+  top: 50%;
   right: 12px;
   z-index: 1;
   width: 272px;
   height: 263px;
   pointer-events: none;
-  /*
-    The card's frame shows 223px of this panel, so a stack centred on the
-    full panel sat low and clipped at the bottom. Lift it to just below the
-    visible middle (30px above / 18px below the front card). `translate`
-    leaves the script-set height and the left list's centre line alone.
-  */
-  translate: 0 -26px;
+  /* Centred in the panel; the script sizes it to fit and centres the wheel on the same line. */
+  translate: 0 -50%;
 }
 
 .strategy-detail-card {
@@ -166,37 +172,26 @@ html[data-theme="dark"] .design-strategy-panel {
 
 .strategy-detail-copy {
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 22px;
 }
 
+/* Phones: the wheel alone fills the panel; the detail cards are left out (the status line still reads them out). */
 @container (max-width: 480px) {
-  .design-strategy-panel {
-    /* Same 66px chrome, so the narrow section stays at its previous 520px. */
-    height: 454px;
-  }
-
   .strategy-option-list {
-    bottom: auto;
-    width: 100%;
-    height: 250px;
+    left: 16%;
+    width: 84%;
   }
 
   .strategy-arrow {
-    top: 125px;
+    left: calc(16% + 22px);
   }
 
   .strategy-card-stack {
-    top: auto;
-    right: 0;
-    bottom: 12px;
-    left: 0;
-    width: auto;
-    height: 176px;
-    translate: none;
+    display: none;
   }
 }
 

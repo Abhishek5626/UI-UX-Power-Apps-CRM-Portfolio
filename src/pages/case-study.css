@@ -55,7 +55,7 @@
   transition:
     background-color var(--theme-duration) var(--theme-ease),
     color var(--theme-duration) var(--theme-ease);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-weight: 400;
   padding: 42px 0 72px;
   display: flex;
@@ -1441,7 +1441,7 @@
   margin-top: 28px;
   border-radius: 99px;
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 500;
   line-height: 16.8px;
@@ -1508,7 +1508,7 @@
 
 .thanks {
   color: var(--theme-text);
-  font-family: "Aeonik Pro", Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 22px;
   line-height: 26px;
   letter-spacing: -0.22px;
@@ -1534,7 +1534,7 @@
 
 .partner {
   color: var(--theme-text);
-  font-family: "Aeonik Pro", Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 78px;
   font-weight: 400;
   line-height: 84px;
@@ -1542,7 +1542,7 @@
 }
 
 .partner em {
-  font-family: "Editor's Note", "Iowan Old Style", Palatino, serif;
+  font-family: var(--font-family);
   font-style: italic;
 }
 

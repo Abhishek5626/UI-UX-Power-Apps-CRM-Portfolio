@@ -53,7 +53,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-title-row h1,
 .cs1-title-row p {
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 .cs1-title-row h1 {
@@ -136,7 +136,7 @@ html[data-theme="dark"] .cs1 {
   max-width: 100%;
   margin: 0;
   color: var(--cs1-body);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -187,7 +187,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-facts dt {
   color: var(--theme-text-muted);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 10px;
   font-weight: 400;
   line-height: 14px;
@@ -196,7 +196,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-facts dd {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -221,7 +221,7 @@ html[data-theme="dark"] .cs1 {
   height: 32px;
   padding: 10px;
   border-radius: 99px;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 13px;
   font-weight: 400;
   line-height: 11.7px;
@@ -256,7 +256,7 @@ html[data-theme="dark"] .cs1 {
   align-items: flex-start;
   gap: 8px;
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 10px;
   font-weight: 500;
   line-height: 14px;
@@ -270,7 +270,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-stat-value {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 18px;
   font-weight: 400;
   line-height: 25.2px;
@@ -297,7 +297,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-why-head h2 {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 500;
   line-height: 38.4px;
@@ -313,7 +313,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-why-copy p {
   margin: 0;
   color: var(--cs1-body);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -429,7 +429,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-note,
 .cs1-stars {
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 .cs1-chat header p {
@@ -497,7 +497,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-msg blockquote p {
   margin: 0;
   color: #bfbfbf;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 12px;
   font-weight: 500;
   line-height: 19.2px;
@@ -682,7 +682,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-problem-head h2 {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 500;
   line-height: 38.4px;
@@ -699,7 +699,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-problem-note,
 .cs1-problem-card p {
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 .cs1-problem-copy p {
@@ -818,7 +818,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-journey-head h2 {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 500;
   line-height: 38.4px;
@@ -843,7 +843,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-personas figcaption,
 .cs1-board-caption,
 .cs1-map {
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 .cs1-journey-side p,
@@ -982,7 +982,7 @@ html[data-theme="dark"] .cs1 {
   border-radius: 12px;
   background: #363434;
   color: #f0f0f0;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 13px;
   font-weight: 400;
   line-height: 18.2px;
@@ -1079,7 +1079,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-strategy-head h2 {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 500;
   line-height: 38.4px;
@@ -1095,7 +1095,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-strategy-intro > p:not(.cs1-strategy-eyebrow):not(.cs1-strategy-feature),
 .cs1-strategy-split p:last-child {
   color: var(--cs1-body);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1104,7 +1104,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-strategy-intro > .cs1-strategy-eyebrow {
   color: #2eb025;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 400;
   line-height: 19.6px;
@@ -1113,7 +1113,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-strategy-intro > .cs1-strategy-feature {
   color: #a3a3a3;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1122,7 +1122,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-strategy-split p:first-child {
   color: #707070;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1229,7 +1229,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-proof-body,
 .cs1-proof-value {
   display: block;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 .cs1-proof-name {
@@ -1294,7 +1294,7 @@ html[data-theme="dark"] .cs1 {
   padding: 8px 14px;
   border-radius: 999px;
   color: rgba(255, 255, 255, 0.82);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -1359,7 +1359,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-modules-title,
 .cs1-modules-category {
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 .cs1-modules-number {
@@ -1414,7 +1414,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-modules-empty {
   margin: 0;
   color: rgba(255, 255, 255, 0.6);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   line-height: 22px;
   text-align: center;
@@ -1426,7 +1426,7 @@ html[data-theme="dark"] .cs1 {
   padding: 10px 22px;
   border-radius: 999px;
   color: #fff;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -1498,7 +1498,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-feature-caption h3,
 .cs1-feature-caption p {
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 .cs1-feature-caption h3 {
@@ -1556,7 +1556,7 @@ html[data-theme="dark"] .cs1 {
 
 .cs1-program-phase-title {
   color: #707070;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1572,7 +1572,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-program-phase-label {
   margin: 0;
   color: #575757;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 16px;
   font-weight: 400;
   line-height: 22.4px;
@@ -1583,7 +1583,7 @@ html[data-theme="dark"] .cs1 {
 .cs1-program-phase-copy > p:last-child,
 .cs1-program-phase.is-flip > p:last-child {
   color: var(--cs1-body);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1628,7 +1628,7 @@ html[data-theme='dark'] .cs1-program-phase-label {
 
 .cs1-request-text h2 {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 500;
   line-height: 38.4px;
@@ -1638,7 +1638,7 @@ html[data-theme='dark'] .cs1-program-phase-label {
 .cs1-request-text p {
   margin: 0;
   color: #616161;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 16px;
   font-weight: 400;
   line-height: 22.4px;
@@ -1658,7 +1658,7 @@ html[data-theme='dark'] .cs1-request-text p {
   padding: 0 24px;
   border-radius: 99px;
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 14px;
   font-weight: 500;
   line-height: 16.8px;
@@ -1676,7 +1676,7 @@ html[data-theme='dark'] .cs1-request-text p {
 .cs1-next-kicker {
   width: 100%;
   color: #303030;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 20px;
   font-weight: 400;
   line-height: 34px;
@@ -1723,7 +1723,7 @@ html[data-theme='dark'] .cs1-next-kicker {
   padding: 6px 10px;
   border-radius: 999px;
   color: #fff;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 13px;
   font-weight: 500;
   line-height: 12px;
@@ -1746,7 +1746,7 @@ html[data-theme='dark'] .cs1-next-kicker {
 
 .cs1-next-titles h3 {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 500;
   line-height: 25.5px;
@@ -1755,7 +1755,7 @@ html[data-theme='dark'] .cs1-next-kicker {
 
 .cs1-next-titles p {
   color: #595959;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1786,7 +1786,7 @@ html[data-theme='dark'] .cs1-next-titles p {
 
 .cs1-results-head h2 {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 500;
   line-height: 38.4px;
@@ -1802,7 +1802,7 @@ html[data-theme='dark'] .cs1-next-titles p {
 .cs1-results-body > p {
   margin: 0;
   color: #3d3d3d;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1822,7 +1822,7 @@ html[data-theme='dark'] .cs1-results-body > p {
 .cs1-results-value {
   margin: 0;
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 51px;
   font-weight: 400;
   line-height: 51px;
@@ -1832,7 +1832,7 @@ html[data-theme='dark'] .cs1-results-body > p {
 .cs1-results-label {
   margin: 0;
   color: #2eb025;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1855,7 +1855,7 @@ html[data-theme='dark'] .cs1-results-body > p {
 
 .cs1-owner-head h2 {
   color: var(--theme-text);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 500;
   line-height: 38.4px;
@@ -1865,7 +1865,7 @@ html[data-theme='dark'] .cs1-results-body > p {
 .cs1-owner-head p,
 .cs1-owner-split p:last-child {
   color: var(--cs1-body);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1874,7 +1874,7 @@ html[data-theme='dark'] .cs1-results-body > p {
 
 .cs1-owner-split p:first-child {
   color: var(--theme-text-muted);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 400;
   line-height: 25.5px;
@@ -1904,7 +1904,7 @@ html[data-theme='dark'] .cs1-results-body > p {
 .cs1-bento h3,
 .cs1-bento p,
 .cs1-flow-card {
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
 }
 
 .cs1-mod h3,

@@ -1,185 +1,184 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState } from 'react'
 import './quik-figures.css'
 
-/** Original concept figures for the Quik case study, drawn from its own text. Everything here is assumed, not research data. */
-function Figure({ label, title, children }: { label: string; title: string; children: ReactNode }) {
+/** The one-pager the agents drafted: the editor washes out to its two key sections, then reveals the rest. */
+export function OnePagerFocus() {
   return (
-    <figure className="qf" aria-label={label}>
-      <p className="qf-title">{title}</p>
-      {children}
-    </figure>
-  )
-}
-
-const firstHour = [
-  { step: 'Sign up', stops: 0 },
-  { step: 'Create a project', stops: 1 },
-  { step: 'Connect a repo', stops: 2 },
-  { step: 'Set env variables', stops: 4 },
-  { step: 'Add a domain', stops: 3 },
-  { step: 'Read the logs', stops: 3 },
-]
-
-export function ResearchMap() {
-  return (
-    <Figure label="A first-hour map of where people stop in Quik, and the top three points ranked" title="The first hour in Quik">
-      <ol className="qf-hour">
-        {firstHour.map(({ step, stops }, index) => (
-          <li key={step}>
-            <span className="qf-hour-bar" aria-hidden="true">
-              {Array.from({ length: stops }, (_, i) => (
-                <i key={i} />
-              ))}
-            </span>
-            <span className="qf-num">{index + 1}</span>
-            <b>{step}</b>
-            <small>{stops ? `${stops} look-up${stops > 1 ? 's' : ''}` : 'No stops'}</small>
-          </li>
-        ))}
-      </ol>
-      <div className="qf-rank">
-        <p className="qf-label">Ranked by how often it comes up and how much it blocks</p>
-        <ol>
-          <li><b>Set env variables</b><span>Every project, and nothing works until it's right</span></li>
-          <li><b>Add a domain</b><span>Needs DNS steps outside Quik</span></li>
-          <li><b>Read the logs</b><span>Experts leave for their own terminal here</span></li>
-        </ol>
-      </div>
-      <p className="qf-note">Concept: the stops are assumed, to be checked in interviews</p>
-    </Figure>
-  )
-}
-
-const directions = [
-  { key: 'A', name: 'Chat added to the dashboard', verdict: 'The menus stay in the way', shape: 'dash' },
-  { key: 'B', name: 'A separate assistant app', verdict: 'Splits people from their projects', shape: 'app' },
-  { key: 'C', name: 'A workspace built around tasks', verdict: 'Taken forward', shape: 'work', chosen: true },
-]
-
-export function Directions() {
-  return (
-    <Figure label="Three directions compared: chat in the dashboard, a separate app, and the chosen task workspace" title="Three directions">
-      <div className="qf-grid qf-three">
-        {directions.map((d) => (
-          <div key={d.key} className={d.chosen ? 'qf-card is-chosen' : 'qf-card'}>
-            <div className={`qf-wire is-${d.shape}`} aria-hidden="true">
-              <i /><i /><i />
-            </div>
-            <p className="qf-label">Direction {d.key}</p>
-            <b>{d.name}</b>
-            <span className={d.chosen ? 'qf-pill is-on' : 'qf-pill'}>{d.verdict}</span>
-          </div>
-        ))}
-      </div>
-    </Figure>
-  )
-}
-
-const parts = [
-  { part: 'Ask', panel: 'centre' },
-  { part: 'Type commands', panel: 'left' },
-  { part: 'Check a plan', panel: 'right' },
-  { part: 'Review the result', panel: 'right' },
-]
-
-export function BuildingBlocks() {
-  return (
-    <Figure label="Four building blocks placed into three panels: console, conversation, and plan and results" title="Four parts, three panels">
-      <div className="qf-blocks">
-        <ul className="qf-parts">
-          {parts.map(({ part, panel }) => (
-            <li key={part} data-panel={panel}>
-              {part}
-            </li>
-          ))}
-        </ul>
-        <span className="qf-arrow" aria-hidden="true">→</span>
-        <div className="qf-panels">
-          <div data-panel="left"><p className="qf-label">Console</p><b>Type commands</b></div>
-          <div data-panel="centre"><p className="qf-label">Conversation</p><b>Ask</b></div>
-          <div data-panel="right"><p className="qf-label">Plan and results</p><b>Check a plan</b><b>Review the result</b></div>
-        </div>
-      </div>
-    </Figure>
-  )
-}
-
-export function ActionSchema() {
-  return (
-    <Figure label="One action's structure drives both the plan step on screen and the matching console command" title="One action, two views">
-      <div className="qf-schema">
-        <pre className="qf-code">{`{
-  "action": "add_domain",
-  "does":   "Point shop.example.com at this project",
-  "needs":  ["domain", "DNS access"],
-  "cost":   "Free",
-  "undo":   "Remove the domain"
-}`}</pre>
-        <span className="qf-arrow" aria-hidden="true">→</span>
-        <div className="qf-views">
-          <div className="qf-card">
-            <p className="qf-label">Plan step</p>
-            <b>Point shop.example.com at this project</b>
-            <span>Needs DNS access · Free · Can be undone</span>
-            <span className="qf-buttons"><i>Approve</i><i>Skip</i></span>
-          </div>
-          <div className="qf-card qf-term">
-            <p className="qf-label">Console</p>
-            <code>$ quik domains add shop.example.com</code>
-          </div>
-        </div>
-      </div>
-    </Figure>
-  )
-}
-
-function PlanStep({ tone, n = 2, title = 'Set the env variables', text = '3 values from your .env file' }: { tone: 'dense' | 'open' | 'final'; n?: number; title?: string; text?: string }) {
-  return (
-    <div className={`qf-step is-${tone}`}>
-      <span className="qf-num">{n}</span>
-      <div>
-        <b>{title}</b>
-        <span>{text}</span>
-      </div>
-      <i>Approve</i>
+    <div className="qf-focus">
+      <img
+        src="/case-study-5/one-pager.webp"
+        width={2000}
+        height={1151}
+        alt="The drafted AWS Conversational Console one-pager open in a code editor, with the problem bullets and the opportunity section highlighted"
+      />
+      <span className="qf-focus-wash" aria-hidden="true" />
+      <span className="qf-focus-band is-problem" aria-hidden="true" />
+      <span className="qf-focus-band is-opportunity" aria-hidden="true" />
     </div>
   )
 }
 
-export function VisualDirections() {
+/** The full workspace with each panel lit in turn: rail, console and agents, chat, review, then all together. */
+export function LayoutTour() {
   return (
-    <Figure label="The same plan step in a dense style, an open style and the final style" title="One plan step, three looks">
-      <div className="qf-grid qf-three">
-        {(['dense', 'open', 'final'] as const).map((tone) => (
-          <div key={tone} className={tone === 'final' ? 'qf-card is-chosen' : 'qf-card'}>
-            <p className="qf-label">{tone === 'dense' ? 'Dense and technical' : tone === 'open' ? 'Soft and open' : 'Final, in between'}</p>
-            <PlanStep tone={tone} />
-          </div>
-        ))}
-      </div>
-    </Figure>
+    <div className="qf-tour">
+      <img
+        src="/case-study-5/layout-full.webp"
+        width={2000}
+        height={1422}
+        alt="The Quik workspace with an icon rail, the console and agents panel, the assistant chat, and the review panel, each highlighted in turn"
+      />
+      {['rail', 'side', 'chat', 'review'].map((part) => (
+        <span key={part} className={`qf-tour-wash is-${part}`} aria-hidden="true" />
+      ))}
+    </div>
   )
 }
 
-export function BeforeAfter() {
+/** Zooms into the theme toggle, clicks it, and zooms out in the other theme: light, dark, then back. */
+export function ThemeSwitch() {
   return (
-    <Figure label="A plan step before and after: borders, icons and repeated labels removed, colour kept for the action" title="Before and after">
-      <div className="qf-grid qf-two">
-        <div className="qf-side is-before">
-          <p className="qf-label">Before</p>
-          <div className="qf-old">
-            <p className="qf-label">Step 2 of 3 · Configuration</p>
-            <div className="qf-old-row"><span className="qf-icon" aria-hidden="true">⚙</span><b>Set the env variables</b></div>
-            <div className="qf-old-row"><span className="qf-icon" aria-hidden="true">ⓘ</span><span>Status: waiting · Source: .env</span></div>
-            <span className="qf-buttons is-loud"><i>Approve</i><i>Skip</i><i>Details</i></span>
-          </div>
-        </div>
-        <div className="qf-side is-after">
-          <p className="qf-label">After</p>
-          <PlanStep tone="final" />
-          <PlanStep tone="final" n={3} title="Deploy to production" text="Builds from main, about 2 minutes" />
-        </div>
+    <div className="qf-theme" role="img" aria-label="The assistant chat switching from light mode to dark mode and back using the theme toggle">
+      <div className="qf-theme-zoom">
+        <img src="/case-study-5/light-chat.webp" width={2000} height={1422} alt="" />
+        <img className="is-dark" src="/case-study-5/dark-chat.webp" width={2000} height={1422} alt="" />
       </div>
-    </Figure>
+      <svg className="qf-theme-cursor" viewBox="0 0 16 20" aria-hidden="true">
+        <path d="M1 1v15l4-4 3 7 3-1-3-7h6z" fill="#111" stroke="#fff" strokeWidth="1.2" strokeLinejoin="round" />
+      </svg>
+    </div>
+  )
+}
+
+/* Scene start times (ms) for the 10s export walkthrough; the step index is how many have passed. */
+const EXPORT_SCRIPT = [0, 700, 1300, 2200, 2900, 3700, 4300, 5100, 5700, 6500, 7700]
+const EXPORT_LOOP = 10000
+const ICONS = '/case-study-5/'
+
+function Steps({ active }: { active: number }) {
+  return (
+    <ol className="qx-steps">
+      {['Select source table', 'Choose destination', 'Configure export'].map((label, i) => (
+        <li key={label} className={i < active ? 'is-done' : i === active ? 'is-active' : undefined}>{label}</li>
+      ))}
+    </ol>
+  )
+}
+
+function Rows({ rows, picked }: { rows: string[][]; picked: number }) {
+  return (
+    <div className="qx-rows">
+      {rows.map((row, i) => (
+        <div key={row[0]} className={i === picked ? 'is-picked' : undefined}>
+          {row.map((cell) => <span key={cell}>{cell}</span>)}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/** A guided export in the assistant, cut to 10 seconds: ask, pick table, bucket and type, then Review and the console open. */
+export function ExportFlow() {
+  const [step, setStep] = useState(EXPORT_SCRIPT.length - 1)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const start = performance.now()
+    const tick = () => {
+      const elapsed = (performance.now() - start) % EXPORT_LOOP
+      setStep(EXPORT_SCRIPT.filter((t) => t <= elapsed).length - 1)
+    }
+    tick()
+    const id = window.setInterval(tick, 100)
+    return () => window.clearInterval(id)
+  }, [])
+
+  return (
+    <div className="qx" role="img" aria-label="The assistant walks through exporting a DynamoDB table to S3: pick the table, the bucket and the export type, then the Review panel shows the finished export and the console shows the matching command">
+      <div className="qx-app" aria-hidden="true">
+        <nav className="qx-rail">
+          <img src={`${ICONS}message-square.svg`} alt="" />
+          <img src={`${ICONS}square-terminal.svg`} alt="" />
+          <img src={`${ICONS}bot.svg`} alt="" />
+          <span className="qx-avatar" />
+          <img src={`${ICONS}moon.svg`} alt="" />
+        </nav>
+
+        <aside className={step >= 10 ? 'qx-side is-open' : 'qx-side'}>
+          <div>
+            <p className="qx-panel-head">&gt;_ QUIK-CONSOLE - ZSH</p>
+            <pre className="qx-console">
+              <b>quik-console - %</b>
+              {` aws dynamodb export-table-to-point-in-time \\
+  --table-name orders \\
+  --s3-bucket data-lake-prod \\
+  --export-type FULL_EXPORT
+
+`}
+              <i>ExportStatus: COMPLETED</i>
+            </pre>
+          </div>
+        </aside>
+
+        <section className="qx-chat">
+          <div className="qx-tabs"><span className="qx-tab">New Chat</span><span>+</span></div>
+          <p className="qx-title">Quick Assistant</p>
+          <div className="qx-thread">
+            <p className="qx-hello">Hi, I am your<br />Quik Assistant</p>
+            {step >= 1 && <p className="qx-user">Export my orders table to S3</p>}
+            {step >= 2 && (
+              <div className="qx-card">
+                <p>Sure. Pick the table to export.</p>
+                <Steps active={0} />
+                <Rows picked={step >= 3 ? 0 : -1} rows={[['orders', 'us-west-2', '1.2M items'], ['users', 'us-west-2', '89K items'], ['products', 'us-east-1', '24K items']]} />
+              </div>
+            )}
+            {step >= 4 && <p className="qx-user">orders</p>}
+            {step >= 4 && (
+              <div className="qx-card">
+                <p>Which S3 bucket should it go to?</p>
+                <Steps active={1} />
+                <Rows picked={step >= 5 ? 0 : -1} rows={[['data-lake-prod', 'us-west-2'], ['analytics-raw', 'us-west-2']]} />
+              </div>
+            )}
+            {step >= 6 && <p className="qx-user">data-lake-prod</p>}
+            {step >= 6 && (
+              <div className="qx-card">
+                <p>Full or partial export?</p>
+                <Steps active={2} />
+                <div className="qx-chips"><span className={step >= 7 ? 'is-picked' : undefined}>Full export</span><span>Partial export</span></div>
+              </div>
+            )}
+            {step >= 8 && <p className="qx-user">Full export</p>}
+            {step >= 8 && (
+              <div className="qx-card">
+                <Steps active={step >= 9 ? 3 : 2} />
+                <p>{step >= 9 ? 'Export completed. The details are in Review.' : 'Starting the export'}{step < 9 && <span className="qx-dots" />}</p>
+              </div>
+            )}
+          </div>
+          <div className="qx-input">
+            <img src={`${ICONS}sparkles.svg`} alt="" />
+            <span>Ask AI a question or make a request...</span>
+            <b className="qx-send">↑</b>
+          </div>
+        </section>
+
+        <aside className={step >= 9 ? 'qx-review is-open' : 'qx-review'}>
+          <div>
+            <p className="qx-panel-head">REVIEW</p>
+            <div className="qx-review-body">
+              <p className="qx-done">✓ Export completed</p>
+              <p className="qx-label">What happened</p>
+              <Steps active={3} />
+              <p className="qx-label">Created resources</p>
+              <code>s3://data-lake-prod/AWSDynamoDB/orders/</code>
+              <p className="qx-label">Export type</p>
+              <p>Full export · 1.2M items</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
   )
 }

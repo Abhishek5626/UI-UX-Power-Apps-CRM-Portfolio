@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import type { MouseEvent as ReactMouseEvent } from 'react'
+import type { MouseEvent as ReactMouseEvent, RefObject } from 'react'
 import { ProgressiveBlur } from './ProgressiveBlur.tsx'
 import { ThemeToggle } from './ThemeToggle.tsx'
 import { useTheme } from '../theme.tsx'
@@ -87,6 +87,76 @@ function focusableElements(root: HTMLElement) {
   })
 }
 
+/** Keeps Tab inside a sheet plus the nav and chat that float above it, as the drawer does. */
+function trapTab(event: KeyboardEvent, panel: HTMLElement) {
+  const outside = [...document.querySelectorAll<HTMLElement>('.portfolio-nav, .ask-dock')]
+  const items = [...focusableElements(panel), ...outside.flatMap(focusableElements)]
+  if (items.length === 0) return
+  const first = items[0]
+  const last = items[items.length - 1]
+  const active = document.activeElement
+  const inScope =
+    (active instanceof Node && panel.contains(active)) ||
+    (active instanceof Node && outside.some((root) => root.contains(active)))
+  if (event.shiftKey && (active === first || !inScope)) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && (active === last || !inScope)) {
+    event.preventDefault()
+    first.focus()
+  }
+}
+
+/** Escape and the Tab loop for a full-screen sheet; the chat is a modal of its own, so its keys stay with it. */
+export function useSheetKeys(panelRef: RefObject<HTMLElement | null>, onClose: () => void) {
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const panel = panelRef.current
+      if (!panel || document.querySelector('.ask-panel[open]')) return
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        onClose()
+      } else if (event.key === 'Tab') {
+        trapTab(event, panel)
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [panelRef, onClose])
+}
+
+/** The theme toggle and close button the project drawer pins top right; the sheets reuse them unchanged. */
+export function DrawerTools({
+  closeLabel,
+  onClose,
+  closeRef,
+}: {
+  closeLabel: string
+  onClose: () => void
+  closeRef?: RefObject<HTMLButtonElement | null>
+}) {
+  const { theme, toggleTheme } = useTheme()
+  return (
+    <div className="project-drawer-tools">
+      <ThemeToggle
+        className="project-drawer-theme is-compact"
+        theme={theme}
+        label={theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+        onClick={toggleTheme}
+      />
+      <button
+        ref={closeRef}
+        className="project-drawer-glass project-drawer-control"
+        type="button"
+        aria-label={closeLabel}
+        onClick={onClose}
+      >
+        <IconClose />
+      </button>
+    </div>
+  )
+}
+
 export function ProjectDrawer({
   projectId,
   onClose,
@@ -103,7 +173,6 @@ export function ProjectDrawer({
   const [shownId, setShownId] = useState(projectId)
   const [contentPhase, setContentPhase] = useState<'in' | 'out'>('in')
   const [motion, setMotion] = useState<'open' | 'next' | 'prev'>('open')
-  const { theme, toggleTheme } = useTheme()
   const [reduced, setReduced] = useState(prefersReducedMotion)
   const panelRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -263,24 +332,7 @@ export function ProjectDrawer({
         return
       }
 
-      if (event.key !== 'Tab') return
-      const outside = [...document.querySelectorAll<HTMLElement>('.portfolio-nav, .ask-dock')]
-      const navItems = outside.flatMap(focusableElements)
-      const items = [...focusableElements(panel), ...navItems]
-      if (items.length === 0) return
-      const first = items[0]
-      const last = items[items.length - 1]
-      const active = document.activeElement
-      const inScope =
-        (active instanceof Node && panel.contains(active)) ||
-        (active instanceof Node && outside.some((root) => root.contains(active)))
-      if (event.shiftKey && (active === first || !inScope)) {
-        event.preventDefault()
-        last.focus()
-      } else if (!event.shiftKey && (active === last || !inScope)) {
-        event.preventDefault()
-        first.focus()
-      }
+      if (event.key === 'Tab') trapTab(event, panel)
     }
 
     document.addEventListener('keydown', onKeyDown)
@@ -335,23 +387,7 @@ export function ProjectDrawer({
       aria-labelledby="case-title"
       onClick={onPanelClick}
     >
-      <div className="project-drawer-tools">
-        <ThemeToggle
-          className="project-drawer-theme is-compact"
-          theme={theme}
-          label={theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
-          onClick={toggleTheme}
-        />
-        <button
-          ref={closeRef}
-          className="project-drawer-glass project-drawer-control"
-          type="button"
-          aria-label="Close project"
-          onClick={onClose}
-        >
-          <IconClose />
-        </button>
-      </div>
+      <DrawerTools closeLabel="Close project" onClose={onClose} closeRef={closeRef} />
       <nav className="project-drawer-nav" aria-label="Projects">
         <button
           className="project-drawer-glass project-drawer-control"

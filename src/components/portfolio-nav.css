@@ -261,7 +261,7 @@ html[data-theme="dark"] .portfolio-nav {
   border-radius: 50%;
   background: var(--nav-tile-chip);
   color: var(--theme-text-muted);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
   font-size: 10px;
   font-weight: 400;
   line-height: 1;
@@ -269,7 +269,7 @@ html[data-theme="dark"] .portfolio-nav {
 
 .portfolio-nav-card-label {
   max-width: 100%;
-  font-family: "Aeonik Pro", Inter, sans-serif;
+  font-family: var(--font-family);
   color: color-mix(in srgb, var(--theme-text) 85%, transparent);
   font-size: 17px;
   font-weight: 400;

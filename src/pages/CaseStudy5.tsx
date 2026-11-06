@@ -1,8 +1,8 @@
-import { useRef, useState, type MouseEvent, type ReactNode } from 'react'
+import { Fragment, useRef, useState, type MouseEvent, type ReactNode } from 'react'
 import { ShippedBadge } from '../components/ShippedBadge.tsx'
 import { useReveal } from './caseStudyMotion.tsx'
 import { QuikDemo } from './QuikDemo.tsx'
-import { ActionSchema, BeforeAfter, BuildingBlocks, Directions, ResearchMap, VisualDirections } from './QuikFigures.tsx'
+import { ExportFlow, LayoutTour, OnePagerFocus, ThemeSwitch } from './QuikFigures.tsx'
 import './case-study-system.css'
 import './case-study-type.css'
 import './case-study-5.css'
@@ -23,8 +23,8 @@ const sections = [
     title: 'Who and why',
     lead: 'Quik asks people to learn its menus before they can get anything done. Beginners stall at that step, and experts leave for their own tools.',
     blocks: [
-      { title: 'Research process', text: 'For this concept, I’d have an AI research agent read Quik’s docs, public support threads and my own persona notes, and flag every point in a new user’s first hour where they stop to look something up. I’d rank those stops by how often they happen and how much they block, and turn the top three into the brief. The ranking below is my assumption until user interviews confirm it.', ratio: '901 / 393', figure: <ResearchMap /> },
-      { title: 'Target customers and their pain points', text: 'Two groups matter most. First-time builders know what they want to launch, but not which Quik feature does it. Experienced developers know exactly what to do, and work faster in a terminal than in any dashboard. Both lose time for the same reason: Quik is organised around its features, not around their goals.', ratio: '901 / 518' },
+      { title: 'Research process', text: 'Fully embracing AI tools, I built a research knowledge base and used a research agent to pull from it alongside trustworthy external sources and internal persona reports. It synthesized the research in about an hour, work that usually takes days, and drafted a product requirement document in a few hours instead of the week it typically takes the team. I reviewed and refined both with the product team.', ratio: '2000 / 932', figure: <img className="cs-media" style={{ width: '100%', height: 'auto' }} src="/case-study-5/research-flow.webp" width={2000} height={932} alt="Research flow: a research knowledge base, trustworthy external sources and internal persona reports feed a research agent, a persona file and a user journey agent, which draft a one-pager that PM and UX review into the final one-pager" /> },
+      { title: 'Target customers and their pain points', text: 'Two customer types shaped every decision. New and casual users want to state a purpose and explore AWS services through conversation. Power users live in the terminal and want conversational help layered on top, not a replacement. On the other hand, the console was organized around services rather than intent, so customers had to know which service to use before they could start. Common workflows were manual and fragmented, with no agentic path to complete them end to end.', ratio: '901 / 518', figure: <OnePagerFocus /> },
     ],
   },
   {
@@ -33,10 +33,10 @@ const sections = [
     title: 'Define the foundational experience',
     lead: 'One workspace had to suit both groups without becoming two products. People describe a goal, see the plan, and stay in control of each step.',
     blocks: [
-      { title: 'Design process', text: 'I compared three directions: a chat added to the current dashboard, a separate assistant app, and a new workspace built around tasks. The first left the menu problem in place, and the second split people from their projects. The workspace solved both, so I took it forward.', ratio: '901 / 462', figure: <Directions /> },
-      { title: 'Identify building blocks and define interface layout', text: 'The experience needs four parts: a place to ask, a place to type commands, a plan to check, and a result to review. These became three panels. The terminal sits on the left, the conversation in the centre, and the plan and results on the right.', ratio: '901 / 623', figure: <BuildingBlocks /> },
-      { title: 'Motion and interaction', text: 'Panels open and close as the work changes. Beginners start with the conversation alone, and the plan slides in once there is something to check. Experts can widen the terminal and keep the rest out of the way. Each move stays short, so it shows what changed without slowing anyone down.', ratio: '901 / 589' },
-      { title: 'Backend structure and syntax', text: 'Each assistant action needs a clear structure behind it: what it will do, what it needs, what it costs, and whether it can be undone. The same structure drives the plan on screen and the matching terminal command, so the two views always agree.', ratio: '901 / 435', figure: <ActionSchema /> },
+      { title: 'Design process', text: 'I compared three directions: a chat added to the current dashboard, a separate assistant app, and a new workspace built around tasks. The first left the menu problem in place, and the second split people from their projects. The workspace solved both, so I took it forward.', ratio: '2000 / 1026', figure: <img className="cs-media" style={{ width: '100%', height: 'auto', padding: 16, boxSizing: 'border-box', background: '#fff' }} src="/case-study-5/build-flow.webp" width={2000} height={1026} alt="Build flow: the one-pager goes through a plan skill into design, product and tasks files alongside the AWS codebase; design-system MCP, prototype, critique and deploy agents produce a prototype, which a deploy agent ships to Gamma, with UX and engineering review at each stage" /> },
+      { title: 'Identify building blocks and define interface layout', text: 'The experience needs four parts: a place to ask, a place to type commands, a plan to check, and a result to review. These became three panels. The terminal sits on the left, the conversation in the centre, and the plan and results on the right.', ratio: '1234 / 856', figure: <video className="cs-media" style={{ width: '100%', height: 'auto', background: '#fff', borderRadius: 6 }} src="/case-study-5/building-blocks.mp4" width={1234} height={856} autoPlay muted loop playsInline aria-label="The four building blocks, chat window, terminal, agent list and output panel, moving into a layout with an action bar on the left" /> },
+      { title: 'Motion and interaction', text: 'Panels open and close as the work changes. Beginners start with the conversation alone, and the plan slides in once there is something to check. Experts can widen the terminal and keep the rest out of the way. Each move stays short, so it shows what changed without slowing anyone down.', ratio: '1182 / 762', figure: <video className="cs-media" style={{ width: '100%', height: 'auto', padding: 16, boxSizing: 'border-box', background: '#fff', borderRadius: 6 }} src="/case-study-5/motion.mp4" width={1182} height={762} autoPlay muted loop playsInline aria-label="The workspace panels opening, closing and resizing as the work changes" /> },
+      { title: 'Backend structure and syntax', text: 'Each assistant action needs a clear structure behind it: what it will do, what it needs, what it costs, and whether it can be undone. The same structure drives the plan on screen and the matching terminal command, so the two views always agree.', ratio: '1258 / 610', figure: <video className="cs-media" style={{ width: '100%', height: 'auto', padding: 16, boxSizing: 'border-box', background: '#fff', borderRadius: 6 }} src="/case-study-5/action-schema.mp4" width={1258} height={610} autoPlay muted loop playsInline aria-label="The project's file structure, with the S3 bucket resource type file opening to show its JSON definition" /> },
     ],
   },
   {
@@ -45,16 +45,20 @@ const sections = [
     title: 'Detailed design and visual exploration',
     lead: 'A quiet interface suits a tool people work in all day. The visual direction gives the content the most weight, and keeps colour for status and decisions.',
     blocks: [
-      { title: 'Visual exploration', text: 'I tested a dense, technical look against a softer, more open one. The final direction sits between them: compact text for experts, with enough space that a beginner can find the next step.', ratio: '901 / 501', figure: <VisualDirections /> },
-      { title: 'Component decisions', text: 'I removed borders that only separated things space could separate, along with decorative icons and repeated labels. Plans became simple numbered steps. Colour now appears only where someone needs to act or something needs attention.', ratio: '901 / 819', figure: <BeforeAfter /> },
+      { title: 'Visual exploration', text: 'I tested a dense, technical look against a softer, more open one. The final direction sits between them: compact text for experts, with enough space that a beginner can find the next step.', ratio: '2000 / 1113', figure: <img className="cs-media" style={{ width: '100%', height: 'auto', padding: 16, boxSizing: 'border-box', background: '#fff', borderRadius: 6 }} src="/case-study-5/visual-exploration.webp" width={2000} height={1113} alt="Component options compared side by side in light and dark themes: button shapes, status tags, suggestion chips, chat inputs, tables and form labels" /> },
+      { title: 'Component decisions', text: 'I removed borders that only separated things space could separate, along with decorative icons and repeated labels. Plans became simple numbered steps. Colour now appears only where someone needs to act or something needs attention.', ratio: '2000 / 1819', figure: <img className="cs-media" style={{ width: '100%', height: 'auto', padding: 16, boxSizing: 'border-box', background: '#fff', borderRadius: 6 }} src="/case-study-5/before-after.webp" width={2000} height={1819} alt="Before and after for four components: message card, chat input, suggestions and buttons" /> },
     ],
   },
 ]
 
 const highlights = [
-  { title: 'Flexible layout', text: 'The panels follow the work from left to right: command, conversation, then review. Each one can resize or close, so people arrange the workspace to suit the task.', ratios: ['901 / 484', '901 / 502', '901 / 502'] },
-  { title: 'Light and dark', text: 'Both themes share the same structure and status colours. Many developers work in dark mode all day, so it gets the same care as light mode.', ratios: ['901 / 507', '901 / 502', '901 / 502'] },
-  { title: 'Core principle', text: 'Start from the goal, not the feature. Someone says what they want to launch or fix, the assistant proposes the steps, and nothing runs until they approve it.', ratios: ['901 / 507'] },
+  { title: 'Flexible layout', text: 'The panels follow the work from left to right: command, conversation, then review. Each one can resize or close, so people arrange the workspace to suit the task.', ratios: ['901 / 484', '901 / 502', '901 / 502'], figure: [
+    <LayoutTour />,
+    <img className="cs-media" style={{ width: '100%', height: 'auto', borderRadius: 6 }} src="/case-study-5/layout-chat.webp" width={2000} height={1422} alt="The workspace with only the assistant chat open" />,
+    <img className="cs-media" style={{ width: '100%', height: 'auto', borderRadius: 6 }} src="/case-study-5/layout-all.webp" width={2000} height={1422} alt="The workspace with the console, agents, chat and review panels all open" />,
+  ] },
+  { title: 'Light and dark', text: 'Both themes share the same structure and status colours. Many developers work in dark mode all day, so it gets the same care as light mode.', ratios: ['901 / 507'], figure: <ThemeSwitch /> },
+  { title: 'Core principle', text: 'Start from the goal, not the feature. Someone says what they want to launch or fix, the assistant proposes the steps, and nothing runs until they approve it.', ratios: ['901 / 507'], figure: <ExportFlow /> },
 ]
 
 function Blank({ ratio }: { ratio: string }) {
@@ -98,9 +102,11 @@ function Block({ id, title, text, ratios, figure }: { id: string; title: string;
         <p className="cs-b1 cs-block-summary">{text}</p>
       </div>
       <div className="cs-block-body">
-        {figure ?? ratios.map((ratio, index) => (
-          <Blank ratio={ratio} key={index} />
-        ))}
+        {/* A figure (or an array of them) fills the image slots in order; empty slots stay as placeholders. */}
+        {ratios.map((ratio, index) => {
+          const slot = (Array.isArray(figure) ? figure : [figure])[index]
+          return slot ? <Fragment key={index}>{slot}</Fragment> : <Blank ratio={ratio} key={index} />
+        })}
       </div>
     </section>
   )
@@ -207,7 +213,9 @@ export function CaseStudy5() {
                   <Metric value="10 min" label="Target: time to a new user’s first launch" />
                   <i />
                   <Metric value="30%" label="Target: fewer steps in common tasks" />
-                  <div className="q-bento-image" aria-hidden="true" />
+                  <div className="q-bento-image">
+                    <img src="/case-study-5/agents-panel.webp" width={772} height={698} alt="Agents panel listing Cost Optimizer, Security Auditor, Resource Explorer and Resource Migration" />
+                  </div>
                   <i />
                   <Metric value="50%" label="Target: new users who start a task in chat" />
                   <Metric value="4.5/5" label="Target: satisfaction with the assistant" />
@@ -215,7 +223,7 @@ export function CaseStudy5() {
                 </div>
               </section>
               {highlights.map((item, index) => (
-                <Block key={item.title} id={`q-highlight-${index}`} title={item.title} text={item.text} ratios={item.ratios} />
+                <Block key={item.title} id={`q-highlight-${index}`} title={item.title} text={item.text} ratios={item.ratios} figure={item.figure} />
               ))}
               <section className="cs-block" aria-labelledby="q-change">
                 <div className="cs-block-head">

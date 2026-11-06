@@ -59,6 +59,21 @@ Targets a pilot would test, not results: 10 minutes for a new user's first launc
 How it makes life easier: people state a goal, check the plan, and approve each step, and nothing runs until they approve it. A three-panel workspace has the terminal on the left, the conversation in the centre, and the plan and results on the right. Beginners start with the conversation alone, and experts can widen the terminal. Each panel can resize or close.
 Design decisions: Abhishek compared a chat added to the dashboard, a separate assistant app, and a new workspace built around tasks, and chose the workspace. Every assistant action states what it will do, what it needs, what it costs and whether it can be undone. The visual direction keeps colour for status and decisions, in light and dark.
 Next step: a small pilot with both groups, to test the targets and the layout.`,
+  'how-i-work': `How I Work (Abhishek's working style, not a case study)
+Summary: Abhishek works closely with PMs and engineers when there's a team, and owns the process end-to-end when working independently, staying close to the product, constraints and decisions.
+H.01 Discovery in the open: close work with PMs and engineers, or end-to-end ownership when solo.
+H.02 Decisions documented, not just designed: discovery stays visible and collaborative, sharing early thoughts, questions, references and tradeoffs so the direction gets sharper before the design gets polished.
+H.03 Reasoning made visible: Abhishek doesn't just design the final state, but makes the reasoning visible, so decisions feel clear, intentional and easier to build on.
+H.04 Clear specs, fewer gaps: designs with implementation in mind, defining states, specs, components and context so work moves smoothly from Figma to build.
+Works best where the stakes are real and the data is dense. The job is to remove the friction, so the next decision comes faster.
+A. Designs from the lifecycle, not the screen: around how people discover, use, return to and grow with a product, creating systems that feel connected and easy to trust.
+B. Systems first, screens second: starts with the structure behind the product, then shapes the screens around it, so the experience feels consistent, scalable and easier to use.
+C. Density is not the enemy: doesn't simplify by removing what matters, but organises dense information so people can scan, understand and act with confidence.`,
+}
+
+/** The How I Work page is about working style, so it gets its own framing instead of the case-study one. */
+const PAGE_INTROS: Record<string, string> = {
+  'how-i-work': 'The visitor is reading the How I Work page, so "you" and "your process" mean how Abhishek works. Answer directly from it, leading with the answer, and link it to Abhishek\'s projects only where the FACTS do.',
 }
 
 const SYSTEM = `You are the assistant on Abhishek Kashid's portfolio website. Visitors are usually recruiters and hiring managers.
@@ -78,6 +93,11 @@ ${FACTS}`
 /** Adds the case study being read, chosen by key from the list above so a visitor can't supply facts. */
 export function systemFor(study: unknown) {
   if (typeof study !== 'string' || !Object.hasOwn(STUDIES, study)) return SYSTEM
+  if (Object.hasOwn(PAGE_INTROS, study)) return `${SYSTEM}
+
+${PAGE_INTROS[study]}
+
+${STUDIES[study]}`
   return `${SYSTEM}
 
 The visitor is reading this case study, so "this project" and "the outcome" mean it. Answer directly from it, leading with the answer.
