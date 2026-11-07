@@ -385,9 +385,12 @@ html[data-loader] .is-entrance-pending .project-fisheye-entrance {
     line-clamp: 3;
   }
 
+  /* Content sits at the card's bottom: wider phones wrap the text into fewer lines, and the
+     spare height goes above the headline, so About Me always starts 22px below the badges. */
   .mobile-hero {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     gap: 6px;
   }
 
@@ -417,50 +420,12 @@ html[data-loader] .is-entrance-pending .project-fisheye-entrance {
     line-height: 20px;
   }
 
-  /*
-    The real toggle, scaled as one piece to the frame's 38px height. It stays
-    above the open menu's scrim (60), as in Figma node 106-774.
-  */
-  .mobile-theme-toggle {
-    position: fixed;
-    top: max(16px, env(safe-area-inset-top));
-    right: max(16px, env(safe-area-inset-right));
-    z-index: 61;
-    width: 38px;
-    height: 38px;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Phones: under the summary, left-aligned, instead of beside the role. */
+  .mobile-hero .hero-current {
+    margin: 14px 0 0;
   }
 
-  /* Comfortable tap target without changing the drawn size. */
-  .mobile-theme-toggle::after {
-    content: "";
-    position: absolute;
-    inset: -3px;
-  }
-
-  .mobile-theme-toggle .theme-toggle {
-    --toggle-width: 56px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: scale(0.6786);
-    transform-origin: top right;
-  }
-
-  .mobile-theme-toggle:focus-visible {
-    outline: 2px solid var(--theme-text);
-    outline-offset: 2px;
-    border-radius: 999px;
-  }
-
-  html[data-mobile-nav='hidden'] .mobile-theme-toggle:not(:focus-visible) {
+  html[data-mobile-nav='hidden'] .corner-theme-toggle:not(:focus-visible) {
     transform: translate3d(
       0,
       calc(-100% - max(16px, env(safe-area-inset-top)) - 8px),
@@ -469,8 +434,51 @@ html[data-loader] .is-entrance-pending .project-fisheye-entrance {
   }
 }
 
-@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
-  .mobile-theme-toggle {
+/*
+  The theme toggle, in the top-right corner at every width (phone frame, Figma
+  node 106-774): the real toggle scaled as one piece to 38px, above the menu's scrim (60).
+*/
+.corner-theme-toggle {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  z-index: 61;
+  width: 38px;
+  height: 38px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Comfortable tap target without changing the drawn size. */
+.corner-theme-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+}
+
+.corner-theme-toggle .theme-toggle {
+  --toggle-width: 56px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: scale(0.6786);
+  transform-origin: top right;
+}
+
+.corner-theme-toggle:focus-visible {
+  outline: 2px solid var(--theme-text);
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corner-theme-toggle {
     transition: none;
   }
 }

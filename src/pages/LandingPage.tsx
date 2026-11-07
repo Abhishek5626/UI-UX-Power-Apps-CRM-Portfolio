@@ -31,7 +31,7 @@ import {
 } from '../components/useProjectDrawer.ts'
 import { usePlayInView } from '../components/InViewVideo.tsx'
 import { TextCycle } from '../components/TextCycle.tsx'
-import { lowPower, perfOn } from '../perf.ts'
+import { isLowPower, perfOn } from '../perf.ts'
 import { ThemeToggleVisual } from '../components/ThemeToggle.tsx'
 import { useTheme } from '../theme.tsx'
 import {
@@ -797,7 +797,7 @@ function TextWall() {
     }
 
     // Low-power devices get the finished code at rest, like reduced motion.
-    if (lowPower || window.matchMedia(reducedMotionQuery).matches) {
+    if (isLowPower() || window.matchMedia(reducedMotionQuery).matches) {
       paint(Infinity, false, 0)
       return
     }
@@ -819,6 +819,12 @@ function TextWall() {
       }
       // Off screen, or the field is panning: repainting every glyph would cost the pan its frames.
       if (!visible || root.closest('[data-moving], [data-hold]')) return
+      // Adaptive quality switched this visit to calmer cards: settle on the finished code.
+      if (isLowPower()) {
+        window.clearInterval(timer)
+        paint(Infinity, false, 0)
+        return
+      }
       const front = ((elapsed - wave * wallWaveEveryMs) / wallWaveMs) * wallWaveReach
       paint(front, wave === 0, wallShimmer)
     }, wallTickMs)
@@ -1174,11 +1180,18 @@ const heroRoles = heroContent.roles.map(([lead, rest]) => (
   </>
 ))
 
-function HeroIntroduction() {
-  const { theme, toggleTheme } = useTheme()
-  const isDark = theme === 'dark'
-  const themeLabel = isDark ? 'Dark Mode' : heroContent.themeLabel
+/** "Currently at" with the current and past employer: beside the role on desktop, under the summary on phones. */
+function CurrentlyAt() {
+  return (
+    <p className="hero-current">
+      {heroContent.current.label}
+      <span className="hero-current-badge is-now">{heroContent.current.now}</span>
+      <span className="hero-current-badge is-past">{heroContent.current.past}</span>
+    </p>
+  )
+}
 
+function HeroIntroduction() {
   return (
     <header className="hero-introduction" data-repel="">
       <div className="hero-heading-block">
@@ -1187,18 +1200,7 @@ function HeroIntroduction() {
           <p className="hero-role">
             <TextCycle items={heroRoles} />
           </p>
-          <HoverCard className="theme-status" tag="div">
-            <button
-              type="button"
-              className="theme-status-surface"
-              aria-pressed={isDark}
-              aria-label={themeLabel}
-              onClick={toggleTheme}
-            >
-              <span className="theme-status-label">{themeLabel}</span>
-              <ThemeToggleVisual />
-            </button>
-          </HoverCard>
+          <CurrentlyAt />
         </div>
       </div>
       <p className="hero-summary">{heroContent.summary}</p>
@@ -1207,30 +1209,18 @@ function HeroIntroduction() {
 }
 
 /**
- * Hero and theme switch for assistive tech and keyboard users; the visible
+ * Hero text for assistive tech; the visible
  * copies live inside the aria-hidden fisheye field.
  */
-function AccessibleHero({ themeButton = true }: { themeButton?: boolean }) {
-  const { theme, toggleTheme } = useTheme()
-  const isDark = theme === 'dark'
-
+function AccessibleHero() {
   return (
     <header>
       <h1 className="visually-hidden">{heroContent.headline}</h1>
       <p className="visually-hidden">
         {heroContent.roles.map((role) => role.join(' ')).join(', ')}.{' '}
+        {heroContent.current.label} {heroContent.current.now}, {heroContent.current.past}.{' '}
         {heroContent.summary}
       </p>
-      {themeButton ? (
-        <button
-          type="button"
-          className="skip-link"
-          aria-pressed={isDark}
-          onClick={toggleTheme}
-        >
-          {isDark ? 'Dark Mode' : heroContent.themeLabel}
-        </button>
-      ) : null}
     </header>
   )
 }
@@ -1297,22 +1287,22 @@ const phoneFisheyeLayout: FisheyeLayout = {
   maxScale: 1.45,
   strips: [
     {
-      height: 3523,
+      height: 3539,
       items: [
-        { item: 0, x: 16, y: 61, w: 361, h: 240 }, // 1 Hero
-        { item: 1, x: 16, y: 319, w: 361, h: 321 }, // 2 About Me
-        { item: 2, x: 16, y: 658, w: 361, h: 323 }, // 3 Quik assistant
-        { item: 3, x: 16, y: 999, w: 361, h: 323 }, // 4 Agentic AI
-        { item: 4, x: 16, y: 1340, w: 361, h: 323 }, // 5 Power Apps + CRM
-        { item: 13, x: 16, y: 1681, w: 361, h: 52 }, // All Projects
-        { item: 5, x: 16, y: 1751, w: 361, h: 208 }, // Tools
-        { item: 6, x: 16, y: 1977, w: 361, h: 158 }, // Building in Code
-        { item: 7, x: 16, y: 2153, w: 361, h: 158 }, // Designing AI Product
-        { item: 8, x: 16, y: 2329, w: 361, h: 158 }, // Storytelling + Play
-        { item: 9, x: 16, y: 2505, w: 361, h: 212 }, // Testimonial
-        { item: 10, x: 16, y: 2735, w: 361, h: 191 }, // Current
-        { item: 11, x: 16, y: 2944, w: 361, h: 200 }, // Music: small turntable beside controls
-        { item: 12, x: 16, y: 3162, w: 361, h: 300 }, // Design Strategy: wheel only
+        { item: 0, x: 16, y: 61, w: 361, h: 252 }, // 1 Hero, with Currently at under the summary; About Me 22px below it
+        { item: 1, x: 16, y: 335, w: 361, h: 321 }, // 2 About Me
+        { item: 2, x: 16, y: 674, w: 361, h: 323 }, // 3 Quik assistant
+        { item: 3, x: 16, y: 1015, w: 361, h: 323 }, // 4 Agentic AI
+        { item: 4, x: 16, y: 1356, w: 361, h: 323 }, // 5 Power Apps + CRM
+        { item: 13, x: 16, y: 1697, w: 361, h: 52 }, // All Projects
+        { item: 5, x: 16, y: 1767, w: 361, h: 208 }, // Tools
+        { item: 6, x: 16, y: 1993, w: 361, h: 158 }, // Building in Code
+        { item: 7, x: 16, y: 2169, w: 361, h: 158 }, // Designing AI Product
+        { item: 8, x: 16, y: 2345, w: 361, h: 158 }, // Storytelling + Play
+        { item: 9, x: 16, y: 2521, w: 361, h: 212 }, // Testimonial
+        { item: 10, x: 16, y: 2751, w: 361, h: 191 }, // Current
+        { item: 11, x: 16, y: 2960, w: 361, h: 200 }, // Music: small turntable beside controls
+        { item: 12, x: 16, y: 3178, w: 361, h: 300 }, // Design Strategy: wheel only
       ],
     },
   ],
@@ -1411,6 +1401,16 @@ function ProjectPointerBadge() {
         )
       }
 
+      // Fully faded out, it only needs to wait under the pointer: jump there and skip the writes.
+      if (!shown && opacity <= 0.01 && Math.abs(velocityOpacity) < 0.01) {
+        x = targetX
+        y = targetY
+        velocityX = 0
+        velocityY = 0
+        if (badge.style.opacity !== '0') badge.style.opacity = '0'
+        frame = 0
+        return
+      }
       badge.style.opacity = String(Math.max(0, Math.min(1, opacity)))
       badge.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${scale})`
 
@@ -1905,18 +1905,20 @@ function MobileHero() {
         </p>
       </div>
       <p className="hero-summary">{heroContent.summary}</p>
+      <CurrentlyAt />
     </header>
   )
 }
 
-function MobileThemeToggle() {
+/** Theme switch in the top-right corner, at every width. */
+function CornerThemeToggle() {
   const { theme, toggleTheme } = useTheme()
   const isDark = theme === 'dark'
 
   return (
     <button
       type="button"
-      className="mobile-theme-toggle"
+      className="corner-theme-toggle"
       aria-pressed={isDark}
       aria-label={isDark ? 'Dark Mode' : heroContent.themeLabel}
       onClick={toggleTheme}
@@ -2028,7 +2030,7 @@ export function LandingPage() {
           .filter(Boolean)
           .join(' ')}
       >
-        <AccessibleHero themeButton={!isMobile} />
+        <AccessibleHero />
         {isMobile ? (
         <main
           id={drawerPresent ? undefined : 'main'}
@@ -2124,7 +2126,7 @@ export function LandingPage() {
       </div>
       <ProjectPointerBadge />
       {!drawerPresent ? <ProgressiveBlur mode="fixed" /> : null}
-      {isMobile && !drawerPresent && !sheetOpen ? <MobileThemeToggle /> : null}
+      {!drawerPresent && !sheetOpen ? <CornerThemeToggle /> : null}
       {allProjectsOpener ? (
         <AllProjectsDialog
           opener={allProjectsOpener}

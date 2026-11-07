@@ -47,7 +47,6 @@
   Smooth theme fills: interpolate solid surface tokens; fade the glass wash
   instead of swapping gradient ↔ solid backgrounds (that snap and jitter).
 */
-.theme-status-surface,
 .project-card-surface:not(.is-media),
 .project-card-surface.is-media.is-light,
 .about-me-surface {
@@ -57,7 +56,6 @@
   isolation: isolate;
 }
 
-.theme-status-surface::before,
 .project-card-surface:not(.is-media)::before,
 .project-card-surface.is-media.is-light::before,
 .about-me-surface::before {
@@ -72,14 +70,12 @@
   transition: opacity var(--theme-duration) var(--theme-ease);
 }
 
-html[data-theme="dark"] .theme-status-surface::before,
 html[data-theme="dark"] .project-card-surface:not(.is-media)::before,
 html[data-theme="dark"] .project-card-surface.is-media.is-light::before,
 html[data-theme="dark"] .about-me-surface::before {
   opacity: 0;
 }
 
-.theme-status-surface > *,
 .project-card-surface:not(.is-media) > *,
 .project-card-surface.is-media.is-light > *,
 .about-me-surface > * {
@@ -196,8 +192,7 @@ html[data-theme="dark"] .about-me-surface::before {
 .hero-headline,
 .hero-role,
 .hero-summary,
-.project-card-label,
-.theme-status-label {
+.project-card-label {
   transition: color var(--theme-duration) var(--theme-ease);
 }
 
@@ -227,6 +222,64 @@ html[data-theme="dark"] .about-me-surface::before {
   white-space: nowrap;
 }
 
+/*
+  "Currently at" (after dousanmiao.com's hero), where the theme pill used to be.
+  Pinned to the row's right edge, so the cycling role never pushes it around.
+  The current employer is a white chip in its brand blue (KPMG #003087, from
+  /landing/kpmg.svg), tipped 2deg as in the reference, and stays white in dark
+  mode as a brand chip; the past one is a tag tilted the other way, with its own
+  dark colours.
+*/
+.hero-current {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 0 auto;
+  color: var(--landing-label);
+  font-family: var(--font-family);
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  line-height: normal;
+  white-space: nowrap;
+  transition: color var(--theme-duration) var(--theme-ease);
+}
+
+.hero-current-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.hero-current-badge.is-now {
+  background: #ffffff;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.08),
+    0 2px 10px rgb(0 0 0 / 0.07);
+  color: #003087;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  rotate: 2deg;
+}
+
+.hero-current-badge.is-past {
+  background: #b3c4fb;
+  color: #22337a;
+  font-weight: 500;
+  rotate: -4deg;
+  transition:
+    background-color var(--theme-duration) var(--theme-ease),
+    color var(--theme-duration) var(--theme-ease);
+}
+
+html[data-theme="dark"] .hero-current-badge.is-past {
+  background: #34417f;
+  color: #dbe3ff;
+}
+
 .hero-role-design {
   font-family: var(--font-family);
   font-style: italic;
@@ -236,49 +289,6 @@ html[data-theme="dark"] .about-me-surface::before {
 .hero-role-engineer {
   font-family: var(--font-family);
   font-style: normal;
-}
-
-.theme-status {
-  position: relative;
-  flex: 1 1 auto;
-  min-width: 0;
-  padding: 2px;
-  border: 1px solid var(--landing-glass-border);
-  border-radius: 18px;
-  background: transparent;
-  backdrop-filter: var(--landing-glass-blur);
-  -webkit-backdrop-filter: var(--landing-glass-blur);
-}
-
-.theme-status-surface {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  /* 59px overall, matching "Design Engineer"'s line height: 1px border + 2px gap + 3px padding each side, plus the 47px toggle. */
-  padding: 3px 3px 3px var(--landing-surface-pad);
-  border: 0;
-  border-radius: 18px;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color var(--theme-duration) var(--theme-ease);
-}
-
-/* The toggle at 47px tall (56px x 0.84); zoom keeps its proportions and shrinks its layout box too. */
-.theme-status-surface .theme-toggle {
-  zoom: 0.84;
-}
-
-.theme-status-label {
-  margin: 0;
-  color: var(--landing-label);
-  font-size: 14px;
-  letter-spacing: -0.02em;
-  line-height: normal;
-  white-space: nowrap;
 }
 
 
@@ -353,8 +363,7 @@ html[data-theme="dark"] .about-me-surface::before {
   text-align: center;
 }
 
-.project-card-link:focus-visible,
-.theme-status-surface:focus-visible {
+.project-card-link:focus-visible {
   outline: 3px solid var(--theme-text);
   outline-offset: 3px;
 }
@@ -387,7 +396,6 @@ html[data-theme="dark"] .about-me-surface::before {
   }
 
   .project-card:hover,
-  .theme-status:hover,
   .about-me-card:hover,
   .work-experience:hover,
   .music-card:hover,
@@ -787,10 +795,6 @@ html[data-theme="dark"] .tool-logo:not(.is-color) {
     flex-wrap: wrap;
   }
 
-  .theme-status {
-    flex-basis: 220px;
-  }
-
   .project-card-statement {
     font-size: 36px;
     line-height: 1.05;
@@ -925,7 +929,6 @@ html[data-theme="dark"] .about-me-place-face {
 
 @media (prefers-reduced-motion: reduce) {
   .landing-page,
-  .theme-status-surface,
   .project-card-icon,
   .project-card-statement,
   .about-me-surface,

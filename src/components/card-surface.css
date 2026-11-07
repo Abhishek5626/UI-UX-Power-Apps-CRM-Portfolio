@@ -9,8 +9,7 @@
     .project-card,
     .work-experience,
     .music-card,
-    .testimonial-card,
-    .theme-status
+    .testimonial-card
   ) {
   position: relative;
 }
@@ -20,8 +19,7 @@
     .project-card,
     .work-experience,
     .music-card,
-    .testimonial-card,
-    .theme-status
+    .testimonial-card
   )::before {
   content: "";
   position: absolute;
@@ -53,8 +51,7 @@ html[data-theme="dark"]
     .project-card,
     .work-experience,
     .music-card,
-    .testimonial-card,
-    .theme-status
+    .testimonial-card
   ) {
   border-color: transparent;
   background: #1a1a1a;
@@ -66,8 +63,7 @@ html[data-theme="dark"]
     .project-card,
     .work-experience,
     .music-card,
-    .testimonial-card,
-    .theme-status
+    .testimonial-card
   )::before {
   opacity: 0.85;
 }
@@ -78,8 +74,7 @@ html[data-theme="dark"]
     .project-card-surface:not(.is-media),
     .project-card-surface.is-media.is-light,
     .work-experience-surface,
-    .testimonial-surface,
-    .theme-status-surface
+    .testimonial-surface
   ) {
   background-color: #1a1a1a;
 }
@@ -90,8 +85,7 @@ html[data-theme="dark"]
     .about-me-surface,
     .project-card-surface,
     .work-experience-surface,
-    .testimonial-surface,
-    .theme-status-surface
+    .testimonial-surface
   ) {
   --card-contours: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 66' preserveAspectRatio='none' fill='none' stroke='%23ddb5fc' stroke-opacity='.18'%3E%3Cpath d='M120 66C134 36 200 14 320 10'/%3E%3Cpath d='M176 66c12-20 60-32 144-36'/%3E%3Cpath d='M232 66c10-10 40-16 88-18'/%3E%3C/svg%3E");
   --card-contours-at: right bottom;
@@ -103,8 +97,7 @@ html[data-theme="dark"]
     .project-card-surface:not(.is-media),
     .project-card-surface.is-media.is-light,
     .work-experience-surface,
-    .testimonial-surface,
-    .theme-status-surface
+    .testimonial-surface
   ) {
   isolation: isolate;
 }
@@ -126,8 +119,7 @@ html[data-theme="dark"]
 }
 
 .about-me-card .about-me-surface,
-.project-card-storytelling-play .project-card-surface,
-.theme-status .theme-status-surface {
+.project-card-storytelling-play .project-card-surface {
   --card-contours: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 66' preserveAspectRatio='none' fill='none' stroke='%23ddb5fc' stroke-opacity='.18'%3E%3Cpath d='M200 66C186 36 120 14 0 10'/%3E%3Cpath d='M144 66c-12-20-60-32-144-36'/%3E%3Cpath d='M88 66c-10-10-40-16-88-18'/%3E%3C/svg%3E");
   --card-contours-at: left bottom;
 }
@@ -143,8 +135,7 @@ html[data-theme="dark"]
     .project-card-surface:not(.is-media),
     .project-card-surface.is-media.is-light,
     .work-experience-surface,
-    .testimonial-surface,
-    .theme-status-surface
+    .testimonial-surface
   )::after {
   content: "";
   position: absolute;
@@ -166,8 +157,7 @@ html[data-theme="dark"]
     .project-card-surface:not(.is-media),
     .project-card-surface.is-media.is-light,
     .work-experience-surface,
-    .testimonial-surface,
-    .theme-status-surface
+    .testimonial-surface
   )::after {
   opacity: 1;
 }
@@ -179,8 +169,7 @@ html[data-theme="dark"]
     .project-card,
     .work-experience,
     .music-card,
-    .testimonial-card,
-    .theme-status
+    .testimonial-card
   ):hover::before {
     opacity: 1;
   }

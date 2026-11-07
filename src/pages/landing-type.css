@@ -70,7 +70,7 @@ html .ask-panel * {
   line-height: 20px;
 }
 
-.project-fisheye-field :is(.theme-status-label, .design-strategy-title, .project-card-label, .work-experience-label, .music-card-label, .testimonial-label) {
+.project-fisheye-field :is(.design-strategy-title, .project-card-label, .work-experience-label, .music-card-label, .testimonial-label) {
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;

@@ -62,6 +62,8 @@ export const heroContent = {
     ['RELEX', 'Developer'],
   ],
   themeLabel: 'Light Mode',
+  // Under the role, after dousanmiao.com's "Currently at" line: the current employer, then a past one.
+  current: { label: 'Currently at', now: 'KPMG', past: 'Ex-Real' },
   summary:
     'A professional maker across design, code and automation. I take ideas from first Figma frame to production build, and wire up the workflows that keep them running.',
 }

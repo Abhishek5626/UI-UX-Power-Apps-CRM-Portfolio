@@ -3,16 +3,19 @@
  * drives it from what the page actually needs and resolves `pageLoaderDone`
  * once it has gone, which is the card entrance's cue to start.
  */
+import { perfOn } from './perf.ts'
+
 const html = document.documentElement
 const active = html.dataset.loader === 'on'
 
-/** Long enough to read the line on a fast connection. */
-const MIN_VISIBLE_MS = 1200
+/** Long enough to read the line on a fast connection; the quick intro (a ?perf switch) halves it. */
+const quick = perfOn('quickIntro')
+const MIN_VISIBLE_MS = quick ? 600 : 1200
 /** Slow or stuck assets stop waiting here, measured from navigation start. */
 const MAX_WAIT_MS = 6000
 const TEXT_OUT_MS = 300
 const PANEL_IN_MS = 500
-const PANEL_HOLD_MS = 350
+const PANEL_HOLD_MS = quick ? 100 : 350
 const PANEL_OUT_MS = 800
 const FADE_OUT_MS = 200
 /** The share of progress earned just by the app having booted. */
