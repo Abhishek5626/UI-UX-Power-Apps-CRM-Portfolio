@@ -33,12 +33,16 @@ export function setPerf(name: PerfSwitch, on: boolean) {
 
 type DeviceHints = Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } }
 const device = navigator as DeviceHints
-/** Few cores, little memory or Data Saver: the cards' ambient loops stay still. */
+/**
+ * Very few cores, little memory or Data Saver: the cards' ambient loops stay still.
+ * Thresholds stay low on purpose: iPhones report only 4 cores (a privacy limit), so a
+ * "4 or fewer" rule calmed every iPhone. Adaptive quality catches genuinely slow devices.
+ */
 const DROPPED_KEY = 'perf-dropped-frames'
 export const lowPower =
   perfOn('lowPower') &&
-  ((navigator.hardwareConcurrency ?? 8) <= 4 ||
-    (device.deviceMemory ?? 8) <= 4 ||
+  ((navigator.hardwareConcurrency ?? 8) <= 2 ||
+    (device.deviceMemory ?? 8) <= 2 ||
     device.connection?.saveData === true ||
     sessionStorage.getItem(DROPPED_KEY) === '1')
 
