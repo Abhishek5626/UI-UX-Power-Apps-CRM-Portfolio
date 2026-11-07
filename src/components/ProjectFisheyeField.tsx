@@ -632,13 +632,13 @@ export function ProjectFisheyeField({
     // stops to build a card mid-gesture. Off-screen tiles stay unrendered, so it costs no frames.
     const idle = (run: () => void, timeout?: number) =>
       'requestIdleCallback' in window ? requestIdleCallback(run, timeout ? { timeout } : undefined) : setTimeout(run, 200)
-    // Only the first ring has a deadline; the outer rings wait for real idle time, never a pan.
+    // Each ring runs in idle time or within 1.5s, but never mid-pan: a pan defers it.
     const widenMounting = (margins: number[]) => () => {
       if (disposed || margins.length === 0) return
-      if (moving) return idle(widenMounting(margins))
+      if (moving) return idle(widenMounting(margins), 1500)
       mountMargin = margins[0]!
       paint()
-      idle(widenMounting(margins.slice(1)))
+      idle(widenMounting(margins.slice(1)), 1500)
     }
     idle(widenMounting([CARD_MOUNT_MARGIN_PX, CARD_MOUNT_MARGIN_PX * 3, Infinity]), 800)
 

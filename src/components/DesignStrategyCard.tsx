@@ -483,10 +483,12 @@ export function DesignStrategyCard() {
 
     const sweepTick = (now: number) => {
       if (cancelled || !sweepButton) return
-      if (!sweepPaused) sweepElapsed += now - sweepLast
+      // Also held while the page pans or a sheet covers it; a held sweep writes nothing, so nothing repaints.
+      const held = sweepPaused || frame.closest('[data-moving], [data-hold]') !== null
+      if (!held) sweepElapsed += now - sweepLast
       sweepLast = now
       const progress = Math.min(sweepElapsed / sweepMs(), 1)
-      sweepButton.style.backgroundPosition = `${(100 - 100 * progress).toFixed(1)}% center`
+      if (!held) sweepButton.style.backgroundPosition = `${(100 - 100 * progress).toFixed(1)}% center`
       if (progress < 1) sweepFrame = requestAnimationFrame(sweepTick)
       else clearSweep(sweepButton)
     }
