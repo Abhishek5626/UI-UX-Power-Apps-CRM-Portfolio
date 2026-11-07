@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ShippedBadge } from '../components/ShippedBadge.tsx'
 import { CaseStudyFooter } from '../components/CaseStudyFooter.tsx'
+import { InViewVideo } from '../components/InViewVideo.tsx'
 import './case-study.css'
 import './case-study-1.css'
 
@@ -85,7 +86,7 @@ function WinIcons() {
 
 function Stars() {
   return (
-    <p className="cs1-stars" aria-label="5 stars">
+    <p className="cs1-stars" role="img" aria-label="5 stars">
       {Array.from({ length: 5 }, (_, index) => (
         <svg key={index} viewBox="0 0 20 20" aria-hidden="true">
           <path
@@ -232,40 +233,8 @@ function WhyStage() {
 }
 
 function GlowVideo() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video || !('IntersectionObserver' in window)) return
-
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (motion.matches) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          video.play().catch(() => {})
-        } else {
-          video.pause()
-        }
-      },
-      { rootMargin: '80px' },
-    )
-    observer.observe(video)
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <video
-      ref={videoRef}
-      className="cs1-glow"
-      src="/case-study-1/glow.webm"
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      aria-hidden="true"
-    />
+    <InViewVideo className="cs1-glow" src="/case-study-1/glow.webm" aria-hidden="true" />
   )
 }
 

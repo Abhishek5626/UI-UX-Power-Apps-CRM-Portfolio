@@ -713,12 +713,6 @@ html:has(.project-drawer) .ask-dock {
   rim; dark: smoked glass with a faint white rim). The ring is a rotating conic
   gradient masked to a 1.5px band; the glow is the same gradient blurred.
 */
-@property --ask-resume-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
 .ask-dock .ask-dock-resume {
   --resume-rim: rgb(28 32 58 / 0.85);
   position: relative;
@@ -744,29 +738,20 @@ html[data-theme="dark"] .ask-dock .ask-dock-resume {
   backdrop-filter: blur(12px) saturate(1.4);
 }
 
+/*
+  The glints turn by rotating an oversized square that carries the gradient, inside the
+  ring's mask: the same picture as turning the gradient's angle, but on the compositor,
+  so the ring never repaints.
+*/
 .ask-resume-ring {
-  /* Declared here, not on the button: the angle must resolve on the element that animates it. */
-  --resume-glints:
-    conic-gradient(
-      from var(--ask-resume-angle),
-      transparent 0 12%,
-      #ff9b45 16%,
-      #ffffff 18.5%,
-      #6aa8ff 21%,
-      transparent 26% 58%,
-      #c084fc 62%,
-      #ffffff 64%,
-      #ffb36b 67%,
-      transparent 72%
-    );
   position: absolute;
   border-radius: inherit;
   pointer-events: none;
-  animation: ask-resume-flow 4s linear infinite;
+  overflow: hidden;
   inset: 0;
   z-index: 1;
   padding: 1.5px;
-  background: var(--resume-glints), var(--resume-rim);
+  background: var(--resume-rim);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -776,12 +761,34 @@ html[data-theme="dark"] .ask-dock .ask-dock-resume {
     linear-gradient(#000 0 0);
 }
 
+.ask-resume-ring::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: conic-gradient(
+    transparent 0 12%,
+    #ff9b45 16%,
+    #ffffff 18.5%,
+    #6aa8ff 21%,
+    transparent 26% 58%,
+    #c084fc 62%,
+    #ffffff 64%,
+    #ffb36b 67%,
+    transparent 72%
+  );
+  animation: ask-resume-flow 4s linear infinite;
+}
+
 @keyframes ask-resume-flow {
-  to { --ask-resume-angle: 360deg; }
+  to { rotate: 360deg; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ask-resume-ring {
+  .ask-resume-ring::before {
     animation: none;
   }
 }

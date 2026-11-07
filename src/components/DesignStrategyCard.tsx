@@ -965,7 +965,9 @@ export function DesignStrategyCard() {
     const tickTimer = (now: number) => {
       if (cancelled) return
       list.classList.toggle('is-turning', animating || pointerDown)
-      const paused = reduced || pointerInside || pointerDown || keyFocus || offscreen || animating
+      const paused = reduced || pointerInside || pointerDown || keyFocus || offscreen || animating ||
+        // The page is panning or covered: the wheel waits instead of turning mid-pan.
+        frame.closest('[data-moving], [data-hold]') !== null
       if (!paused) timerElapsed += now - timerLast
       timerLast = now
       if (timerElapsed >= cycleMs()) {

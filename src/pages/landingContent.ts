@@ -54,8 +54,13 @@ export type LandingCardContent = {
 
 export const heroContent = {
   headline: 'Design, Code & AI Workflows.',
-  roleDesign: 'Design',
-  roleEngineer: 'Engineer',
+  // The hero cycles through these; the first word of each is set in italic.
+  roles: [
+    ['Design', 'Engineer'],
+    ['CRM', 'Developer'],
+    ['Power', 'Apps'],
+    ['RELEX', 'Developer'],
+  ],
   themeLabel: 'Light Mode',
   summary:
     'A professional maker across design, code and automation. I take ideas from first Figma frame to production build, and wire up the workflows that keep them running.',

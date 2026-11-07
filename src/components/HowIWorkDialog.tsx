@@ -32,7 +32,9 @@ export function HowIWorkDialog({
   useEffect(() => {
     dialogRef.current?.show()
     closeRef.current?.focus({ preventScroll: true })
-  }, [])
+    // Cached before the first hover, so a certificate's logo shows at once.
+    for (const logo of new Set(certificates.items.map((item) => item.logo))) new Image().src = logo
+  }, [certificates.items])
 
   // Tweens the shell between the two panels' heights, then hands back to auto
   // so it keeps fitting its content (and the viewport cap) after any resize.
@@ -102,8 +104,7 @@ export function HowIWorkDialog({
     }
     const src = row.dataset.logo ?? ''
     if (logo.getAttribute('src') !== src) logo.src = src
-    const box = event.currentTarget.getBoundingClientRect()
-    logo.style.translate = `${event.clientX - box.left}px ${event.clientY - box.top}px`
+    logo.style.translate = `${event.clientX}px ${event.clientY}px`
     logo.classList.add('is-shown')
   }
 
@@ -254,7 +255,7 @@ export function HowIWorkDialog({
                     </li>
                   ))}
               </ul>
-              <img ref={certLogoRef} className="cert-logo" alt="" width={160} height={160} aria-hidden="true" />
+              <img ref={certLogoRef} className="cert-logo" alt="" width={200} height={200} aria-hidden="true" />
             </div>
           </div>
         </div>

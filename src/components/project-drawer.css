@@ -16,8 +16,17 @@
   transform-origin: center center;
 }
 
+/* Once the opaque drawer has slid over it, the page stops rendering, so its videos and loops stop too. */
 .landing-stage-canvas.is-covered {
-  animation: project-backdrop-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation:
+    project-backdrop-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) both,
+    landing-skip 0s 0.72s both;
+}
+
+@keyframes landing-skip {
+  to {
+    content-visibility: hidden;
+  }
 }
 
 .landing-stage-canvas.is-revealing {

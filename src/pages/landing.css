@@ -688,7 +688,8 @@ html[data-theme="dark"] .tool-logo:not(.is-color) {
   height: 100%;
 }
 
-.project-card-media.is-fill video {
+.project-card-media.is-fill video,
+.project-card-media.is-fill canvas {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -701,12 +702,12 @@ html[data-theme="dark"] .tool-logo:not(.is-color) {
   Scaling 1.3x and lifting 5.2% (0.04 x 1.3) puts that point at the card's middle
   while the video still covers the card edge to edge.
 */
-.project-card-agentic-ai .project-card-media.is-video video {
+.project-card-agentic-ai .project-card-media.is-video > * {
   transform: translateY(-5.2%) scale(1.3);
 }
 
 /* The blurred copy shows only near the edges, ramping linearly from full at the edge to none 24% in. */
-.project-card-media.is-video video.is-edge {
+.project-card-media.is-video .is-edge {
   filter: blur(10px);
   -webkit-mask-image:
     linear-gradient(to right, #000, transparent 24%, transparent 76%, #000),
@@ -1040,12 +1041,6 @@ html[data-theme="dark"] .project-card-badge,
 }
 
 /* All Projects card (Figma 352-825): one glass row, title left, View All right. */
-@property --all-projects-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
 .all-projects-card {
   position: relative;
   isolation: isolate;
@@ -1054,19 +1049,30 @@ html[data-theme="dark"] .project-card-badge,
 }
 
 /*
-  A gradient stroke that flows round the edge (::before) over a soft glow of the
-  same colours (::after), so the card isn't missed. The stroke is the gradient
-  masked down to a 1.5px ring.
+  A gradient stroke that flows round the edge (.is-stroke) over a soft glow of the
+  same colours (.is-glow), so the card isn't missed. The stroke is the gradient
+  masked down to a 1.5px ring. The flow turns an oversized square carrying the
+  gradient inside each clipped layer: the same picture as turning the gradient's
+  angle, but on the compositor, so neither layer repaints.
 */
-.all-projects-card::before,
-.all-projects-card::after {
-  content: "";
+.all-projects-flow {
   position: absolute;
   inset: -1px;
   z-index: 2;
+  overflow: hidden;
   border-radius: inherit;
+  pointer-events: none;
+}
+
+.all-projects-flow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
   background: conic-gradient(
-    from var(--all-projects-angle),
     transparent 0deg,
     #a479ff 50deg,
     #79a7ff 110deg,
@@ -1074,11 +1080,10 @@ html[data-theme="dark"] .project-card-badge,
     transparent 230deg,
     transparent 360deg
   );
-  pointer-events: none;
   animation: all-projects-flow 3.2s linear infinite;
 }
 
-.all-projects-card::before {
+.all-projects-flow.is-stroke {
   padding: 1.5px;
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -1089,7 +1094,7 @@ html[data-theme="dark"] .project-card-badge,
     linear-gradient(#000 0 0);
 }
 
-.all-projects-card::after {
+.all-projects-flow.is-glow {
   z-index: -1;
   inset: -2px;
   filter: blur(10px);
@@ -1097,12 +1102,11 @@ html[data-theme="dark"] .project-card-badge,
 }
 
 @keyframes all-projects-flow {
-  to { --all-projects-angle: 360deg; }
+  to { rotate: 360deg; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .all-projects-card::before,
-  .all-projects-card::after {
+  .all-projects-flow::before {
     animation: none;
   }
 }
@@ -1462,6 +1466,37 @@ html[data-theme="dark"] .project-card-surface.is-spacious > .ai-graph {
 
 .ai-graph.is-playing .ai-graph-lines path.ai-graph-flow {
   animation: ai-graph-flow 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/*
+  The field is panning or a sheet covers it: the cards' looping animations hold.
+  !important because the rules that start them use the animation shorthand, which
+  resets the play state and outranks these on specificity.
+*/
+.project-fisheye-field[data-moving] .ai-graph-blob,
+.project-fisheye-field[data-moving] .ai-graph-flow,
+.project-fisheye-field[data-moving] .ai-graph-node-inner,
+.project-fisheye-field[data-moving] .project-card-badges-track,
+.project-fisheye-field[data-moving] .all-projects-flow::before,
+.landing-page[data-hold] .ai-graph-blob,
+.landing-page[data-hold] .ai-graph-flow,
+.landing-page[data-hold] .ai-graph-node-inner,
+.landing-page[data-hold] .project-card-badges-track,
+.landing-page[data-hold] .all-projects-flow::before {
+  animation-play-state: paused !important;
+}
+
+/* Low-power devices: the graph builds once, then its endless loops stay still. */
+html[data-low-power] .ai-graph-blob,
+html[data-low-power] .ai-graph-flow {
+  animation-play-state: paused !important;
+}
+
+/* The baked edge canvas carries its own blur and mask (see ProjectCardVideo). */
+html[data-baked-edge] .project-card-media.is-video .is-edge {
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 /* The orb breathes as it is fed. */

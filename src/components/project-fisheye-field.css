@@ -40,8 +40,22 @@ html:has(.landing-page.is-fisheye-page) {
 }
 
 /* Only a recognised drag blocks selection and shows the grabbing hand. */
-.project-fisheye-field[data-dragging='true'],
-.project-fisheye-field[data-dragging='true'] * {
+.project-fisheye-field[data-dragging='true'] {
+  cursor: grabbing !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/*
+  Pan tricks: while dragging, the tiles take no pointer events (the field holds the capture),
+  so the field's cursor shows everywhere and no hover or hit-testing runs on moving cards.
+  Without them, every element gets the cursor instead, which restyles the whole field.
+*/
+html[data-pan-tricks] .project-fisheye-field[data-dragging='true'] .project-fisheye-plane {
+  pointer-events: none;
+}
+
+html:not([data-pan-tricks]) .project-fisheye-field[data-dragging='true'] * {
   cursor: grabbing !important;
   user-select: none;
   -webkit-user-select: none;

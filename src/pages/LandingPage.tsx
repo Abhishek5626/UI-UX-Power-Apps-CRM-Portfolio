@@ -1,4 +1,6 @@
 import {
+  Suspense,
+  lazy,
   useCallback,
   useEffect,
   useId,
@@ -20,7 +22,6 @@ import { WorkExperienceCard } from '../components/WorkExperienceCard.tsx'
 import { AskDock, askStudies, type AskStudy } from '../components/AskDock.tsx'
 import { PortfolioNav } from '../components/PortfolioNav.tsx'
 import { ProgressiveBlur } from '../components/ProgressiveBlur.tsx'
-import { HowIWorkDialog } from '../components/HowIWorkDialog.tsx'
 import { howIWorkContent } from '../components/howIWorkContent.ts'
 import { DrawerTools, ProjectDrawer, useSheetKeys } from '../components/ProjectDrawer.tsx'
 import {
@@ -28,6 +29,9 @@ import {
   useProjectDrawer,
   type ProjectId,
 } from '../components/useProjectDrawer.ts'
+import { usePlayInView } from '../components/InViewVideo.tsx'
+import { TextCycle } from '../components/TextCycle.tsx'
+import { lowPower, perfOn } from '../perf.ts'
 import { ThemeToggleVisual } from '../components/ThemeToggle.tsx'
 import { useTheme } from '../theme.tsx'
 import {
@@ -36,11 +40,18 @@ import {
 } from '../components/ProjectFisheyeField.tsx'
 import { aboutMeCard, heroContent, landingCards, allProjectsContent } from './landingContent.ts'
 import type { LandingCardContent, LandingTool } from './landingContent.ts'
+// The All Projects sheet shares How I Work's sheet styles, so they load with the page, not with that lazy sheet.
+import '../components/how-i-work.css'
 import './landing.css'
 import { CardIcon } from '../components/CardIcon.tsx'
 import './landing-type.css'
 
 const cursorLabel = 'View project'
+
+// Loaded on first open: most visits never open the sheet, so it stays out of the first download.
+const HowIWorkDialog = lazy(() =>
+  import('../components/HowIWorkDialog.tsx').then((module) => ({ default: module.HowIWorkDialog })),
+)
 
 function ProjectCardIcon({ onMedia = false }: { onMedia?: boolean }) {
   return (
@@ -61,29 +72,162 @@ function ProjectCardIcon({ onMedia = false }: { onMedia?: boolean }) {
   )
 }
 
-function ProjectCardMedia({ card }: { card: LandingCardContent }) {
-  if (card.videoSrc) {
-    // Decorative: the card's own title says what it is. Reduced motion keeps the first frame still.
-    const still = window.matchMedia(reducedMotionQuery).matches
-    return (
-      <span className="project-card-media is-fill is-video">
-        {/* A blurred copy masked to the edges gives the blurred border; Chrome ignores masks on backdrop-filter here. */}
-        {['is-sharp', 'is-edge'].map((layer) => (
-          <video
-            key={layer}
-            className={layer}
-            src={card.videoSrc}
-            autoPlay={!still}
-            muted
-            loop
-            playsInline
-            preload={still ? 'metadata' : 'auto'}
-            aria-hidden="true"
-          />
-        ))}
-      </span>
-    )
+/** The card's blurred edge: each video frame copied to a tiny canvas, so the video downloads and decodes once. */
+function ProjectCardVideo({ src, covered }: { src: string; covered: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const edgeRef = useRef<HTMLCanvasElement>(null)
+  const [fieldMoving, setFieldMoving] = useState(false)
+  const [held, setHeld] = useState(false)
+  const [wanted, setWanted] = useState(false)
+  // A still of the first frame (public/project-assets/*-poster.webp) shows before any video loads.
+  const poster = src.replace(/\.mp4$/, '-poster.webp')
+  // Held while a case study drawer covers the page (even as it slides in on a direct link),
+  // while a sheet covers it, and while the field pans, when decoding competes for frames.
+  // Pointing at or touching the card plays it at once.
+  const preload = usePlayInView(videoRef, !covered && !fieldMoving && !held, perfOn('videoFocus'), wanted)
+
+  useEffect(() => {
+    const card = videoRef.current?.closest<HTMLElement>('.project-card')
+    if (!card) return
+    const on = () => setWanted(true)
+    const off = (event: PointerEvent) => {
+      if (event.pointerType !== 'touch') setWanted(false)
+    }
+    card.addEventListener('pointerenter', on)
+    card.addEventListener('pointerdown', on)
+    card.addEventListener('pointerleave', off)
+    return () => {
+      card.removeEventListener('pointerenter', on)
+      card.removeEventListener('pointerdown', on)
+      card.removeEventListener('pointerleave', off)
+    }
+  }, [])
+
+  useEffect(() => {
+    const field = videoRef.current?.closest('.project-fisheye-field')
+    const onMotion = (event: Event) => {
+      const moving = (event as CustomEvent<boolean>).detail
+      setFieldMoving(moving)
+      // A touch carries no hover to end it: panning away hands the video back to focus.
+      if (moving) setWanted(false)
+    }
+    const onHold = (event: Event) => setHeld((event as CustomEvent<boolean>).detail)
+    field?.addEventListener('fisheye-motion', onMotion)
+    window.addEventListener('landing-hold', onHold)
+    return () => {
+      field?.removeEventListener('fisheye-motion', onMotion)
+      window.removeEventListener('landing-hold', onHold)
+    }
+  }, [])
+
+  useEffect(() => {
+    const video = videoRef.current
+    const context = edgeRef.current?.getContext('2d')
+    if (!video || !context) return
+    const canvas = context.canvas
+    const baked = perfOn('bakedVideoEdge')
+    let frame = 0
+    let box = { width: 1, height: 1 }
+    let mask: HTMLCanvasElement | null = null
+    const sizer = new ResizeObserver(([entry]) => {
+      box = { width: entry.contentRect.width || 1, height: entry.contentRect.height || 1 }
+      mask = null
+    })
+    if (baked) sizer.observe(canvas)
+
+    const draw = () => {
+      if (!baked) {
+        // 64px wide is plenty under a 10px blur; the canvas keeps the video's ratio so object-fit crops alike.
+        if (video.videoWidth && canvas.height !== Math.round((64 * video.videoHeight) / video.videoWidth)) {
+          canvas.width = 64
+          canvas.height = Math.round((64 * video.videoHeight) / video.videoWidth)
+        }
+        context.drawImage(video, 0, 0, canvas.width, canvas.height)
+      } else if (video.videoWidth) {
+        // Baked: the canvas takes the card's own shape, so the CSS blur and edge mask can be drawn
+        // into it once per frame instead of being composited every frame the card moves.
+        const width = 96
+        const height = Math.max(1, Math.round((width * box.height) / box.width))
+        if (!mask || canvas.width !== width || canvas.height !== height) {
+          canvas.width = width
+          canvas.height = height
+          mask = edgeMask(width, height)
+        }
+        const scale = Math.max(box.width / video.videoWidth, box.height / video.videoHeight)
+        const sw = box.width / scale
+        const sh = box.height / scale
+        context.clearRect(0, 0, width, height)
+        context.filter = `blur(${(10 * width) / box.width}px)`
+        context.drawImage(video, (video.videoWidth - sw) / 2, (video.videoHeight - sh) / 2, sw, sh, 0, 0, width, height)
+        context.filter = 'none'
+        context.globalCompositeOperation = 'destination-in'
+        context.drawImage(mask, 0, 0)
+        context.globalCompositeOperation = 'source-over'
+      }
+      frame = video.requestVideoFrameCallback(draw)
+    }
+    video.addEventListener('loadeddata', draw, { once: true })
+    // Until the video has a frame, the edge blurs the poster, so the border is there from the start.
+    const still = new Image()
+    still.onload = () => {
+      if (video.readyState >= 2 || !baked) return
+      const width = 96
+      const height = Math.max(1, Math.round((width * box.height) / box.width))
+      canvas.width = width
+      canvas.height = height
+      mask = edgeMask(width, height)
+      const scale = Math.max(box.width / still.width, box.height / still.height)
+      const sw = box.width / scale
+      const sh = box.height / scale
+      context.filter = `blur(${(10 * width) / box.width}px)`
+      context.drawImage(still, (still.width - sw) / 2, (still.height - sh) / 2, sw, sh, 0, 0, width, height)
+      context.filter = 'none'
+      context.globalCompositeOperation = 'destination-in'
+      context.drawImage(mask, 0, 0)
+      context.globalCompositeOperation = 'source-over'
+    }
+    requestAnimationFrame(() => (still.src = video.poster))
+    return () => {
+      sizer.disconnect()
+      video.removeEventListener('loadeddata', draw)
+      video.cancelVideoFrameCallback(frame)
+    }
+  }, [])
+
+  return (
+    <span className="project-card-media is-fill is-video">
+      {/* Decorative: the card's own title says what it is. */}
+      <video ref={videoRef} className="is-sharp" src={src} poster={poster} muted loop playsInline preload={preload} aria-hidden="true" />
+      {/* Masked to the edges for the blurred border; Chrome ignores masks on backdrop-filter here. */}
+      <canvas ref={edgeRef} className="is-edge" width={0} height={0} aria-hidden="true" />
+    </span>
+  )
+}
+
+/**
+ * The edge mask the CSS draws (two linear ramps, full at the edge and gone 24% in,
+ * added together), as alpha in a canvas the size of the edge canvas.
+ */
+function edgeMask(width: number, height: number) {
+  const ramp = (t: number) => (t < 0.24 ? 1 - t / 0.24 : t > 0.76 ? (t - 0.76) / 0.24 : 0)
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+  const context = canvas.getContext('2d')!
+  const image = context.createImageData(width, height)
+  for (let y = 0; y < height; y += 1) {
+    const b = ramp((y + 0.5) / height)
+    for (let x = 0; x < width; x += 1) {
+      const a = ramp((x + 0.5) / width)
+      image.data[(y * width + x) * 4 + 3] = Math.round((a + b - a * b) * 255)
+    }
   }
+  context.putImageData(image, 0, 0)
+  return canvas
+}
+
+function ProjectCardMedia({ card, covered = false }: { card: LandingCardContent; covered?: boolean }) {
+  if (card.videoSrc) return <ProjectCardVideo src={card.videoSrc} covered={covered} />
 
   if (card.imageFrame && card.imageSrc) {
     return (
@@ -652,7 +796,8 @@ function TextWall() {
       })
     }
 
-    if (window.matchMedia(reducedMotionQuery).matches) {
+    // Low-power devices get the finished code at rest, like reduced motion.
+    if (lowPower || window.matchMedia(reducedMotionQuery).matches) {
       paint(Infinity, false, 0)
       return
     }
@@ -672,7 +817,8 @@ function TextWall() {
         setSnippet((current) => (current + 1) % wallSnippetTokens.length)
         return
       }
-      if (!visible) return
+      // Off screen, or the field is panning: repainting every glyph would cost the pan its frames.
+      if (!visible || root.closest('[data-moving], [data-hold]')) return
       const front = ((elapsed - wave * wallWaveEveryMs) / wallWaveMs) * wallWaveReach
       paint(front, wave === 0, wallShimmer)
     }, wallTickMs)
@@ -878,7 +1024,7 @@ function ProjectCard({
       ) : card.tools ? (
         <ToolGrid tools={card.tools} />
       ) : (
-        <ProjectCardMedia card={card} />
+        <ProjectCardMedia card={card} covered={Boolean(activeProject)} />
       )}
       {card.badges ? <ProjectCardBadges badges={card.badges} /> : null}
       {card.href ? <span className="visually-hidden">{cursorLabel}</span> : null}
@@ -903,6 +1049,8 @@ function ProjectCard({
 function AllProjectsCard({ onOpen }: { onOpen: (opener: HTMLElement) => void }) {
   return (
     <HoverCard className="project-card all-projects-card">
+      <span className="all-projects-flow is-stroke" aria-hidden="true" />
+      <span className="all-projects-flow is-glow" aria-hidden="true" />
       <span className="project-card-surface all-projects-card-surface">
         <span className="all-projects-card-title">{allProjectsContent.title}</span>
         <button
@@ -1019,6 +1167,13 @@ function AllProjectsDialog({
   )
 }
 
+/** The hero's roles, first word italic as in the Figma frame. Built once, so the cycle never restarts. */
+const heroRoles = heroContent.roles.map(([lead, rest]) => (
+  <>
+    <span className="hero-role-design">{lead}</span> <span className="hero-role-engineer">{rest}</span>
+  </>
+))
+
 function HeroIntroduction() {
   const { theme, toggleTheme } = useTheme()
   const isDark = theme === 'dark'
@@ -1030,8 +1185,7 @@ function HeroIntroduction() {
         <h1 className="hero-headline">{heroContent.headline}</h1>
         <div className="hero-role-row">
           <p className="hero-role">
-            <span className="hero-role-design">{heroContent.roleDesign}</span>{' '}
-            <span className="hero-role-engineer">{heroContent.roleEngineer}</span>
+            <TextCycle items={heroRoles} />
           </p>
           <HoverCard className="theme-status" tag="div">
             <button
@@ -1064,7 +1218,7 @@ function AccessibleHero({ themeButton = true }: { themeButton?: boolean }) {
     <header>
       <h1 className="visually-hidden">{heroContent.headline}</h1>
       <p className="visually-hidden">
-        {heroContent.roleDesign} {heroContent.roleEngineer}.{' '}
+        {heroContent.roles.map((role) => role.join(' ')).join(', ')}.{' '}
         {heroContent.summary}
       </p>
       {themeButton ? (
@@ -1591,16 +1745,18 @@ function useTileHover(rootRef: RefObject<HTMLElement | null>) {
         return
       }
 
-      const tiles = root.querySelectorAll<HTMLElement>('[data-repel]')
+      const tiles = [...root.querySelectorAll<HTMLElement>('[data-repel]')]
       const origin = next ? centerOf(next) : null
+      // Every read before any write: interleaving them forced a layout per tile.
+      const centers = origin ? tiles.map(centerOf) : []
 
-      tiles.forEach((tile) => {
+      tiles.forEach((tile, index) => {
         if (!origin || !next || tile.contains(next)) {
           tile.style.removeProperty('--repel-x')
           tile.style.removeProperty('--repel-y')
           return
         }
-        const [x, y] = centerOf(tile)
+        const [x, y] = centers[index]
         const dx = x - origin[0]
         const dy = y - origin[1]
         const distance = Math.hypot(dx, dy)
@@ -1745,8 +1901,7 @@ function MobileHero() {
       <div className="mobile-hero-title">
         <h1 className="hero-headline">{heroContent.headline}</h1>{' '}
         <p className="hero-role">
-          <span className="hero-role-design">{heroContent.roleDesign}</span>{' '}
-          <span className="hero-role-engineer">{heroContent.roleEngineer}</span>
+          <TextCycle items={heroRoles} />
         </p>
       </div>
       <p className="hero-summary">{heroContent.summary}</p>
@@ -1791,6 +1946,15 @@ export function LandingPage() {
   const [allProjectsOpener, setAllProjectsOpener] = useState<HTMLElement | null>(null)
   // The sheets bring their own theme toggle and close, so the page's floating ones step aside.
   const sheetOpen = allProjectsOpener !== null || howIWorkOpener !== null
+
+  // A sheet's frosted glass shows the page blurred: its loops and videos hold until it closes.
+  useEffect(() => {
+    if (!perfOn('holdBehindSheets')) return
+    const page = pageRef.current
+    if (sheetOpen) page?.setAttribute('data-hold', '')
+    else page?.removeAttribute('data-hold')
+    window.dispatchEvent(new CustomEvent('landing-hold', { detail: sheetOpen }))
+  }, [sheetOpen])
 
   useEffect(() => {
     if (drawerPresent) return
@@ -1969,10 +2133,12 @@ export function LandingPage() {
         />
       ) : null}
       {howIWorkOpener ? (
-        <HowIWorkDialog
-          opener={howIWorkOpener}
-          onClose={() => setHowIWorkOpener(null)}
-        />
+        <Suspense fallback={null}>
+          <HowIWorkDialog
+            opener={howIWorkOpener}
+            onClose={() => setHowIWorkOpener(null)}
+          />
+        </Suspense>
       ) : null}
       <AskDock
         // A new key on opening a sheet resets the dock, so the nav button shows rather than the chat bar left over from panning.

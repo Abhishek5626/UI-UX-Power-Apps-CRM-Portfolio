@@ -410,9 +410,10 @@ dialog.sheet-dialog .how-i-work-tag {
   align-content: flex-start;
 }
 
+/* The panel scrolls, so it clips: a negative top margin here cut the chips' tops off. */
 .how-i-work-panel.is-certificates > .all-projects-filters {
   flex: 0 0 100%;
-  margin-top: -12px;
+  margin-top: 0;
 }
 
 .cert-list-wrap {
@@ -435,25 +436,30 @@ dialog.sheet-dialog .how-i-work-tag {
   border-bottom: 1px solid var(--theme-border-strong);
 }
 
-/* Follows the pointer over the list, centred on it; script sets its translate. */
+/*
+  signal-a.studio's recognitions: the hovered row's logo replaces the pointer, centred on it,
+  and shows, moves and hides at once with no easing. Script sets its translate to the pointer.
+*/
 .cert-logo {
-  position: absolute;
-  top: -80px;
-  left: -80px;
+  position: fixed;
+  top: -100px;
+  left: -100px;
   z-index: 2;
-  width: 160px;
-  height: 160px;
-  border-radius: 28px;
-  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
   opacity: 0;
-  scale: 0.6;
   pointer-events: none;
-  transition: opacity 200ms ease, scale 260ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .cert-logo.is-shown {
   opacity: 1;
-  scale: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cert-row {
+    cursor: none;
+  }
 }
 
 .cert-logo:not([src]) {
@@ -494,12 +500,19 @@ dialog.sheet-dialog .how-i-work-tag {
   }
 }
 
-/* Phones: three top tabs outgrow the width, so the row scrolls sideways instead of clipping. */
+/* Phones: the three top tabs share the width, one size tighter, so none is cut off.
+   Sideways scroll stays only as a fallback for the narrowest screens. */
 @media (max-width: 760px) {
   dialog.sheet-dialog .how-i-work-tabs:not(.all-projects-filters) {
     flex: none;
     overflow-x: auto;
     scrollbar-width: none;
+  }
+
+  dialog.sheet-dialog .how-i-work-tabs:not(.all-projects-filters) .how-i-work-tab {
+    flex: 1 1 auto;
+    padding: 0 10px;
+    font-size: 13px;
   }
 
   dialog.sheet-dialog .how-i-work-tabs:not(.all-projects-filters)::-webkit-scrollbar {

@@ -1,0 +1,28 @@
+/*
+  One line tall and as wide as the current word (script sets the width after the first).
+  The first word sits in flow; the rest stack below it out of flow, so before any script
+  the box already fits the first word.
+*/
+.text-cycle {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: top;
+}
+
+.text-cycle-track {
+  position: relative;
+  display: block;
+}
+
+.text-cycle-item {
+  display: block;
+  width: max-content;
+  white-space: nowrap;
+}
+
+.text-cycle-item + .text-cycle-item {
+  position: absolute;
+  top: calc(var(--i) * 100%);
+  left: 0;
+  opacity: 0;
+}

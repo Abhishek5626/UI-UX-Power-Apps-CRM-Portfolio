@@ -28,6 +28,7 @@ import {
   type ReactNode,
   isValidElement,
 } from 'react'
+import { perfOn } from '../perf.ts'
 import './project-fisheye-field.css'
 
 /** Componentry / Craftwork default. */
@@ -384,8 +385,14 @@ export function ProjectFisheyeField({
     syncMotion()
     motionQuery.addEventListener('change', syncMotion)
 
+    // The field fills the viewport and only moves on resize, so pointer code reuses this
+    // instead of reading layout on every move.
+    let rootLeft = 0
+    let rootTop = 0
     const layoutMetrics = () => {
       const rect = root.getBoundingClientRect()
+      rootLeft = rect.left
+      rootTop = rect.top
       viewW = Math.max(1, rect.width)
       viewH = Math.max(1, rect.height)
       scale = scaleFor(layout, viewW)
@@ -416,9 +423,8 @@ export function ProjectFisheyeField({
     }
 
     const aimLens = (event: PointerEvent) => {
-      const rect = root.getBoundingClientRect()
-      lens.targetX = event.clientX - rect.left
-      lens.targetY = event.clientY - rect.top
+      lens.targetX = event.clientX - rootLeft
+      lens.targetY = event.clientY - rootTop
     }
 
     const lensMoving = () =>
@@ -586,17 +592,29 @@ export function ProjectFisheyeField({
       paint()
       if (phone) syncNav()
 
-      if (
-        drag.active ||
-        Math.hypot(velocity.x, velocity.y) > 0.006 ||
-        (phone && (glide !== null || lensMoving()))
-      ) {
+      const gliding = Math.hypot(velocity.x, velocity.y) > 0.006
+      if (drag.active || gliding || (phone && (glide !== null || lensMoving()))) {
         frame = requestAnimationFrame(tick)
+        // The slow tail of a glide counts as still, so videos and loops come back sooner.
+        setMoving((drag.active && drag.moved) || Math.hypot(velocity.x, velocity.y) > 0.05 || glide !== null)
       } else {
         velocity.x = 0
         velocity.y = 0
         frame = 0
+        setMoving(false)
       }
+    }
+
+    // Cards hold their repainting loops (text wall, AI graph, videos) while the field moves:
+    // measured, those loops are what cost the pan its frames.
+    let moving = false
+    const holdWhileMoving = perfOn('panTricks')
+    const setMoving = (next: boolean) => {
+      if (!holdWhileMoving || next === moving) return
+      moving = next
+      if (next) root.dataset.moving = ''
+      else delete root.dataset.moving
+      root.dispatchEvent(new CustomEvent('fisheye-motion', { detail: next }))
     }
 
     const requestRender = () => {
@@ -610,13 +628,19 @@ export function ProjectFisheyeField({
       paint()
     }
 
-    const widenMounting = () => {
-      if (disposed) return
-      mountMargin = CARD_MOUNT_MARGIN_PX
+    // Cards mount ahead of the pan in idle time, ring by ring, so a pan into new ground never
+    // stops to build a card mid-gesture. Off-screen tiles stay unrendered, so it costs no frames.
+    const idle = (run: () => void, timeout?: number) =>
+      'requestIdleCallback' in window ? requestIdleCallback(run, timeout ? { timeout } : undefined) : setTimeout(run, 200)
+    // Only the first ring has a deadline; the outer rings wait for real idle time, never a pan.
+    const widenMounting = (margins: number[]) => () => {
+      if (disposed || margins.length === 0) return
+      if (moving) return idle(widenMounting(margins))
+      mountMargin = margins[0]!
       paint()
+      idle(widenMounting(margins.slice(1)))
     }
-    if ('requestIdleCallback' in window) requestIdleCallback(widenMounting, { timeout: 800 })
-    else setTimeout(widenMounting, 200)
+    idle(widenMounting([CARD_MOUNT_MARGIN_PX, CARD_MOUNT_MARGIN_PX * 3, Infinity]), 800)
 
     const resizeObserver = new ResizeObserver(resize)
     resizeObserver.observe(root)
@@ -853,6 +877,7 @@ export function ProjectFisheyeField({
     return () => {
       disposed = true
       cancelAnimationFrame(frame)
+      setMoving(false)
       resizeObserver.disconnect()
       tabObserver.disconnect()
       motionQuery.removeEventListener('change', syncMotion)
